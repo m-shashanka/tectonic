@@ -13,7 +13,7 @@ require('dotenv').config({path: "./config.env"});
 const PORT = process.env.PORT || 3000;
 
 const connectDb = require('./utilsServer/connectDb');
-connectDb();
+// connectDb();
 
 nextApp.prepare().then(() => {
 //(files/pages) in nextJS are server side rendered, so without below line pages folder files won't work
