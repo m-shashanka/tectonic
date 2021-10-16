@@ -8,10 +8,7 @@ import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData";
 import { PostDeleteToastr } from "../components/Layout/Toastr";
 import InfiniteScroll from "react-infinite-scroll-component";
-import {
-  PlaceHolderPosts,
-  EndMessage,
-} from "../components/Layout/PlaceHolderGroup";
+import {PlaceHolderPosts,EndMessage} from "../components/Layout/PlaceHolderGroup";
 import cookie from "js-cookie";
 
 function Index({ user, postsData, errorLoading }) {
