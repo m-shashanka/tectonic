@@ -29,7 +29,25 @@ export const loginUser = async (user, setError, setLoading) => {
   setLoading(false);
 };
 
+export const redirectUser = (ctx, location) => {
+  if (ctx.req) { //req,res available only on server side
+    //if on server side, manually handle redirection
+    ctx.res.writeHead(302, { Location: location });
+    ctx.res.end();
+  } else {
+    //if on client side, let react handle redirection
+    Router.push(location);
+  }
+};
+
 const setToken = token => {
   cookie.set("token", token);
   Router.push("/");
+};
+
+export const logoutUser = email => {
+  cookie.set("userEmail", email);
+  cookie.remove("token");
+  Router.push("/login");
+  Router.reload();
 };
