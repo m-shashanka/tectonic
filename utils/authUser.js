@@ -30,12 +30,10 @@ export const loginUser = async (user, setError, setLoading) => {
 };
 
 export const redirectUser = (ctx, location) => {
-  if (ctx.req) { //req,res available only on server side
-    //if on server side, manually handle redirection
+  if (ctx.req) {
     ctx.res.writeHead(302, { Location: location });
     ctx.res.end();
   } else {
-    //if on client side, let react handle redirection
     Router.push(location);
   }
 };

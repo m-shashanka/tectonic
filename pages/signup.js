@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import CommonInputs from "../components/Common/CommonInputs";
 import ImageDropDiv from "../components/Common/ImageDropDiv";
@@ -51,7 +51,6 @@ function Signup() {
   const inputRef = useRef();
 
   useEffect(() => {
-    //convert to array and check every item is set i.e has a value
     const isUser = Object.values({ name, email, password, bio }).every(item =>
       Boolean(item)
     );
@@ -71,8 +70,9 @@ function Signup() {
         })
       });
 
+      if (errorMsg !== null) setErrorMsg(null);
+
       if (res.data === "Available") {
-        if (errorMsg !== null) setErrorMsg(null);
         setUsernameAvailable(true);
         setUser(prev => ({ ...prev, username }));
       }

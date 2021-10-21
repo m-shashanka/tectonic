@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import { loginUser } from "../utils/authUser";
 import { HeaderMessage, FooterMessage } from "../components/Common/WelcomeMessage";
@@ -23,7 +23,6 @@ function Login() {
   };
 
   useEffect(() => {
-    //convert object to array and check if all elements have a value i.e if they are set
     const isUser = Object.values({ email, password }).every(item => Boolean(item));
     isUser ? setSubmitDisabled(false) : setSubmitDisabled(true);
   }, [user]);
