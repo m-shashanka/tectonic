@@ -4,10 +4,27 @@ import { postComment } from "../../../utils/postActions";
 import styles from "./commentInputField.module.css";
 
 function CommentInputField() {
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () =>{
+    if(loading || !text || text.trim().length === 0)
+      return;
+    setLoading(true);
+    await postComment(postId, user, text, setComments, setText);
+    setLoading(false);
+  }
+
   return (
     <div className={styles.yourComment}>
-      <input type="text" placeholder="Add comment" name="comment" />
-      <img src="/send.png" alt="send" />
+      <input
+        type="text"
+        placeholder="Add comment"
+        name="comment"
+        value={text}
+        onChange={e=>setText(e.target.value)}
+      />
+      <img src="/send.png" alt="send" onClick={handleSubmit}/>
     </div>
   );
 }

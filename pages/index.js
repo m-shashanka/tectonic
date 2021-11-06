@@ -2,7 +2,7 @@ import {useState,useEffect} from "react";
 import TopBar from "../components/Layout/TopBar/TopBar";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
-import CreatePost from "../components/Post/CreatePost";
+import CreatePost from "../components/Post/CreatePost/CreatePost";
 import CardPost from "../components/Post/CardPost/CardPost";
 import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData/NoData";
@@ -25,6 +25,7 @@ function Index(){
   return (<>
   <TopBar {...temp}/>
   <div className="layContent">
+    <CreatePost />
     <NoPosts />
     <CardPost />
   </div>

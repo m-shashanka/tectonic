@@ -54,6 +54,8 @@ export const likePost = async (postId, userId, setLikes, like = true) => {
 };
 
 export const postComment = async (postId, user, text, setComments, setText) => {
+  if(!text || text.trim().length === 0)
+    return;
   try {
     const res = await Axios.post(`/comment/${postId}`, { text });
 
