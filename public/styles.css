@@ -1,3 +1,8 @@
+*{
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
 :root {
   --progressBar: #54d1db;
 }
@@ -10,7 +15,7 @@ body {
   text-decoration: underline;
   cursor: pointer;
 }
-
+/* 
 .mySpinner {
   border: 5px solid #f3f3f3;
   border-top: 5px solid #16d47b;
@@ -27,7 +32,7 @@ body {
   100% {
     transform: rotate(360deg);
   }
-}
+} */
 
 .refreshIcon {
   text-align: center;

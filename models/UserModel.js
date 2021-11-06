@@ -11,13 +11,15 @@ const UserSchema = new Schema(
 
     username: { type: String, required: true, unique: true, trim: true },
 
+    bio: { type: String, select: false},
+
     profilePicUrl: { type: String },
 
     newMessagePopup: { type: Boolean, default: true },
 
-    unreadMessage: { type: Boolean, default: false },
+    unreadMessage: { type: Number, default: 0 },
 
-    unreadNotification: { type: Boolean, default: false },
+    unreadNotification: { type: Number, default: 0 },
 
     role: { type: String, default: "user", enum: ["user", "root"] },
 

@@ -30,10 +30,13 @@ export const loginUser = async (user, setError, setLoading) => {
 };
 
 export const redirectUser = (ctx, location) => {
+  //req object is available only on server side
   if (ctx.req) {
+    //If user is on server side, handle the rerouting
     ctx.res.writeHead(302, { Location: location });
     ctx.res.end();
   } else {
+    //If user is on client side, let nextJS handle the rerouting
     Router.push(location);
   }
 };
@@ -46,6 +49,6 @@ const setToken = token => {
 export const logoutUser = email => {
   cookie.set("userEmail", email);
   cookie.remove("token");
-  Router.push("/login");
+  Router.push("/authentication");
   Router.reload();
 };

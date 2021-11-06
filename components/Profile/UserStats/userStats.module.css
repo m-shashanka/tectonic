@@ -1,0 +1,35 @@
+.menuCard{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profileStats{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileStats h4{
+    margin: 0 0 2px 0;
+    font-weight: bold;
+}
+
+.profileStats span{
+    font-size: 16;
+}
+
+.profileFollowers{
+    margin-left: 8px;
+}
+
+/* remove this style if screen width decreases */
+.profilePosts{
+    padding: 0 10%;
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+}
+
+.profileFollowing{
+    margin-right: 8px;
+}

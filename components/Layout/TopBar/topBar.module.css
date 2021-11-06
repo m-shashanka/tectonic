@@ -1,0 +1,293 @@
+.topbarContainer{
+    height: 70px;
+    width: 100%;
+    /* background-color: #182130; */
+    background-color: #1E1E3F;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.userIcon{
+    color: aqua;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.chatIcon, .bellIcon{
+    color: aqua;
+    transform: scale(1.5);
+}
+
+.userIcon > i:hover, .chatIcon > i:hover, .bellIcon > i:hover{
+    transform: scale(1.2);
+}
+
+.topbarLeft{
+    flex: 3;
+}
+
+.logo{
+   font-size: 25px;
+   margin-left: 20px;
+   font-weight: bold;
+   color: aqua;
+   cursor: pointer;
+}
+
+.topbarCenter{
+    flex: 5;
+}
+
+.topbarRight{
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topbarIcons{
+    display: flex;
+    margin-left: 110px;
+}
+
+.topbarIconItem{
+    margin: 0 30px;
+    cursor: pointer;
+    position: relative;
+    color: white;
+}
+
+.topbarIconBadge{
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: -9px;
+    right: -9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.leftMenu{
+    position: fixed;
+    top: 70px;
+    left: -20vw;
+    height: 100vh;
+    width: 20vw;
+    background-color: cyan;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+}
+
+.leftMenu p{
+    margin-top: 15px;
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: medium;
+}
+
+.layUsers{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.layOnlineUsers{
+    height: 100%;
+    overflow: auto;
+}
+
+.layOnlineUsers::-webkit-scrollbar {
+    width: 7px;
+}
+
+.layOnlineUsers::-webkit-scrollbar-track {
+    border-radius: 12px;
+}
+
+.layOnlineUsers::-webkit-scrollbar-thumb {
+    border-radius: 12px;
+}
+
+.leftMenu.toggled{
+    left: 0;
+}
+
+.leftMenuCloseArrow{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 4px;
+    position: absolute;
+    bottom: 26vh;
+    left: 19vw;
+    height: 30px;
+    width: 35px;
+    transform: scale(1.2);
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    background-color: aliceblue;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    cursor: pointer;
+}
+
+.leftMenuOpenArrow{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 5px;
+    position: absolute;
+    bottom: 26vh;
+    left: 19vw;
+    height: 30px;
+    width: 35px;
+    transform: scale(1.2);
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    background-color: cyan;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    cursor: pointer;
+}
+
+.rightMenu{
+    position: fixed;
+    top: 70px;
+    right: -20vw;
+    height: 100vh;
+    width: 20vw;
+    background-color: cyan;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+}
+
+.rightMenu.toggled{
+    right: 0;
+}
+
+.rightMenuCloseArrow{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 4px;
+    position: absolute;
+    bottom: 26vh;
+    right: 19vw;
+    height: 30px;
+    width: 35px;
+    transform: scale(1.2);
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    background-color: aliceblue;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    cursor: pointer;
+}
+
+.rightMenuOpenArrow{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 5px;
+    position: absolute;
+    bottom: 26vh;
+    right: 19vw;
+    height: 30px;
+    width: 35px;
+    transform: scale(1.2);
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    background-color: cyan;
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+    cursor: pointer;
+}
+
+.userProfile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userPic{
+    margin-top: 10px;
+    width: 50%;
+    height: 50%;
+}
+
+.userPic img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+}
+
+.userProfile h3{
+    margin-top: 2px;
+}
+
+.userLogout{
+    margin-left: 30%;
+    position: absolute;
+    bottom: 18vh;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.profileOptions{
+    margin-top: 9%;
+    margin-bottom: 5%;
+}
+
+.profileOptions p, .userLogout p{
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.profileOptions i, .userLogout i{
+    margin-right: 16px;
+    transform: scale(1.3);
+}
+
+.profileOptions div, .userLogout{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 80%;
+    padding: 10px 0 10px 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.profileOptions div:hover:not(.selectedOption), .userLogout:hover{
+    background-color: #1E1E3F;
+    color: white;
+}
+
+.selectedOption{
+    background-color: aliceblue;
+}

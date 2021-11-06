@@ -15,46 +15,47 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-MyApp.getInitialProps = async ({ Component, ctx }) => {
-  const { token } = parseCookies(ctx);
-  let pageProps = {};
+// MyApp.getInitialProps = async ({ Component, ctx }) => {
+//   const { token } = parseCookies(ctx);
+//   let pageProps = {};
 
-  const protectedRoutes =
-    ctx.pathname === "/" ||
-    ctx.pathname === "/[username]" ||
-    ctx.pathname === "/notifications" ||
-    ctx.pathname === "/post/[postId]" ||
-    ctx.pathname === "/messages" ||
-    ctx.pathname === "/search";
+//   const protectedRoutes =
+//     ctx.pathname === "/" ||
+//     ctx.pathname === "/[username]" ||
+//     ctx.pathname === "/notifications" ||
+//     ctx.pathname === "/post/[postId]" ||
+//     ctx.pathname === "/messages" ||
+//     ctx.pathname === "/search";
 
-  if (!token) {
-    destroyCookie(ctx, "token");
-    protectedRoutes && redirectUser(ctx, "/login");
-  }
-  //
-  else {
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
+//   if (!token) {
+//     destroyCookie(ctx, "token");
+//     protectedRoutes && redirectUser(ctx, "/authentication");
+//   }
+//   //
+//   else {
+//     if (Component.getInitialProps) {
+//       pageProps = await Component.getInitialProps(ctx);
+//     }
 
-    try {
-      const res = await axios.get(`${baseUrl}/api/auth`, {
-        headers: { Authorization: token },
-      });
+//     try {
+//       const res = await axios.get(`${baseUrl}/api/auth`, {
+//         headers: { Authorization: token },
+//       });
 
-      const { user, userFollowStats } = res.data;
+//       const { user, userFollowStats } = res.data;
 
-      if (user) !protectedRoutes && redirectUser(ctx, "/");
+        //don't allow logged in user to visit authentication page
+//       if (user) !protectedRoutes && redirectUser(ctx, "/");
 
-      pageProps.user = user;
-      pageProps.userFollowStats = userFollowStats;
-    } catch (error) {
-      destroyCookie(ctx, "token");
-      redirectUser(ctx, "/login");
-    }
-  }
+//       pageProps.user = user;
+//       pageProps.userFollowStats = userFollowStats;
+//     } catch (error) {
+//       destroyCookie(ctx, "token");
+//       redirectUser(ctx, "/authentication");
+//     }
+//   }
 
-  return { pageProps };
-};
+//   return { pageProps };
+// };
 
 export default MyApp;

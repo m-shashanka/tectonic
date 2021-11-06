@@ -12,7 +12,7 @@ router.get("/:searchText", authMiddleware, async (req, res) => {
     // let userPattern = new RegExp(`^${searchText}`);
 
     const results = await UserModel.find({
-      name: { $regex: searchText, $options: "i" }
+      name: { $regex: searchText, $options: "i" } //options - i indicates that it's case insensitive search
     });
 
     return res.status(200).json(results);

@@ -1,0 +1,53 @@
+.friendCard:hover{
+    background-color: #1E1E3F;
+    transform: scale(1.03);
+}
+
+.friendCard:hover h4{
+    color: white;
+}
+
+.friendCard:hover .followUserButton{
+    background-color: cyan;
+    color: black;
+}
+
+.user h4:hover, .userPic:hover{
+    cursor: pointer;
+}
+
+.user{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.username{
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    margin-left: 18px;
+}
+
+.userPic{
+    width: 50px;
+    height: 50px;
+}
+
+.userPic img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.followUserButton{
+    margin-top: 2px;
+    margin-right: 15px;
+    border-radius: 12px;
+    padding: 5px 10px;
+}

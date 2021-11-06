@@ -8,7 +8,7 @@ const ChatModel = require("../models/ChatModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const isEmail = require("validator/lib/isEmail");
-const userPng = "https://res.cloudinary.com/indersingh/image/upload/v1593464618/App/user_mklcpl.png";
+const userPng = "https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png";
 
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 
@@ -16,9 +16,7 @@ router.get("/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    if (username.length < 1) return res.status(401).send("Invalid");
-
-    if (!regexUserName.test(username)) return res.status(401).send("Invalid");
+    if (username.length < 1 || !regexUserName.test(username)) return res.status(401).send("Invalid");
 
     const user = await UserModel.findOne({ username: username.toLowerCase() });
 
@@ -37,11 +35,7 @@ router.post("/", async (req, res) => {
     email,
     username,
     password,
-    bio,
-    facebook,
-    youtube,
-    twitter,
-    instagram
+    bio
   } = req.body.user;
 
   if (!isEmail(email)) return res.status(401).send("Invalid Email");
@@ -66,6 +60,7 @@ router.post("/", async (req, res) => {
       name,
       email: email.toLowerCase(),
       username: username.toLowerCase(),
+      bio,
       password,
       profilePicUrl: req.body.profilePicUrl || userPng
     });
@@ -73,18 +68,6 @@ router.post("/", async (req, res) => {
     user.password = await bcrypt.hash(password, 10);
     await user.save();
 
-    let profileFields = {};
-    profileFields.user = user._id;
-
-    profileFields.bio = bio;
-
-    profileFields.social = {};
-    if (facebook) profileFields.social.facebook = facebook;
-    if (youtube) profileFields.social.youtube = youtube;
-    if (instagram) profileFields.social.instagram = instagram;
-    if (twitter) profileFields.social.twitter = twitter;
-
-    await new ProfileModel(profileFields).save();
     await new FollowerModel({ user: user._id, followers: [], following: [] }).save();
     await new NotificationModel({ user: user._id, notifications: [] }).save();
     await new ChatModel({ user: user._id, chats: [] }).save();

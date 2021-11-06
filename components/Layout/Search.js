@@ -18,7 +18,7 @@ function SearchComponent() {
     if (value.length === 0) return;
     if (value.trim().length === 0) return;
 
-    setText(value);
+    // setText(value);
     setLoading(true);
 
     try {

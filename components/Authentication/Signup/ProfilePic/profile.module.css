@@ -1,0 +1,28 @@
+.profilePic{
+    width: 12em !important;
+    height: 12em;
+    background-color: #eee;
+    border-radius: 100%;
+    margin-bottom: 2%;
+    position: relative;
+}
+
+.highlighted{
+    border: 2px solid #1A6AC6;
+}
+
+.profilePic i{
+    transform: scale(1.5);
+    bottom: 12%;
+    right: 11%;
+    cursor: pointer;
+}
+
+.profilePic i:hover{
+    opacity: 0.8;
+}
+
+.profilePic img{
+    border-radius: 100%;
+    cursor: pointer;
+}

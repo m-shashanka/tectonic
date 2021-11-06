@@ -35,9 +35,7 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const user = await UserModel.findOne({ email: email.toLowerCase() }).select(
-      "+password"
-    );
+    const user = await UserModel.findOne({ email: email.toLowerCase() }).select("+password");
 
     if (!user) {
       return res.status(401).send("Invalid Credentials");
