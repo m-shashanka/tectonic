@@ -1,55 +1,60 @@
-import {useState} from "react";
+import { useState } from "react";
 import Card from "../../Layout/Card/Card";
 import Comment from "../Comment/Comment";
 import Button from "../../Layout/Button/Button";
-import styles from "./cardPost.module.css";
 import DeletePost from "./DeletePost/DeletePost";
+import calculateTime from "../../../utils/calculateTime";
+import Link from "next/link";
+import CommentInputField from "../CommentInputField/CommentInputField";
+import styles from "./cardPost.module.css";
 
 export default function CardPost() {
-
-    return (
-        <Card className={styles.postCard}>
-            <div className={styles.postLayout}>
-                <div className={styles.postHeader}>
-                    <div className={styles.postInfo}>
-                        <div className={styles.userPic}>
-                            <img 
-                                src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-                                alt=""
-                            />
-                        </div>
-                        <div className={styles.userInfo}>
-                            <h3>Shashank</h3>
-                            <span>Date and Time</span>
-                            <span>, Location</span>
-                        </div>
-                    </div>
-                    <DeletePost />
-                </div>
-
-                <div className={styles.postContent}>
-
-                </div>
-
-                <div className={styles.postStats}>
-                    <div className={styles.likes}>
-                        <i className="fas fa-heart"/>
-                        <span>5 likes</span>
-                    </div>
-                    <i className={`${styles.comments} far fa-comments`}/>
-                </div>
-
-                <div className={styles.postComments}>
-                    <Comment />
-                    <Comment />
-                    <Comment />
-                    <Button className={styles.viewMore}>View More</Button>
-                </div>
+  return (
+    <Card className={styles.postCard}>
+      <div className={styles.postLayout}>
+        <div className={styles.postHeader}>
+          <div className={styles.postInfo}>
+            <div className={styles.userPic}>
+              <img
+                src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
+                alt=""
+              />
             </div>
-        </Card>
-    );
-}
+            <div className={styles.userInfo}>
+              <h3>Shashank</h3>
+              <span>Date and Time</span>
+              <span>, Location</span>
+            </div>
+          </div>
+          <DeletePost />
+        </div>
 
+        <div className={styles.postContent}>
+          <p>Today was a good day!</p>
+          <img
+            src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
+            alt=""
+          />
+        </div>
+
+        <div className={styles.postStats}>
+          <div className={styles.likes}>
+            <i className="fas fa-heart" />
+            <span>5 likes</span>
+          </div>
+          <i className={`${styles.comments} far fa-comments`} />
+        </div>
+
+        <div className={styles.postComments}>
+          <Comment />
+          <Comment />
+          <Button className={styles.viewMore}>View More</Button>
+          <CommentInputField />
+        </div>
+      </div>
+    </Card>
+  );
+}
 
 // import React, { useState } from "react";
 // import {

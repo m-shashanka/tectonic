@@ -34,7 +34,7 @@ export const NoPosts = () => (
     <i className="fas fa-meh"/>
      <div>
        <h3>Hey!</h3>
-       <h4>No Posts found. &nbsp; Make sure you have followed someone.</h4>
+       <h4>No Posts found. &nbsp; Make sure you are following somebody.</h4>
      </div>
   </div>
 );

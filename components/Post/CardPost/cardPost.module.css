@@ -40,8 +40,15 @@
 }
 
 .postContent{
-    height: 100px;
-    margin-bottom: 9px;
+    margin: 9px 10px;
+}
+
+.postContent img{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .postStats{
@@ -55,7 +62,7 @@
 .likes{
     display: flex;
     align-items: center;
-    margin-right: 25px;
+    margin-right: 30px;
 }
 
 .likes i{
@@ -63,6 +70,10 @@
     transform: scale(1.6);
     margin: 5px 11px 3px 7px;
     cursor: pointer;
+}
+
+.likes i:hover{
+    transform: scale(1.8);
 }
 
 .likes span{
@@ -84,6 +95,7 @@
 
 .comments:hover{
     color: #12abe7;
+    transform: scale(1.6);
 }
 
 .postComments{
@@ -97,4 +109,5 @@
     background-color: white;
     border: 1px solid teal;
     color: teal;
+    display: block;
 }
