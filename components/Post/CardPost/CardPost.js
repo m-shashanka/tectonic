@@ -3,10 +3,9 @@ import Card from "../../Layout/Card/Card";
 import Comment from "../Comment/Comment";
 import Button from "../../Layout/Button/Button";
 import styles from "./cardPost.module.css";
+import DeletePost from "./DeletePost/DeletePost";
 
 export default function CardPost() {
-
-    const [deletePostConfirmation,setDeletePostConfirmation] = useState(false);
 
     return (
         <Card className={styles.postCard}>
@@ -25,15 +24,7 @@ export default function CardPost() {
                             <span>, Location</span>
                         </div>
                     </div>
-                    <i 
-                        className={`${styles.deletePost} fas fa-trash`} 
-                        onClick={()=>setDeletePostConfirmation(true)}
-                    >
-                        <div className={styles.confirmDelete}>
-                            <p>Are you sure?</p>
-                            <p className={styles.finalDelete}><i className="fas fa-trash"/>&nbsp;Delete</p>
-                        </div>
-                    </i>
+                    <DeletePost />
                 </div>
 
                 <div className={styles.postContent}>
