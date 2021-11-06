@@ -1,4 +1,5 @@
 import { Message, Button } from "semantic-ui-react";
+import styles from "./noData.module.css";
 
 export const NoProfilePosts = () => (
   <>
@@ -29,12 +30,13 @@ export const NoMessages = () => (
 );
 
 export const NoPosts = () => (
-  <Message
-    info
-    icon="meh"
-    header="Hey!"
-    content="No Posts. Make sure you have followed someone."
-  />
+  <div className={styles.container}>
+    <i className="fas fa-meh"/>
+     <div>
+       <h3>Hey!</h3>
+       <h4>No Posts found. &nbsp; Make sure you have followed someone.</h4>
+     </div>
+  </div>
 );
 
 export const NoProfile = () => (

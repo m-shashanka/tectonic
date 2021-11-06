@@ -1,6 +1,11 @@
 import {useState,useEffect} from "react";
 import TopBar from "../components/Layout/TopBar/TopBar";
+import axios from "axios";
 import baseUrl from "../utils/baseUrl";
+import CreatePost from "../components/Post/CreatePost";
+import CardPost from "../components/Post/CardPost/CardPost";
+import { parseCookies } from "nookies";
+import { NoPosts } from "../components/Layout/NoData/NoData";
 
 function Index(){
 
@@ -18,7 +23,12 @@ function Index(){
   let temp = {user}
 
   return (<>
-  <TopBar {...temp}/></>);
+  <TopBar {...temp}/>
+  <div className="layContent">
+    <NoPosts />
+    <CardPost />
+  </div>
+  </>);
 }
 
 // import React, { useEffect, useRef, useState } from "react";

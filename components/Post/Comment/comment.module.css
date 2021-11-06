@@ -1,0 +1,41 @@
+.commentDetails{
+    display: flex;
+    margin-bottom: 9px;
+}
+
+.commentUserDetails{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.commentUser{
+    font-weight: 500;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.commentUser:hover{
+    color: #166FE5;
+}
+
+.commentUserPic{
+    width: 25px;
+    height: 25px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.commentUserPic img{
+    width: 100%;
+    height: auto;
+    border-radius: 7px;
+    object-fit: cover;
+}
+
+.deleteComment{
+    margin-left: 4%;
+    margin-top: 0;
+    color: rgb(221, 42, 42);
+    transform: scale(0.9);
+    cursor: pointer;
+}

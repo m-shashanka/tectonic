@@ -1,0 +1,24 @@
+.container{
+    background-color: #1E1E3F;
+    border: 1px solid #1E1E3F;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: white;
+}
+
+.container i{
+    transform: scale(2.9);
+    margin: 0 35px 0 20px;
+    color: cyan;
+}
+
+.container h3{
+    margin: 0;
+}
+
+.container h4{
+    font-weight: 600;
+    margin: 2px 0 0 0;
+}

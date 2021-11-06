@@ -1,0 +1,139 @@
+.postCard{
+    padding: 1%;
+    margin: 25px 0;
+}
+
+.postHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postInfo{
+    display: flex;
+}
+
+.userPic{
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+
+.userPic img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userInfo{
+    margin-left: 10px;
+}
+
+.userInfo h3{
+    margin: 0;
+    cursor: pointer;
+}
+
+.userInfo h3:hover{
+    color: #166FE5;
+}
+
+.deletePost{
+    margin-right: 8px;
+    color: rgb(221, 42, 42);
+    cursor: pointer;
+    position: relative;
+}
+
+.confirmDelete{
+    position: absolute;
+    z-index: 2;
+    width: 110px;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: default;
+    bottom: 22px;
+    left: -50px;
+}
+
+.confirmDelete i{
+    transform: scale(0.85);
+}
+
+.confirmDelete p{
+    font-weight: normal;
+    text-align: center;
+}
+
+.finalDelete{
+    background-color: red;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.finalDelete:hover{
+    transform: scale(1.05);
+}
+
+.postContent{
+    height: 100px;
+    margin-bottom: 9px;
+}
+
+.postStats{
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+}
+
+.likes{
+    display: flex;
+    align-items: center;
+    margin-right: 25px;
+}
+
+.likes i{
+    color: red;
+    transform: scale(1.6);
+    margin: 5px 11px 3px 7px;
+    cursor: pointer;
+}
+
+.likes span{
+    margin-top: 3px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.likes span:hover{
+    color: #166FE5;
+}
+
+.comments{
+    margin-top: 4px;
+    transform: scale(1.5);
+    color: #1E1E3F;
+    cursor: pointer;
+}
+
+.comments:hover{
+    color: #12abe7;
+}
+
+.postComments{
+    margin-top: 12px;
+}
+
+.viewMore{
+    margin-left: 5px;
+    border-radius: 12px;
+    padding: 4px 8px;
+    background-color: white;
+    border: 1px solid teal;
+    color: teal;
+}
