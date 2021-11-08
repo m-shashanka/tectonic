@@ -1,12 +1,28 @@
 import React, { useState, useRef } from "react";
 import uploadPic from "../../../utils/uploadPicToCloudinary";
 import { submitNewPost } from "../../../utils/postActions";
+import Card from "../../Layout/Card/Card";
 import styles from './createPost.module.css';
 
 function CreatePost() {
+    const username = "Username";
     return (
-        <>
-        </>
+        <Card className={styles.createPostCard}>
+            <div className={styles.createPost}>
+            <div className={styles.userPic}>
+              <img
+                src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
+                alt=""
+              />
+            </div>
+            <p>What's on your mind, {username}?</p>
+            </div>
+            <div className={styles.options}>
+              <p><i className="fas fa-edit" />&ensp;Create Post</p>
+              <p><i className="fas fa-image" />&ensp;Photo</p>
+              <p><i className="fas fa-map-marker-alt" />&ensp;Check in</p>
+            </div>
+        </Card>
     );
 }
 

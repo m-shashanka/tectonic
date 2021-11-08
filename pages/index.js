@@ -26,7 +26,7 @@ function Index(){
   <TopBar {...temp}/>
   <div className="layContent">
     <CreatePost />
-    <NoPosts />
+    {/* <NoPosts /> */}
     <CardPost />
   </div>
   </>);
