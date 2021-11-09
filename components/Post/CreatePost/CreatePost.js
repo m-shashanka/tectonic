@@ -3,6 +3,8 @@ import uploadPic from "../../../utils/uploadPicToCloudinary";
 import { submitNewPost } from "../../../utils/postActions";
 import Card from "../../Layout/Card/Card";
 import styles from './createPost.module.css';
+import Modal from "../../Layout/Modal/Modal";
+import CreatePostModal from "./CreatePostModal/CreatePostModal";
 
 function CreatePost() {
     const username = "Username";
@@ -22,6 +24,7 @@ function CreatePost() {
               <p><i className="fas fa-image" />&ensp;Photo</p>
               <p><i className="fas fa-map-marker-alt" />&ensp;Check in</p>
             </div>
+            <Modal><CreatePostModal /></Modal>
         </Card>
     );
 }
