@@ -1,4 +1,5 @@
 import { toast, ToastContainer } from "react-toastify";
+import styles from "./toastr.module.css";
 
 export const PostDeleteToastr = () => {
   return (
@@ -13,6 +14,7 @@ export const PostDeleteToastr = () => {
       draggable
       pauseOnHover={false}>
       {toast.info("Deleted Successfully", {
+        className: `${styles.deletePost}`,
         position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: false,

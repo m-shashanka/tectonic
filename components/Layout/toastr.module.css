@@ -1,0 +1,11 @@
+.deletePost{
+    background-color: #1E1E3F;
+    color: white;
+    font-size: 16px;
+    --toastify-icon-color-info: aqua;
+    --toastify-color-progress-info: aqua;
+}
+
+.deletePost button{
+    color: white;
+}

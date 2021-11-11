@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { deletePost } from "../../../../utils/postActions";
 import styles from "./deletePost.module.css";
 
-export default function DeletePost() {
+export default function DeletePost({id, setPosts, setShowToastr}) {
   const ref = useRef();
   const [deletePostConfirmation, setDeletePostConfirmation] = useState(false);
 
@@ -21,7 +22,9 @@ export default function DeletePost() {
     };
   }, [ref]);
 
-  const deletePost = ()=>{
+  const delPost = ()=>{
+    // deletePost(id, setPosts, setShowToastr);
+    setShowToastr(true);
   }
 
   return (
@@ -33,7 +36,7 @@ export default function DeletePost() {
       {deletePostConfirmation && (
         <div className={styles.confirmDelete}>
           <p>Are you sure?</p>
-          <p className={styles.finalDelete} onClick={deletePost}>
+          <p className={styles.finalDelete} onClick={delPost}>
             <i className="fas fa-trash" />
             &nbsp;Delete
           </p>

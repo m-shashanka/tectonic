@@ -8,7 +8,7 @@ import Link from "next/link";
 import CommentInputField from "../CommentInputField/CommentInputField";
 import styles from "./cardPost.module.css";
 
-export default function CardPost() {
+export default function CardPost({ post, user, setPosts, setShowToastr, socket }) {
   return (
     <Card className={styles.postCard}>
       <div className={styles.postLayout}>
@@ -26,7 +26,8 @@ export default function CardPost() {
               <span>, Location</span>
             </div>
           </div>
-          <DeletePost />
+          <DeletePost setShowToastr={setShowToastr}/>
+          {/* <DeletePost id={post._id} setPosts={setPosts} setShowToastr={setShowToastr} /> */}
         </div>
 
         <div className={styles.postContent}>

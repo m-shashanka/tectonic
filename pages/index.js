@@ -4,6 +4,7 @@ import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import CreatePost from "../components/Post/CreatePost/CreatePost";
 import CardPost from "../components/Post/CardPost/CardPost";
+import { PostDeleteToastr } from "../components/Layout/Toastr";
 import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData/NoData";
 
@@ -12,6 +13,12 @@ function Index(){
   // useEffect(()=>{
   //   document.title = `Hello ${user.name.split(" ")[0]}`;
   // },[]);
+
+  const [showToastr, setShowToastr] = useState(false);
+
+  useEffect(() => {
+    showToastr && setTimeout(() => setShowToastr(false), 3000);
+  }, [showToastr]);  
 
   let user = {
     unreadNotification:"hello",
@@ -24,10 +31,11 @@ function Index(){
 
   return (<>
   <TopBar {...temp}/>
+  {showToastr && <PostDeleteToastr />}
   <div className="layContent">
     <CreatePost {...temp}/>
     {/* <NoPosts /> */}
-    <CardPost />
+    <CardPost setShowToastr={setShowToastr}/>
   </div>
   </>);
 }
