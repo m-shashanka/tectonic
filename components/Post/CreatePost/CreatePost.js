@@ -1,34 +1,53 @@
 import React, { useState, useRef } from "react";
 import Card from "../../Layout/Card/Card";
-import styles from './createPost.module.css';
+import styles from "./createPost.module.css";
 import Modal from "../../Layout/Modal/Modal";
 import CreatePostModal from "./CreatePostModal/CreatePostModal";
 
-function CreatePost() {
-    const username = "Username";
-    const [showModal,setShowModal] = useState(false);
+function CreatePost({ user, setPosts }) {
+  const [showModal, setShowModal] = useState(false);
 
-    return (
-      <>
-        <Card className={styles.createPostCard} onClick={()=>setShowModal(true)}>
-            <div className={styles.createPost}>
-            <div className={styles.userPic}>
-              <img
-                src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-                alt=""
-              />
-            </div>
-            <p>What's on your mind, {username}?</p>
-            </div>
-            <div className={styles.options}>
-              <p><i className="fas fa-edit" />&ensp;Create Post</p>
-              <p><i className="fas fa-image" />&ensp;Photo</p>
-              <p><i className="fas fa-map-marker-alt" />&ensp;Check in</p>
-            </div>
-        </Card>
-        {showModal && <Modal closeModal={()=>setShowModal(false)}><CreatePostModal closeModal={()=>setShowModal(false)}/></Modal>}
-      </>
-    );
+  return (
+    <>
+      <Card
+        className={styles.createPostCard}
+        onClick={() => setShowModal(true)}
+      >
+        <div className={styles.createPost}>
+          <div className={styles.userPic}>
+            <img
+              src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
+              alt=""
+            />
+          </div>
+          <p>What's on your mind, {user.username}?</p>
+        </div>
+        <div className={styles.options}>
+          <p>
+            <i className="fas fa-edit" />
+            &ensp;Create Post
+          </p>
+          <p>
+            <i className="fas fa-image" />
+            &ensp;Photo
+          </p>
+          <p>
+            <i className="fas fa-map-marker-alt" />
+            &ensp;Check in
+          </p>
+        </div>
+      </Card>
+      {showModal && (
+        <Modal closeModal={() => setShowModal(false)}>
+          <CreatePostModal
+            user={user}
+            setPosts={setPosts}
+            closeModal={() => setShowModal(false)}
+          />
+        </Modal>
+      )}
+    </>
+  );
 }
 
 // import React, { useState, useRef } from "react";

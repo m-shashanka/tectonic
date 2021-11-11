@@ -33,13 +33,13 @@ export default function Signup() {
     setFormLoading(true);
     
     let profilePicUrl;
-    if(media !== null)
+    if(media !== null){
       profilePicUrl = await uploadPic(media);
-
-    if(media !== null && !profilePicUrl){
-      setFormLoading(false);
-      setServerError("Error Uploading Image");
-      return;
+      if(!profilePicUrl){
+        setFormLoading(false);
+        setServerError("Error Uploading Image");
+        return;
+      }
     }
 
     let user = {

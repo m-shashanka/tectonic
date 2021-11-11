@@ -13,14 +13,12 @@ export const submitNewPost = async (
   location,
   picUrl,
   setPosts,
-  setNewPost,
   setError
 ) => {
   try {
     const res = await Axios.post("/", { text, location, picUrl });
 
     setPosts(prev => [res.data, ...prev]);
-    setNewPost({ text: "", location: "" });
   } catch (error) {
     const errorMsg = catchErrors(error);
     setError(errorMsg);
