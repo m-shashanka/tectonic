@@ -1,11 +1,18 @@
-import { add } from "lodash";
 import { useState, useRef} from "react";
 import Button from "../../../Layout/Button/Button";
+import uploadPic from "../../../../utils/uploadPicToCloudinary";
+import { submitNewPost } from "../../../../utils/postActions";
+import Spinner from "../../../Layout/Spinner/Spinner";
 import styles from './createPostModal.module.css';
 
 export default function CreatePostModal({closeModal}){
 
+    const [newPost,setNewPost] = useState({text:"",location:""});
+    const [loading,setLoading] = useState(false);
+    const [serverError,setServerError] = useState(null);
+
     const [text,setText] = useState("");
+    const [location,setLocation] = useState("");
 
     const [addLocation,setAddLocation] = useState(false);
 
@@ -20,8 +27,13 @@ export default function CreatePostModal({closeModal}){
       setMedia(files[0]);
       setMediaPreview(URL.createObjectURL(files[0]));
     };
-
+    
     const isValid = txt => (txt && txt.trim().length > 0);
+
+    const submitPost = () =>{
+      if(!isValid(text))
+        return;
+    }
 
     return (
       <>
@@ -40,15 +52,17 @@ export default function CreatePostModal({closeModal}){
             ref={inputRef}
           />
           {mediaPreview && <img src={mediaPreview} onClick={()=>inputRef.current.click()}/>}
-          {addLocation && <input placeholder="Location"/>}
+          {addLocation && <input placeholder="Location" value={location} onChange={(e)=>setLocation(e.target.value)} />}
         </div>
         <div className={styles.footer}>
           <div className={styles.photoLocation}>
             <p onClick={()=>inputRef.current.click()}><i className="fas fa-image" />&ensp;Add Photo</p>
             <p onClick={()=>setAddLocation(true)}><i className="fas fa-map-marker-alt" />&ensp;Add Location</p>
           </div>
-          <Button className={isValid(text) ? styles.publishPost : styles.disableSubmit}>Publish</Button>
+          {loading && <Spinner className={styles.loading}/>}
+          {!loading && <Button onClick={submitPost} className={isValid(text) ? styles.publishPost : styles.disableSubmit}>Publish</Button>}
         </div>
+        {serverError && <p style={{color:"red",background:"white",padding:"10px"}}>{serverError}</p>}
       </>
     );
   }

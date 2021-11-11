@@ -1,6 +1,4 @@
 import React, { useState, useRef } from "react";
-import uploadPic from "../../../utils/uploadPicToCloudinary";
-import { submitNewPost } from "../../../utils/postActions";
 import Card from "../../Layout/Card/Card";
 import styles from './createPost.module.css';
 import Modal from "../../Layout/Modal/Modal";

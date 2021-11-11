@@ -67,6 +67,7 @@
     background: white;
     justify-content: space-between;
     padding: 2px 12px 5px 18px;
+    position: relative;
 }
 
 .photoLocation{
@@ -123,4 +124,12 @@
 
 .disableSubmit:hover{
     transform: scale(1.0);
+}
+
+.loading{
+    position: absolute;
+    background-color: transparent;
+    width: 35px;
+    height: 35px;
+    right: 15px;
 }
