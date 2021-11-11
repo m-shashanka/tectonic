@@ -23,9 +23,17 @@
 }
 
 .content{
-    height: 100px;
     background-color: white;
     padding: 12px;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.content img{
+    margin-left: 4px;
+    width: 20%;
+    height: 20%;
+    cursor: pointer;
 }
 
 .content textarea{
@@ -33,10 +41,25 @@
     width: 100%;
     font-size: large;
     border: none;
+    margin-bottom: 5px;
 }
 
 .content textarea:focus{
     outline: none;
+}
+
+.content input{
+    display: block;
+    margin-top: 10px;
+    width: 39%;
+    background: #eee;
+    padding: 6px 0 6px 8px;
+    border-radius: 12px;
+    border: none;
+}
+
+.content input:focus{
+    outline: 1px solid grey;
 }
 
 .footer{
@@ -86,4 +109,18 @@
     padding: 0 10px;
     height: 30px;
     border-radius: 12px;
+}
+
+.disableSubmit{
+    padding: 0 10px;
+    height: 30px;
+    border-radius: 12px;
+    background: grey;
+    opacity: 0.6;
+    border: none;
+    cursor: default;
+}
+
+.disableSubmit:hover{
+    transform: scale(1.0);
 }

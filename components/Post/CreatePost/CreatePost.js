@@ -8,8 +8,11 @@ import CreatePostModal from "./CreatePostModal/CreatePostModal";
 
 function CreatePost() {
     const username = "Username";
+    const [showModal,setShowModal] = useState(false);
+
     return (
-        <Card className={styles.createPostCard}>
+      <>
+        <Card className={styles.createPostCard} onClick={()=>setShowModal(true)}>
             <div className={styles.createPost}>
             <div className={styles.userPic}>
               <img
@@ -24,8 +27,9 @@ function CreatePost() {
               <p><i className="fas fa-image" />&ensp;Photo</p>
               <p><i className="fas fa-map-marker-alt" />&ensp;Check in</p>
             </div>
-            <Modal><CreatePostModal /></Modal>
         </Card>
+        {showModal && <Modal closeModal={()=>setShowModal(false)}><CreatePostModal closeModal={()=>setShowModal(false)}/></Modal>}
+      </>
     );
 }
 
