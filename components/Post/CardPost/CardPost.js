@@ -4,11 +4,14 @@ import Comment from "../Comment/Comment";
 import Button from "../../Layout/Button/Button";
 import DeletePost from "./DeletePost/DeletePost";
 import calculateTime from "../../../utils/calculateTime";
+import {likePost} from "../../../utils/postActions";
 import Link from "next/link";
 import CommentInputField from "../CommentInputField/CommentInputField";
 import styles from "./cardPost.module.css";
+import LikesList from "../LikesList/LikesList";
 
 export default function CardPost({ post, user, setPosts, setShowToastr, socket }) {
+
   return (
     <Card className={styles.postCard}>
       <div className={styles.postLayout}>
@@ -41,7 +44,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
         <div className={styles.postStats}>
           <div className={styles.likes}>
             <i className="fas fa-heart" />
-            <span>5 likes</span>
+            <LikesList />
           </div>
           <i className={`${styles.comments} far fa-comments`} />
         </div>

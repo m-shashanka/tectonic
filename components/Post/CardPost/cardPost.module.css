@@ -76,16 +76,6 @@
     transform: scale(1.8);
 }
 
-.likes span{
-    margin-top: 3px;
-    transform: scale(1.2);
-    cursor: pointer;
-}
-
-.likes span:hover{
-    color: #166FE5;
-}
-
 .comments{
     margin-top: 4px;
     transform: scale(1.5);

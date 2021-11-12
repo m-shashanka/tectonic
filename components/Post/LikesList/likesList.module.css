@@ -1,0 +1,79 @@
+.loadingContainer{
+    width: 100%;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.line{
+    height: 12px;
+    flex: 80%;
+    margin-left: 10px;
+    animation: pulse 1s infinite ease-in-out;
+}
+
+.circle{
+    flex: 20%;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    animation: pulse 1s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%{
+        background-color: rgba(165,165,165,.1);
+    }
+    50%{
+        background-color: rgba(165,165,165,.3);
+    }
+    100%{
+        background-color: rgba(165,165,165,.1);
+    }
+}
+
+.likes{
+    margin-top: 3px;
+    transform: scale(1.2);
+    cursor: pointer;
+    position: relative;
+}
+
+.likes:hover{
+    color: #166FE5;
+}
+
+.container{
+    width: 140px;
+    height: 170px;
+    position: absolute;
+    bottom: 28px;
+    left: -45px;
+    z-index: 2;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.26);
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: default;
+}
+
+.container::after{
+    position: absolute;
+    transform: translateY(9px) translateX(47px);
+    content: '';
+    border: 10px solid transparent;
+    border-top-color: white;
+}
+
+.likesContainer{
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.likesContainer::-webkit-scrollbar {
+    width: 5px;
+}
