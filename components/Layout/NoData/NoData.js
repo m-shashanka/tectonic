@@ -48,5 +48,11 @@ export const NoNotifications = () => (
 );
 
 export const NoPostFound = () => (
-  <Message info icon="meh" header="Hey!" content="No Post Found." />
+  <div className={styles.container}>
+    <i className="fas fa-meh"/>
+     <div>
+       <h3>Hey!</h3>
+       <h4>Post not found.</h4>
+     </div>
+  </div>
 );

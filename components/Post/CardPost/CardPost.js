@@ -75,7 +75,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
     </Card>
     {showModal && (
         <Modal closeModal={() => setShowModal(false)}>
-          <NoImageModal
+          <ImageModal
             closeModal={() => setShowModal(false)}
             setShowToastr={setShowToastr}
             likes = {displayLikes}
