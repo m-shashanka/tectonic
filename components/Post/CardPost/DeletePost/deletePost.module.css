@@ -5,7 +5,7 @@
     position: relative;
 }
 
-.confirmDelete{
+.showTop{
     position: absolute;
     z-index: 2;
     width: 110px;
@@ -18,7 +18,30 @@
     left: -50px;
 }
 
-.confirmDelete::after{
+.showLeft{
+    position: absolute;
+    z-index: 2;
+    width: 110px;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: default;
+    /* bottom: 25px;
+    left: -50px; */
+    left: -123px;
+    top: -36px;
+}
+
+.showLeft::after{
+    position: absolute;
+    transform: translateY(-30px) translateX(100px);
+    content: '';
+    border: 10px solid transparent;
+    border-left-color: #333;
+}
+
+.showTop::after{
     position: absolute;
     transform: translateY(9px) translateX(36px);
     content: '';
@@ -26,11 +49,11 @@
     border-top-color: #333;
 }
 
-.confirmDelete i{
+.showTop i, .showLeft i{
     transform: scale(0.85);
 }
 
-.confirmDelete p{
+.showTop p, .showLeft p{
     font-weight: normal;
     text-align: center;
 }

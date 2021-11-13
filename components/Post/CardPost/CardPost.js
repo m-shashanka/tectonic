@@ -3,6 +3,8 @@ import Card from "../../Layout/Card/Card";
 import Comment from "../Comment/Comment";
 import Button from "../../Layout/Button/Button";
 import DeletePost from "./DeletePost/DeletePost";
+import Modal from '../../Layout/Modal/Modal';
+import ImageModal from "./ImageModal/ImageModal";
 import calculateTime from "../../../utils/calculateTime";
 import {likePost} from "../../../utils/postActions";
 import Link from "next/link";
@@ -12,9 +14,11 @@ import LikesList from "../LikesList/LikesList";
 
 export default function CardPost({ post, user, setPosts, setShowToastr, socket }) {
 
+  const [showModal, setShowModal] = useState(false);
+
   return (
+    <>
     <Card className={styles.postCard}>
-      <div className={styles.postLayout}>
         <div className={styles.postHeader}>
           <div className={styles.postInfo}>
             <div className={styles.userPic}>
@@ -36,6 +40,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
         <div className={styles.postContent}>
           <p>Today was a good day!</p>
           <img
+            onClick={() => setShowModal(true)}
             src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
             alt=""
           />
@@ -55,8 +60,16 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
           <Button className={styles.viewMore}>View More</Button>
           <CommentInputField />
         </div>
-      </div>
     </Card>
+    {showModal && (
+        <Modal closeModal={() => setShowModal(false)}>
+          <ImageModal
+            closeModal={() => setShowModal(false)}
+            setShowToastr={setShowToastr}
+          />
+        </Modal>
+      )}
+    </>
   );
 }
 

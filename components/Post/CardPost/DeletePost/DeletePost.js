@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { deletePost } from "../../../../utils/postActions";
 import styles from "./deletePost.module.css";
 
-export default function DeletePost({id, setPosts, setShowToastr}) {
+export default function DeletePost({id, setPosts, setShowToastr, closeModal, showLeft}) {
   const ref = useRef();
   const [deletePostConfirmation, setDeletePostConfirmation] = useState(false);
 
@@ -25,6 +25,7 @@ export default function DeletePost({id, setPosts, setShowToastr}) {
   const delPost = ()=>{
     // deletePost(id, setPosts, setShowToastr);
     setShowToastr(true);
+    closeModal && closeModal();
   }
 
   return (
@@ -34,7 +35,7 @@ export default function DeletePost({id, setPosts, setShowToastr}) {
       onClick={() => setDeletePostConfirmation(true)}
     >
       {deletePostConfirmation && (
-        <div className={styles.confirmDelete}>
+        <div className={showLeft ? styles.showLeft : styles.showTop}>
           <p>Are you sure?</p>
           <p className={styles.finalDelete} onClick={delPost}>
             <i className="fas fa-trash" />

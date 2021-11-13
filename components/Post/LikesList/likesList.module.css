@@ -46,27 +46,48 @@
     color: #166FE5;
 }
 
-.container{
+.showTop{
     width: 140px;
     max-height: 170px;
     position: absolute;
-    bottom: 28px;
-    left: -45px;
-    z-index: 2;
     background-color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.26);
     color: white;
     padding: 10px;
     border-radius: 12px;
     cursor: default;
+    bottom: 28px;
+    left: -45px;
 }
 
-.container::after{
+.showLeft{
+    width: 140px;
+    max-height: 170px;
     position: absolute;
-    transform: translateY(9px) translateX(47px);
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.26);
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: default;
+    left: -180px;
+    top: -95px;
+}
+
+.showTop::after{
+    position: absolute;
     content: '';
     border: 10px solid transparent;
+    transform: translateY(9px) translateX(47px);
     border-top-color: white;
+}
+
+.showLeft::after{
+    position: absolute;
+    content: '';
+    border: 10px solid transparent;
+    transform: translateY(-67px) translateX(129px);
+    border-left-color: white;
 }
 
 .likesContainer{
