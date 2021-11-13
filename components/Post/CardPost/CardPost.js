@@ -5,6 +5,7 @@ import Button from "../../Layout/Button/Button";
 import DeletePost from "./DeletePost/DeletePost";
 import Modal from '../../Layout/Modal/Modal';
 import ImageModal from "./ImageModal/ImageModal";
+import NoImageModal from "./NoImageModal/NoImageModal";
 import calculateTime from "../../../utils/calculateTime";
 import {likePost} from "../../../utils/postActions";
 import Link from "next/link";
@@ -74,7 +75,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
     </Card>
     {showModal && (
         <Modal closeModal={() => setShowModal(false)}>
-          <ImageModal
+          <NoImageModal
             closeModal={() => setShowModal(false)}
             setShowToastr={setShowToastr}
             likes = {displayLikes}
