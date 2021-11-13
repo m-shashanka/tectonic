@@ -12,6 +12,7 @@ import { parseCookies } from "nookies";
 import { Grid } from "semantic-ui-react";
 import { NoProfilePosts, NoProfile } from "../../components/Layout/NoData/NoData";
 import CardPost from "../../components/Post/CardPost/CardPost";
+import CreatePost from "../../components/Post/CreatePost/CreatePost";
 import cookie from "js-cookie";
 import { PlaceHolderPosts } from "../../components/Layout/PlaceHolderGroup";
 import ProfileMenuTabs from "../../components/Profile/ProfileMenuTabs";
@@ -23,6 +24,21 @@ import Settings from "../../components/Profile/Settings";
 import { PostDeleteToastr } from "../../components/Layout/Toastr";
 
 function ProfilePage(){
+
+  const [showToastr, setShowToastr] = useState(false);
+
+  useEffect(() => {
+    showToastr && setTimeout(() => setShowToastr(false), 3000);
+  }, [showToastr]);  
+
+  let user = {
+    unreadNotification:"hello",
+    email:"ha",
+    unreadMessage:"an",
+    username:"bs"
+  }
+
+  let temp = {user}
 
   const [selectedIndex,setSelectedIndex] = useState(2);
 
@@ -46,52 +62,55 @@ function ProfilePage(){
   }
 
   return <>
+  <TopBar {...temp}/>
+  {showToastr && <PostDeleteToastr />}
+    <div className="layContent">
 
-    <div className={styles.layProfileCard}>
       <Card className={styles.profileCard}>
-
         <img 
           className={styles.profilePic}
           src="https://res.cloudinary.com/indersingh/image/upload/v1593464618/App/user_mklcpl.png"
           alt=""
         />
-
         <div className={styles.profileInfo}>
           <h2>Name</h2>
           <p>Bio will go here guxcwdhcbh cbjhsdvbnfvsdkkkkkk fefgbhedsdhfvbsdjgsdhcf</p>
         </div>
-
         <Button className={styles.followButton}>Follow</Button>
-
+        {/* <Button className={styles.updateProfile}><i className="fas fa-user-edit"/>Update Profile</Button> */}
       </Card>
-    </div>
 
-    <div className={styles.layMenuCard}>
       <Card className={styles.menuCard}>
+        <span style={slider}></span>
+        <div onClick={()=>{setSelectedIndex(1)}}>
+          <p>120</p>
+          <span>
+            Followers
+          </span>
+        </div>
 
-        <div style={slider}></div>
+        <div className={styles.posts} onClick={()=>{setSelectedIndex(2)}}>
+          <p>56</p>
+          <span>
+            Posts
+          </span>
+        </div>
 
-        <span onClick={()=>{setSelectedIndex(1)}}>
-          Followers
-        </span>
-
-        <span className={styles.posts} onClick={()=>{setSelectedIndex(2)}}>
-          Posts
-        </span>
-
-        <span onClick={()=>{setSelectedIndex(3)}}>
-          Following
-        </span>
-      
+        <div onClick={()=>{setSelectedIndex(3)}}>
+          <p>200</p>
+          <span>
+            Following
+          </span>
+        </div>
+        
       </Card>
-    </div>
-
-    <div className={styles.layPostCard}>
 
       {selectedIndex == 2 && 
-      <Card className={`${styles.postCard} ${styles.fadeIn}`}>
-
-      </Card>}
+      <div className={styles.fadeIn}>
+        <CreatePost {...temp}/>
+        {/* <NoPosts /> */}
+        <CardPost setShowToastr={setShowToastr}/>
+      </div>}
 
       {selectedIndex != 2 && 
       <div className={styles.fadeIn}>
