@@ -15,6 +15,17 @@ import LikesList from "../LikesList/LikesList";
 export default function CardPost({ post, user, setPosts, setShowToastr, socket }) {
 
   const [showModal, setShowModal] = useState(false);
+  const [displayLikes, setDisplayLikes] = useState(false);
+
+  const showAllLikes = () =>{
+    setDisplayLikes(true);
+    setShowModal(true);
+  }
+
+  const showAllComments = ()=>{
+    setDisplayLikes(false);
+    setShowModal(true);
+  }
 
   return (
     <>
@@ -40,7 +51,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
         <div className={styles.postContent}>
           <p>Today was a good day!</p>
           <img
-            onClick={() => setShowModal(true)}
+            onClick={showAllComments}
             src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
             alt=""
           />
@@ -49,15 +60,15 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
         <div className={styles.postStats}>
           <div className={styles.likes}>
             <i className="fas fa-heart" />
-            <LikesList />
+            <LikesList showAllLikes={showAllLikes}/>
           </div>
-          <i className={`${styles.comments} far fa-comments`} />
+          <i className={`${styles.comments} far fa-comments`} onClick={() => setShowModal(true)}/>
         </div>
 
         <div className={styles.postComments}>
           <Comment />
           <Comment />
-          <Button className={styles.viewMore}>View More</Button>
+          <Button className={styles.viewMore} onClick={showAllComments}>View More</Button>
           <CommentInputField />
         </div>
     </Card>
@@ -66,6 +77,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
           <ImageModal
             closeModal={() => setShowModal(false)}
             setShowToastr={setShowToastr}
+            likes = {displayLikes}
           />
         </Modal>
       )}

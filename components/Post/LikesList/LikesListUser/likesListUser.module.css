@@ -5,6 +5,21 @@
     margin-bottom: 6px;
 }
 
+.expand{
+    margin-bottom: 20px;
+    margin-left: 6px;
+    margin-top: 5px;
+    padding: 5px;
+}
+
+.expand .userPic, .expand p{
+    transform: scale(1.4);
+}
+
+.expand p{
+    margin-left: 22px;
+}
+
 .user:hover{
     border-radius: 12px;
     background-color: gainsboro;

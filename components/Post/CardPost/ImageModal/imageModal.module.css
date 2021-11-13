@@ -102,11 +102,33 @@
     transform: scale(1.8);
 }
 
-.postComments{
+.likesCount{
+    margin-top: 3px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.likesCount:hover{
+    color: #166FE5;
+}
+
+.comments{
+    margin-top: 4px;
+    transform: scale(1.5);
+    color: #1E1E3F;
+    cursor: pointer;
+}
+
+.comments:hover{
+    color: #12abe7;
+    transform: scale(1.6);
+}
+
+.postComments, .postLikes{
     margin-top: 12px;
 }
 
-.allComments{
+.allComments, .allLikes{
     max-height: 250px;
     overflow-y: auto;
     overflow-x: hidden;

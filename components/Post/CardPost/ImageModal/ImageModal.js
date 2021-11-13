@@ -1,11 +1,16 @@
+import { useState } from "react";
 import Card from "../../../Layout/Card/Card";
 import DeletePost from "../DeletePost/DeletePost";
 import LikesList from "../../LikesList/LikesList";
+import LikesListUser from "../../LikesList/LikesListUser/LikesListUser";
 import Comment from "../../Comment/Comment";
 import CommentInputField from "../../CommentInputField/CommentInputField";
 import styles from "./imageModal.module.css";
 
-export default function ImageModal({ closeModal, setShowToastr }) {
+export default function ImageModal({ closeModal, setShowToastr, likes }) {
+
+  const [showLikes,setShowLikes] = useState(likes);
+
   return (
     <div className={styles.postModal}>
       <Card className={styles.postCard}>
@@ -42,11 +47,15 @@ export default function ImageModal({ closeModal, setShowToastr }) {
           <div className={styles.postStats}>
             <div className={styles.likes}>
               <i className="fas fa-heart" />
-              <LikesList showLeft={true}/>
+              <span
+                className={styles.likesCount}
+                onClick={() => setShowLikes(true)}
+              >5 likes</span>
             </div>
+            <i className={`${styles.comments} far fa-comments`} onClick={()=>setShowLikes(false)} />
           </div>
 
-          <div className={styles.postComments}>
+          {!showLikes && <div className={styles.postComments}>
             <div className={styles.allComments}>
               <Comment />
               <Comment />
@@ -55,7 +64,21 @@ export default function ImageModal({ closeModal, setShowToastr }) {
               <Comment />
             </div>
             <CommentInputField />
-          </div>
+          </div>}
+
+          {showLikes && 
+            <div className={styles.postLikes}>
+              <div className={styles.allLikes}>
+                <LikesListUser expand={true}/>
+                <LikesListUser expand={true}/>
+                <LikesListUser expand={true}/>
+                <LikesListUser expand={true}/>
+                <LikesListUser expand={true}/>
+                <LikesListUser expand={true}/>
+              </div>
+            </div>
+          }
+
         </div>
       </Card>
       <i className={`${styles.closeButton} fas fa-times`} onClick={() => closeModal()} />
