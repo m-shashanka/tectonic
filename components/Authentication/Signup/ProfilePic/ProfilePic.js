@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import styles from "./profile.module.css";
 
-export default function ProfilePic({ setMedia }) {
-  const [mediaPreview, setMediaPreview] = useState(null);
+export default function ProfilePic({ setMedia,userImage }) {
+  const [mediaPreview, setMediaPreview] = useState(userImage || null);
   const [highlighted, setHighlighted] = useState(false);
   const inputRef = useRef();
 

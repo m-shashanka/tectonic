@@ -69,7 +69,7 @@ function ProfilePage(){
       <Card className={styles.profileCard}>
         <img 
           className={styles.profilePic}
-          src="https://res.cloudinary.com/indersingh/image/upload/v1593464618/App/user_mklcpl.png"
+          src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
           alt=""
         />
         <div className={styles.profileInfo}>
