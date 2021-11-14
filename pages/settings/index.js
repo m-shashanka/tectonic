@@ -27,6 +27,12 @@ export default function Settings(){
 
     const [updatePassword,setUpdatePassword] = useState(false);
 
+    const [showNotification,setShowNotification] = useState(true);
+
+    const handleNotification = (e) => {
+        setShowNotification(prev => ! prev);
+    }
+
     const [serverError,setServerError] = useState(null);
     const [success,setSuccess] = useState(false);
     const [loading,setLoading] = useState(false);
@@ -104,7 +110,13 @@ export default function Settings(){
                     {success && <p style={{color:"green"}}>Updated password successfully.</p>}
                 </section>}
                 <hr />
-                <h3><i className="fab fa-telegram-plane"/>Show New Notification Popup?</h3>
+                <section className={styles.popUpNotification}>
+                    <h3><i className="fab fa-telegram-plane"/>Show New Notification Popup?</h3>
+                    <label className={styles.switch}>
+                        <input type="checkbox" defaultChecked={showNotification} onChange={handleNotification} />
+                        <span className={styles.slider}></span>
+                    </label>
+                </section>
             </Card>
         </div>
         </>
