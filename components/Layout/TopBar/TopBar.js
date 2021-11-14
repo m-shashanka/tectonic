@@ -82,7 +82,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
         </div>
       </div>
 
-      <div
+      {!isActive('/messages') && <div
         className={
           leftMenuOpen
             ? `${styles.leftMenu} ${styles.toggled}`
@@ -117,7 +117,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
             <i className="fas fa-chevron-right" />
           )}
         </div>
-      </div>
+      </div>}
 
       <div
         className={
