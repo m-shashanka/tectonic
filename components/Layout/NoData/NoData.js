@@ -44,7 +44,12 @@ export const NoProfile = () => (
 );
 
 export const NoNotifications = () => (
-  <Message content="No Notifications" icon="smile" info />
+  <div className={styles.container} style={{padding:"15px"}}>
+    <i className="fas fa-grin"/>
+     <div>
+       <h4>No Notifications</h4>
+     </div>
+  </div>
 );
 
 export const NoPostFound = () => (

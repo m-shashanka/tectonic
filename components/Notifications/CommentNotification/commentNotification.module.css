@@ -1,0 +1,43 @@
+.container{
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.commentDetails{
+    display: flex;
+    align-items: center;
+}
+
+.userPic{
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.userPic img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.commentInfo{
+    margin-left: 10px;
+}
+
+.commentInfo h4, .commentInfo p{
+    display: inline;
+}
+
+.commentInfo p{
+    margin-left: 8px;
+}
+
+.commentInfo h4 span{
+    color: #166FE5;
+    cursor: pointer;
+}
+
+.comment{
+    margin-left: 3vw;
+}
