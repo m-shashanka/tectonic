@@ -1,0 +1,69 @@
+.settingsCard{
+    padding: 15px;
+}
+
+.settingsCard h3{
+    color: #1053ac;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.settingsCard h3:hover{
+    background-color: #ccc;
+}
+
+.settingsCard h3 i{
+    color: #1E1E3F;
+    margin-right: 6px;
+}
+
+.eye{
+    right: 2%;
+    cursor: pointer;
+}
+
+.invalid input{
+    background-color: rgb(255, 237, 237);
+    border: 1px solid red !important;
+}
+
+.invalid input:focus{
+    outline: none;
+    border: 2px solid red !important;
+}
+
+.settingsCard div{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.settingsCard section p{
+    text-align: center;
+}
+
+.settingsCard label{
+    font-weight: 500;
+}
+
+.settingsCard div i{
+    position: absolute;
+    padding-left: 8px;
+    color: rgb(102, 99, 99);
+}
+
+.settingsCard input{
+    background: #eee;
+    border: none;
+    padding: 12px 15px 12px 28px;
+    margin: 8px 0;
+    width: 100%;
+    border-radius: 12px;
+}
+
+.submitButton{
+    margin: 10px 0 15px 2px;
+    border-radius: 12px;
+}
