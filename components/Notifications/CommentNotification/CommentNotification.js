@@ -17,6 +17,12 @@ export default function CommentNotification() {
           <p>4 days ago</p>
         </div>
       </div>
+      <div className={styles.postImage}>
+        <img
+          src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
+          alt=""
+        />
+      </div>
       <p className={styles.comment}>Cut text after 5 words</p>
     </div>
   );

@@ -4,6 +4,7 @@ import { NoNotifications } from "../../components/Layout/NoData/NoData";
 import styles from "./notifications.module.css";
 import LikeNotification from "../../components/Notifications/LikeNotification/LikeNotification";
 import CommentNotification from "../../components/Notifications/CommentNotification/CommentNotification";
+import FollowerNotification from "../../components/Notifications/FollowerNotification/FollowerNotification";
 
 export default function Notifications() {
   let user = {
@@ -23,6 +24,7 @@ export default function Notifications() {
           <Card className={styles.notificationsCard}>
             <LikeNotification />
             <CommentNotification />
+            <FollowerNotification />
           </Card>
       </div>
     </>

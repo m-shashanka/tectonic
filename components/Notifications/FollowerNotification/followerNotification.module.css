@@ -1,9 +1,12 @@
 .container{
     padding: 5px;
     margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.commentDetails{
+.followerDetails{
     display: flex;
     align-items: center;
 }
@@ -21,41 +24,28 @@
     object-fit: cover;
 }
 
-.commentInfo{
+.followerInfo{
     margin-left: 10px;
 }
 
-.commentInfo h4, .commentInfo p{
+.followerInfo h4, .followerInfo p{
     display: inline;
 }
 
-.commentInfo p{
+.followerInfo p{
     margin-left: 8px;
 }
 
-.commentInfo h4 span{
+.followerInfo h4 span{
     color: #166FE5;
     cursor: pointer;
 }
 
-.postImage{
-    width: 65px;
-    height: 65px;
+.button{
+    margin-right: 5px;
+    color: cyan;
+    background-color: #1E1E3F;
+    padding: 6px;
+    border-radius: 12px;
     cursor: pointer;
-    margin-left: 3vw;
-    border-radius: 5px;
-    margin-top: 4px;
-}
-
-.postImage img{
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.comment{
-    margin-left: 3vw;
-    margin-top: 3px;
-    font-weight: 500;
 }
