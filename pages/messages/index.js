@@ -4,6 +4,7 @@ import Card from "../../components/Layout/Card/Card";
 import styles from './messages.module.css';
 import MessagePreview from "../../components/Messages/MessagePreview/MessagePreview";
 import ChatBox from "../../components/Messages/ChatBox/ChatBox";
+import { NoMessages } from "../../components/Layout/NoData/NoData";
 
 export default function Messages(){
   let user = {
@@ -23,7 +24,9 @@ export default function Messages(){
         <div className={styles.leftBar}>
           <h2>Messages</h2>
           <SearchMessages />
+          
           <div className={styles.messagePreviews}>
+            {/* <NoMessages /> */}
             <MessagePreview />
             <hr />
             <MessagePreview />

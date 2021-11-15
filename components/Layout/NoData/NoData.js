@@ -11,22 +11,32 @@ export const NoProfilePosts = () => (
 export const NoFollowData = ({ followersComponent, followingComponent }) => (
   <>
     {followersComponent && (
-      <Message icon="user outline" info content={`User does not have followers`} />
+      <div className={styles.container} style={{padding:"15px"}}>
+        <i className="fas fa-user-friends"/>
+        <div>
+          <h4>User does not have any followers.</h4>
+        </div>
+      </div>
     )}
 
     {followingComponent && (
-      <Message icon="user outline" info content={`User does not follow any users`} />
+      <div className={styles.container} style={{padding:"15px"}}>
+        <i className="fas fa-user-friends"/>
+        <div>
+          <h4>User does not follow any users.</h4>
+        </div>
+      </div>
     )}
   </>
 );
 
 export const NoMessages = () => (
-  <Message
-    info
-    icon="telegram plane"
-    header="Sorry"
-    content="You have not messaged anyone yet.Search above to message someone!"
-  />
+  <div className={styles.container} style={{padding:"15px"}}>
+    <i className="fab fa-telegram-plane"/>
+     <div>
+       <h4>You have not messaged anyone yet. Search above to message someone!</h4>
+     </div>
+  </div>
 );
 
 export const NoPosts = () => (
@@ -40,7 +50,13 @@ export const NoPosts = () => (
 );
 
 export const NoProfile = () => (
-  <Message info icon="meh" header="Hey!" content="No Profile Found." />
+  <div className={styles.container}>
+    <i className="fas fa-meh"/>
+     <div>
+       <h3>Hey!</h3>
+       <h4>Profile not found.</h4>
+     </div>
+  </div>
 );
 
 export const NoNotifications = () => (
