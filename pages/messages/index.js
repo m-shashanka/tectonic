@@ -3,7 +3,7 @@ import TopBar from "../../components/Layout/TopBar/TopBar";
 import Card from "../../components/Layout/Card/Card";
 import styles from './messages.module.css';
 import MessagePreview from "../../components/Messages/MessagePreview/MessagePreview";
-import ChatBox from "../../components/Messages/MessagePreview/ChatBox/ChatBox";
+import ChatBox from "../../components/Messages/ChatBox/ChatBox";
 
 export default function Messages(){
   let user = {

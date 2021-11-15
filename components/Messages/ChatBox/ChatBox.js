@@ -1,5 +1,6 @@
 import MessageInputField from "./MessageInputField/MessageInputField";
 import styles from "./chatBox.module.css";
+import Message from "../Message/Message";
 
 export default function ChatBox(){
     return (
@@ -12,6 +13,20 @@ export default function ChatBox(){
                     />
                 </div>
                 <h3>Username</h3>
+            </div>
+            <div className={styles.chatBody}>
+                <Message />
+                <Message myMessage />
+                <Message myMessage />
+                <Message myMessage />
+                <Message />
+                <Message />
+                <Message myMessage />
+                <Message />
+                <Message myMessage />
+                <Message />
+                <Message myMessage />
+                <Message />
             </div>
             <MessageInputField />
         </>

@@ -17,14 +17,14 @@
 }
 
 .yourMessage input:focus{
-    outline: 1px solid #002C5B;
+    outline: 1px solid #151585;
     background-color: aliceblue;
 }
 
 .yourMessage img{
     width: 40px;
     height: 40px;
-    background-color: #002C5B;
+    background-color: #151585;
     padding-right: 6px;
     border-radius: 50%;
     cursor: pointer;

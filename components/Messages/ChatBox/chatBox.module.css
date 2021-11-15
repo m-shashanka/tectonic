@@ -27,3 +27,10 @@
     border-radius: 50%;
     object-fit: cover;
 }
+
+.chatBody{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    /* background: red; */
+}
