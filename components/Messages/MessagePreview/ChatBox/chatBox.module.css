@@ -1,0 +1,29 @@
+.header{
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom: 3px solid cyan;
+    background-color: #151585;
+}
+
+.header h3{
+    margin: 0;
+    margin-left: 12px;
+    cursor: pointer;
+    color: white;
+}
+
+.userPic{
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+}
+
+.userPic img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}

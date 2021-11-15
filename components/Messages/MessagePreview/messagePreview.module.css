@@ -4,6 +4,7 @@
     align-items: center;
     padding: 5px;
     border-radius: 12px;
+    cursor: pointer;
 }
 
 .container:hover{
