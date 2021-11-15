@@ -1,6 +1,7 @@
 import SearchMessages from "../../components/Messages/SearchMessages/SearchMessages";
 import TopBar from "../../components/Layout/TopBar/TopBar";
 import styles from './messages.module.css';
+import MessagePreview from "../../components/Messages/MessagePreview/MessagePreview";
 
 export default function Messages(){
   let user = {
@@ -20,6 +21,13 @@ export default function Messages(){
         <div className={styles.leftBar}>
           <h2>Messages</h2>
           <SearchMessages />
+          <div className={styles.messagePreviews}>
+            <MessagePreview />
+            <hr />
+            <MessagePreview />
+            <hr />
+            <MessagePreview />
+          </div>
         </div>
 
         <div className={styles.rightBar}>

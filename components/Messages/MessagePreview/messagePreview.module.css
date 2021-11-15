@@ -1,0 +1,58 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-radius: 12px;
+}
+
+.container:hover{
+    background-color: gainsboro;
+}
+
+.messageInfo{
+    display: flex;
+}
+
+.userPic{
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+}
+
+.userPic img{
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userInfo{
+    margin-left: 5px;
+}
+
+.userInfo section{
+    display: flex;
+    align-items: center;
+}
+
+.userInfo section p{
+    margin-left: 5px;
+    font-size: 11px;
+}
+
+.userInfo h5{
+    margin: 0;
+}
+
+.message{
+    margin-top: 2px;
+    font-size: 13.8px;
+}
+
+.container i{
+    color: rgb(207, 6, 6);
+    cursor: pointer;
+    margin-right: 3px;
+    font-size: 12px;
+}

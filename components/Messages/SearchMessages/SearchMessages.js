@@ -17,7 +17,7 @@ export default function SearchMessages() {
             <input
               value={text}
               onChange={(e)=>setText(e.target.value)}
-              placeholder="Search..."
+              placeholder="Search"
               className={styles.searchInput}
             />
             {loading && <Spinner className={styles.userLoading}/>}
