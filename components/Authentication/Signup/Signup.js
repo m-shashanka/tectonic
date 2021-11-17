@@ -87,7 +87,7 @@ export default function Signup() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Create Account</h1>
 
-      <ProfilePic setMedia={setMedia} />
+      <ProfilePic setMedia={setMedia} userImage="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png" />
 
       <div className={errors.name ? styles.invalid : null}>
         <i className="fas fa-user" />

@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../../utils/authUser";
 import Spinner from "../../Layout/Spinner/Spinner";
-import styles from './login.module.css';
+import Link from "next/link";
 const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 import cookie from "js-cookie";
+import styles from './login.module.css';
 
 export default function Login(){
 
@@ -71,7 +72,7 @@ export default function Login(){
               )}
               <i className={showPassword ? `fas fa-eye-slash ${styles.eye}`:`fas fa-eye ${styles.eye}`} onClick={()=>{setShowPassword(prev=>!prev)}}/>
             </div>
-            <a href="#" style={{color:"#1877F2"}}>Forgot your password?</a>
+            <Link href="#" style={{color:"#1877F2"}}>Forgot your password?</Link>
             {!formLoading && <button type="submit">Sign In</button>}
             {formLoading && <Spinner className={styles.loading}/>}
             {serverError && <p className={styles.serverError}>{serverError}</p>}

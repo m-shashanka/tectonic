@@ -1,13 +1,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import styles from "./topBar.module.css";
 import Card from "../Card/Card";
 import UserSuggestion from "../../Profile/UserSuggestion/UserSuggestion";
 import OnlineUser from "../../Profile/OnlineUser/OnlineUser";
 import UserStats from "../../Profile/UserStats/UserStats";
 import {logoutUser} from "../../../utils/authUser";
 import SearchBar from "../SearchBar/SearchBar";
+import styles from "./topBar.module.css";
 
 export default function TopBar({user:{unreadNotification,email,unreadMessage,username}}) {
 
