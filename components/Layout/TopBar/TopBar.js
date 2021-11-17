@@ -9,7 +9,7 @@ import {logoutUser} from "../../../utils/authUser";
 import SearchBar from "../SearchBar/SearchBar";
 import styles from "./topBar.module.css";
 
-export default function TopBar({user:{unreadNotification,email,unreadMessage,username}}) {
+export default function TopBar({user:{unreadNotification,email,unreadMessage,username,profilePicUrl},userFollowStats}) {
 
   const [chatHovered, setChatHovered] = useState(false);
   const toggleChatHover = () => setChatHovered(!chatHovered);
@@ -56,7 +56,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
                   onMouseLeave={toggleChatHover}
                 />
               </div>
-              <span className={styles.topbarIconBadge}>1</span>
+              {unreadMessage && <span className={styles.topbarIconBadge}>{unreadMessage}</span>}
             </div>
             <div className={styles.topbarIconItem}>
               <div className={styles.bellIcon}>
@@ -68,7 +68,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
                   onMouseLeave={toggleNotificationHover}
                 />
               </div>
-              <span className={styles.topbarIconBadge}>2</span>
+              {unreadNotification && <span className={styles.topbarIconBadge}>{unreadNotification}</span>}
             </div>
           </div>
 
@@ -130,13 +130,13 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
 
           <div className={styles.userPic}>
             <img
-              src="https://res.cloudinary.com/indersingh/image/upload/v1593464618/App/user_mklcpl.png"
+              src={profilePicUrl}
               alt=""
             />
           </div>
-          <h3>Name</h3>
+          <h3>{username}</h3>
 
-          <UserStats />
+          <UserStats userFollowStats={userFollowStats}/>
 
         </div>
 
@@ -160,13 +160,13 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
             </div>
           </Link>
           <Link href={`/${username}`}>
-            <div className={isActive('') ? `${styles.profileUser} ${styles.selectedOption}` : styles.profileUser}>
+            <div className={(router.query.username === username) ? `${styles.profileUser} ${styles.selectedOption}` : styles.profileUser}>
               <i className={"fas fa-user"}/>
               <p>Profile</p>
             </div>
           </Link>
-          <Link href={`/${username}/settings`}>
-            <div className={isActive('') ? `${styles.profileSettings} ${styles.selectedOption}` : styles.profileSettings}>
+          <Link href={`/settings`}>
+            <div className={isActive('/settings') ? `${styles.profileSettings} ${styles.selectedOption}` : styles.profileSettings}>
               <i className={"fas fa-cog"}/>
               <p>Settings</p>
             </div>

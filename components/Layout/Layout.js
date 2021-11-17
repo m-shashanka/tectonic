@@ -3,7 +3,7 @@ import TopBar from "./TopBar/TopBar";
 import nprogress from "nprogress";
 import Router, { useRouter } from "next/router";
 
-function Layout({children, user}){
+function Layout({children, user, userFollowStats}){
 
   Router.onRouteChangeStart = () => nprogress.start();
   Router.onRouteChangeComplete = () => nprogress.done();
@@ -17,7 +17,7 @@ function Layout({children, user}){
     <>
     <style jsx global>{`body {background-color: aliceblue;}`}</style>
       <HeadTags />
-      {(user && authenticated) && <TopBar />}
+      {(user && authenticated) && <TopBar user={user} userFollowStats={userFollowStats}/>}
       {children}
     </>
   );

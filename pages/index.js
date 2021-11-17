@@ -10,10 +10,6 @@ import { NoPosts } from "../components/Layout/NoData/NoData";
 
 function Index(){
 
-  // useEffect(()=>{
-  //   document.title = `Hello ${user.name.split(" ")[0]}`;
-  // },[]);
-
   const [showToastr, setShowToastr] = useState(false);
 
   useEffect(() => {
