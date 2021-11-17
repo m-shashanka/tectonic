@@ -65,7 +65,7 @@ export default function SearchBar() {
               }}
               value={text}
               onChange={handleChange}
-              placeholder="Search for friends"
+              placeholder="Search for people"
               className={styles.searchInput}
             />
             {loading && <Spinner className={styles.userLoading}/>}
