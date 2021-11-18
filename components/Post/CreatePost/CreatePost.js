@@ -16,8 +16,8 @@ function CreatePost({ user, setPosts }) {
         <div className={styles.createPost}>
           <div className={styles.userPic}>
             <img
-              src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-              alt=""
+              src={user.profilePicUrl}
+              alt="Profile Pic"
             />
           </div>
           <p>What's on your mind, {user.username}?</p>

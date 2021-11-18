@@ -2,7 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { deletePost } from "../../../../utils/postActions";
 import styles from "./deletePost.module.css";
 
-export default function DeletePost({id, setPosts, setShowToastr, closeModal, showLeft}) {
+export default function DeletePost({
+  id,
+  setPosts,
+  setShowToastr,
+  closeModal,
+  showLeft,
+}) {
   const ref = useRef();
   const [deletePostConfirmation, setDeletePostConfirmation] = useState(false);
 
@@ -22,11 +28,10 @@ export default function DeletePost({id, setPosts, setShowToastr, closeModal, sho
     };
   }, [ref]);
 
-  const delPost = ()=>{
-    // deletePost(id, setPosts, setShowToastr);
-    setShowToastr(true);
+  const delPost = async () => {
+    await deletePost(id, setPosts, setShowToastr);
     closeModal && closeModal();
-  }
+  };
 
   return (
     <i
