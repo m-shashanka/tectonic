@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "../../Layout/Card/Card";
 import Comment from "../Comment/Comment";
 import Button from "../../Layout/Button/Button";
@@ -10,13 +10,19 @@ import calculateTime from "../../../utils/calculateTime";
 import {likePost} from "../../../utils/postActions";
 import Link from "next/link";
 import CommentInputField from "../CommentInputField/CommentInputField";
-import styles from "./cardPost.module.css";
 import LikesList from "../LikesList/LikesList";
+import styles from "./cardPost.module.css";
 
 export default function CardPost({ post, user, setPosts, setShowToastr, socket }) {
 
   const [showModal, setShowModal] = useState(false);
   const [displayLikes, setDisplayLikes] = useState(false);
+
+  const [likes, setLikes] = useState(post.likes);
+
+  const isLiked = post.likes.length > 0 && post.likes.filter(like => like.user === user._id).length > 0;
+
+  const [comments, setComments] = useState(post.comments);
 
   const showAllLikes = () =>{
     setDisplayLikes(true);
@@ -33,44 +39,64 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
     <Card className={styles.postCard}>
         <div className={styles.postHeader}>
           <div className={styles.postInfo}>
-            <div className={styles.userPic}>
-              <img
-                src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-                alt=""
-              />
-            </div>
+            <Link href={`/${post.user.username}`}>
+              <div className={styles.userPic}>
+                <img
+                  src={post.user.profilePicUrl}
+                  alt="User Profile Pic"
+                />
+              </div>
+            </Link>
             <div className={styles.userInfo}>
-              <h3>Shashank</h3>
-              <span>Date and Time</span>
-              <span>, Location</span>
+              <Link href={`/${post.user.username}`}>
+                <h3>{post.user.username}</h3>
+              </Link>
+              <span>{calculateTime(post.createdAt)}</span>
+              {post.location && <span>{`, ${post.location}`}</span>}
             </div>
           </div>
-          <DeletePost setShowToastr={setShowToastr}/>
-          {/* <DeletePost id={post._id} setPosts={setPosts} setShowToastr={setShowToastr} /> */}
+          {(user.role === "root" || post.user._id === user._id) &&
+            <DeletePost id={post._id} setPosts={setPosts} setShowToastr={setShowToastr} />
+          }
         </div>
 
         <div className={styles.postContent}>
-          <p>Today was a good day!</p>
-          <img
+          <p>{post.text}</p>
+          {post.picUrl && <img
             onClick={showAllComments}
-            src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-            alt=""
-          />
+            src={post.picUrl}
+            alt="Post Image"
+          />}
         </div>
 
         <div className={styles.postStats}>
           <div className={styles.likes}>
-            <i className="fas fa-heart" />
-            <LikesList showAllLikes={showAllLikes}/>
+            {isLiked ? <i className="fas fa-heart" /> : <i className="far fa-heart" />}
+            {likes.length > 0 &&
+              <LikesList likes={likes} showAllLikes={showAllLikes}/>}
           </div>
           <i className={`${styles.comments} far fa-comments`} onClick={() => setShowModal(true)}/>
         </div>
 
         <div className={styles.postComments}>
-          <Comment />
-          <Comment />
-          <Button className={styles.viewMore} onClick={showAllComments}>View More</Button>
-          <CommentInputField />
+            {comments.length > 0 &&
+              comments.map(
+                (comment, i) =>
+                  i < 2 && (
+                    <Comment
+                      key={comment._id}
+                      comment={comment}
+                      postId={post._id}
+                      user={user}
+                      setComments={setComments}
+                    />
+                  )
+              )}
+
+            {comments.length > 2 && 
+              (<Button className={styles.viewMore} onClick={showAllComments}>View More</Button>)}
+
+          <CommentInputField user={user} postId={post._id} setComments={setComments} />
         </div>
     </Card>
     {showModal && (

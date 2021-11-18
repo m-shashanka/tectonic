@@ -1,5 +1,4 @@
-import {useState,useEffect} from "react";
-import TopBar from "../components/Layout/TopBar/TopBar";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import CreatePost from "../components/Post/CreatePost/CreatePost";
@@ -8,32 +7,38 @@ import { PostDeleteToastr } from "../components/Layout/Toastr";
 import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData/NoData";
 
-function Index(){
-
+function Index({ user, postsData, errorLoading }) {
+  const [posts, setPosts] = useState(postsData || []);
   const [showToastr, setShowToastr] = useState(false);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
-  }, [showToastr]);  
+  }, [showToastr]);
 
-  let user = {
-    unreadNotification:"hello",
-    email:"ha",
-    unreadMessage:"an",
-    username:"bs"
-  }
+  if (errorLoading || posts.length === 0)
+    return (
+      <div className="layContent">
+        <NoPosts />
+      </div>
+    );
 
-  let temp = {user}
-
-  return (<>
-  <TopBar {...temp}/>
-  {showToastr && <PostDeleteToastr />}
-  <div className="layContent">
-    <CreatePost {...temp}/>
-    {/* <NoPosts /> */}
-    <CardPost setShowToastr={setShowToastr}/>
-  </div>
-  </>);
+  return (
+    <>
+      {showToastr && <PostDeleteToastr />}
+      <div className="layContent">
+        <CreatePost user={user} setPosts={setPosts} />
+        {(errorLoading || posts.length === 0) ? <NoPosts /> : posts.map((post) => (
+          <CardPost
+            key={post._id}
+            post={post}
+            user={user}
+            setPosts={setPosts}
+            setShowToastr={setShowToastr}
+          />
+        ))}
+      </div>
+    </>
+  );
 }
 
 // import React, { useEffect, useRef, useState } from "react";
@@ -180,19 +185,19 @@ function Index(){
 //   );
 // }
 
-// Index.getInitialProps = async (ctx) => {
-//   try {
-//     const { token } = parseCookies(ctx);
+Index.getInitialProps = async (ctx) => {
+  try {
+    const { token } = parseCookies(ctx);
 
-//     const res = await axios.get(`${baseUrl}/api/posts`, {
-//       headers: { Authorization: token },
-//       params: { pageNumber: 1 },
-//     });
+    const res = await axios.get(`${baseUrl}/api/posts`, {
+      headers: { Authorization: token },
+      params: { pageNumber: 1 },
+    });
 
-//     return { postsData: res.data };
-//   } catch (error) {
-//     return { errorLoading: true };
-//   }
-// };
+    return { postsData: res.data };
+  } catch (error) {
+    return { errorLoading: true };
+  }
+};
 
 export default Index;

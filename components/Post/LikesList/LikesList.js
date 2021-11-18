@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./likesList.module.css";
 import LikesListUser from "./LikesListUser/LikesListUser";
 
-export default function LikesList({showAllLikes}) {
+export default function LikesList({likes, showAllLikes}) {
   const ref = useRef();
 
   const [showLikesList, setShowLikesList] = useState(false);
@@ -29,7 +29,7 @@ export default function LikesList({showAllLikes}) {
       className={styles.likes}
       onClick={() => setShowLikesList(true)}
     >
-      5 likes
+      {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
       {showLikesList && (
         <div className={styles.container}>
           <div className={styles.likesContainer}>

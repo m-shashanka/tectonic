@@ -119,7 +119,7 @@ nextApp.prepare().then(() => {
   app.use("/api/signup", require("./api/signup"));
   app.use("/api/auth", require("./api/auth"));
   app.use('/api/search',require("./api/search"));
-  // app.use("/api/posts",require('./api/posts'));
+  app.use("/api/posts",require('./api/posts'));
   // app.use("/api/profile", require("./api/profile"));
   // app.use("/api/notifications", require("./api/notifications"));
   // app.use("/api/chats", require("./api/chats"));

@@ -206,10 +206,10 @@ router.put("/unlike/:postId", authMiddleware, async (req, res) => {
       return res.status(404).send("No Post found");
     }
 
-    const isLiked =
+    const isNotLiked =
       post.likes.filter(like => like.user.toString() === userId).length === 0;
 
-    if (isLiked) {
+    if (isNotLiked) {
       return res.status(401).send("Post not liked before");
     }
 
