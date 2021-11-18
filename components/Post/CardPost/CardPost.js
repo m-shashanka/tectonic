@@ -71,7 +71,10 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
 
         <div className={styles.postStats}>
           <div className={styles.likes}>
-            {isLiked ? <i className="fas fa-heart" /> : <i className="far fa-heart" />}
+            <i 
+              className={isLiked ? "fas fa-heart" : "far fa-heart"} 
+              onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
+            />
             {likes.length > 0 &&
               <LikesList likes={likes} showAllLikes={showAllLikes}/>}
           </div>
