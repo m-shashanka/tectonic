@@ -1,16 +1,33 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "./likesList.module.css";
+import catchErrors from "../../../utils/catchErrors";
+import { Axios } from "../../../utils/postActions";
 import LikesListUser from "./LikesListUser/LikesListUser";
+import styles from "./likesList.module.css";
 
-export default function LikesList({likes, showAllLikes}) {
+export default function LikesList({likes, showAllLikes, postId}) {
   const ref = useRef();
 
   const [showLikesList, setShowLikesList] = useState(false);
+
+  const [likesList, setLikesList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getLikesList = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.get(`/like/${postId}`);
+      setLikesList(res.data);
+    } catch (error) {
+      alert(catchErrors(error));
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
         setShowLikesList(false);
+        setLikesList([]);
       }
     }
 
@@ -27,16 +44,23 @@ export default function LikesList({likes, showAllLikes}) {
     <span
       ref={ref}
       className={styles.likes}
-      onClick={() => setShowLikesList(true)}
+      onClick={() => {
+          setShowLikesList(true);
+          getLikesList();
+        }
+      }
     >
       {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
       {showLikesList && (
         <div className={styles.container}>
           <div className={styles.likesContainer}>
-            {/* <PlaceHolder /> */}
-            <LikesListUser />
-            <LikesListUser />
-            <span onClick={showAllLikes}>Show All</span>
+            {loading && <PlaceHolder />}
+            {!loading && likesList.length && 
+              likesList.map((like,i) =>(
+                (i < 3) && <LikesListUser key={like._id} user={like.user} />
+              ))
+            }
+            {!loading && likesList.length > 3 && <span onClick={showAllLikes}>Show All</span>}
           </div>
         </div>
       )}

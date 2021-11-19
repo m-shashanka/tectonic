@@ -1,15 +1,18 @@
+import Link from "next/link";
 import styles from './likesListUser.module.css';
 
-export default function LikesListUser({expand}) {
+export default function LikesListUser({user, expand}) {
   return (
-    <div className={expand ? `${styles.user} ${styles.expand}` : styles.user}>
-      <div className={styles.userPic}>
-        <img
-          src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-          alt=""
-        />
+    <Link href={`/${user.username}`}>
+      <div className={expand ? `${styles.user} ${styles.expand}` : styles.user}>
+        <div className={styles.userPic}>
+          <img
+            src={user.profilePicUrl}
+            alt="Profile Pic"
+          />
+        </div>
+        <p>{user.username}</p>
       </div>
-      <p>Username</p>
-    </div>
+    </Link>
   );
 }

@@ -76,7 +76,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
               onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
             />
             {likes.length > 0 &&
-              <LikesList likes={likes} showAllLikes={showAllLikes}/>}
+              <LikesList likes={likes} showAllLikes={showAllLikes} postId={post._id} />}
           </div>
           <i className={`${styles.comments} far fa-comments`} onClick={() => setShowModal(true)}/>
         </div>
