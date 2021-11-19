@@ -1,5 +1,6 @@
 import Link from "next/link";
 import calculateTime from "../../../utils/calculateTime";
+import { deleteComment } from "../../../utils/postActions";
 import styles from "./comment.module.css";
 
 export default function Comment({ comment, user, setComments, postId }) {
@@ -20,7 +21,11 @@ export default function Comment({ comment, user, setComments, postId }) {
           </Link>
           <span>{calculateTime(comment.date)}</span>
           {(user.role === "root" || comment.user._id === user._id) &&
-            <i className={`${styles.deleteComment} fas fa-trash`} />}
+            <i 
+              className={`${styles.deleteComment} fas fa-trash`} 
+              onClick={()=>deleteComment(postId,comment._id,setComments)}
+            />
+          }
         </div>
         <p>{comment.text}</p>
       </div>
