@@ -6,8 +6,7 @@ export default function DeletePost({
   id,
   setPosts,
   setShowToastr,
-  closeModal,
-  showLeft,
+  closeModal
 }) {
   const ref = useRef();
   const [deletePostConfirmation, setDeletePostConfirmation] = useState(false);
@@ -40,7 +39,7 @@ export default function DeletePost({
       onClick={() => setDeletePostConfirmation(true)}
     >
       {deletePostConfirmation && (
-        <div className={showLeft ? styles.showLeft : styles.showTop}>
+        <div className={styles.showTop}>
           <p>Are you sure?</p>
           <p className={styles.finalDelete} onClick={delPost}>
             <i className="fas fa-trash" />

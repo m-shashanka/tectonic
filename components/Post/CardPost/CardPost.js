@@ -34,6 +34,18 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
     setShowModal(true);
   }
 
+    const addPropsToModal = () => ({
+      post,
+      user,
+      setLikes,
+      likes,
+      isLiked,
+      comments,
+      setComments,
+      closeModal:() => setShowModal(false),
+      openLikes = {displayLikes}
+    });
+
   return (
     <>
     <Card className={styles.postCard}>
@@ -104,11 +116,9 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
     </Card>
     {showModal && (
         <Modal closeModal={() => setShowModal(false)}>
-          <ImageModal
-            closeModal={() => setShowModal(false)}
-            setShowToastr={setShowToastr}
-            likes = {displayLikes}
-          />
+          {post.picUrl ?
+            <ImageModal {...addPropsToModal()}/> : <NoImageModal {...addPropsToModal()}/>
+          }
         </Modal>
       )}
     </>

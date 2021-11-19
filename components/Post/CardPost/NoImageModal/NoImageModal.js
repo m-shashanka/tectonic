@@ -1,14 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import Card from "../../../Layout/Card/Card";
-import DeletePost from "../DeletePost/DeletePost";
 import LikesListUser from "../../LikesList/LikesListUser/LikesListUser";
 import Comment from "../../Comment/Comment";
+import Link from "next/link";
+import calculateTime from "../../../../utils/calculateTime";
+import { likePost } from "../../../../utils/postActions";
+import { Axios } from "../../../../utils/postActions";
+import catchErrors from "../../../../utils/catchErrors";
 import CommentInputField from "../../CommentInputField/CommentInputField";
+import Spinner from "../../../Layout/Spinner/Spinner";
 import styles from "./noImageModal.module.css";
 
-export default function NoImageModal({ closeModal, setShowToastr, likes }) {
+export default function NoImageModal({post,user,setLikes,likes,isLiked,comments,setComments,closeModal,openLikes}) {
 
-  const [showLikes,setShowLikes] = useState(likes);
+  const [showLikes,setShowLikes] = useState(openLikes);
+  const [likesList,setLikesList] = useState([]);
+  const [loading,setLoading] = useState(false);
+
+  const getLikesList = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.get(`/like/${postId}`);
+      setLikesList(res.data);
+    } catch (error) {
+      alert(catchErrors(error));
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getLikesList();
+  }, [likes]);
 
   return (
     <div className={styles.postModal}>
@@ -19,56 +41,60 @@ export default function NoImageModal({ closeModal, setShowToastr, likes }) {
             <div className={styles.postInfo}>
               <div className={styles.userPic}>
                 <img
-                  src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-                  alt=""
+                  src={post.user.profilePicUrl}
+                  alt="User Profile Pic"
                 />
               </div>
               <div className={styles.userInfo}>
-                <h3>Shashank</h3>
-                <span>Date and Time</span>
-                <span>, Location</span>
+                <Link href={`/${post.user.username}`}>
+                  <h3>{post.user.username}</h3>
+                </Link>
+                <span>{calculateTime(post.createdAt)}</span>
+                {post.location && <span>{`, ${post.location}`}</span>}
               </div>
             </div>
-            <DeletePost setShowToastr={setShowToastr} showLeft={true} closeModal={closeModal}/>
-            {/* <DeletePost id={post._id} setPosts={setPosts} setShowToastr={setShowToastr} /> */}
           </div>
 
           <div className={styles.postContent}>
-            <p>Today was a good day!</p>
+            <p>{post.text}</p>
           </div>
 
           <div className={styles.postStats}>
             <div className={styles.likes}>
-              <i className="fas fa-heart" />
-              <span
+              <i 
+                className={isLiked ? "fas fa-heart" : "far fa-heart"} 
+                onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
+              />
+              {likes.length > 0 && <span
                 className={styles.likesCount}
                 onClick={() => setShowLikes(true)}
-              >5 likes</span>
+              >{`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}</span>}
             </div>
             <i className={`${styles.comments} far fa-comments`} onClick={()=>setShowLikes(false)} />
           </div>
 
           {!showLikes && <div className={styles.postComments}>
             <div className={styles.allComments}>
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
+            {comments.length > 0 &&
+              comments.map(
+                comment => <Comment
+                  key={comment._id}
+                  comment={comment}
+                  postId={post._id}
+                  user={user}
+                  setComments={setComments}
+                />
+            )}
             </div>
-            <CommentInputField />
+            <CommentInputField user={user} postId={post._id} setComments={setComments} />
           </div>}
 
           {showLikes && 
             <div className={styles.postLikes}>
-              <div className={styles.allLikes}>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-              </div>
+              {!loading && <div className={styles.allLikes}>
+                {likesList.map(like=> <LikesListUser key={like._id} user={like.user} expand />)}
+              </div>}
+              {loading && <Spinner className={styles.likesLoader} />}
             </div>
           }
 
