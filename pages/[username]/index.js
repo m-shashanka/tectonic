@@ -36,6 +36,10 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
 
   const [selectedIndex,setSelectedIndex] = useState(2);
 
+  const [loggedUserFollowStats, setUserFollowStats] = useState(userFollowStats);
+
+  const ownAccount = profile._id === user._id;
+
   var sliderPos;
 
   if(selectedIndex == 1)
@@ -82,6 +86,10 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
       getPosts();
     }, [router.query.username]);
 
+    const isFollowing =
+      loggedUserFollowStats.following.length > 0 &&
+      loggedUserFollowStats.following.filter(following => following.user === profile._id).length > 0;
+
   return <>
   {showToastr && <PostDeleteToastr />}
     <div className="layContent">
@@ -89,55 +97,98 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
       <Card className={styles.profileCard}>
         <img 
           className={styles.profilePic}
-          src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
+          src={profile.profilePicUrl}
           alt="Profile Pic"
         />
         <div className={styles.profileInfo}>
-          <h2>Name</h2>
-          <p>Bio will go here guxcwdhcbh cbjhsdvbnfvsdkkkkkk fefgbhedsdhfvbsdjgsdhcf</p>
+          <h2>{profile.name}</h2>
+          <p>{profile.bio}</p>
         </div>
-        <Button className={styles.followButton}>Follow</Button>
-        {/* <Button className={styles.updateProfile}><i className="fas fa-user-edit"/>Update Profile</Button> */}
+        {ownAccount ? 
+          <Button className={styles.updateProfile}><i className="fas fa-user-edit"/>Update Profile</Button> :
+          <Button className={styles.followButton}>{isFollowing ? `Following` : `Follow`}</Button>
+        }
       </Card>
 
+      {ownAccount ? 
       <Card className={styles.menuCard}>
         <span style={slider}></span>
         <div onClick={()=>{setSelectedIndex(1)}}>
-          <p>120</p>
+          <p>{loggedUserFollowStats.followers.length}</p>
           <span>
             Followers
           </span>
         </div>
 
         <div className={styles.posts} onClick={()=>{setSelectedIndex(2)}}>
-          <p>56</p>
+          <p>{loggedUserFollowStats.postsCount}</p>
           <span>
             Posts
           </span>
         </div>
 
         <div onClick={()=>{setSelectedIndex(3)}}>
-          <p>200</p>
+          <p>{loggedUserFollowStats.following.length}</p>
           <span>
             Following
           </span>
         </div>
         
-      </Card>
+      </Card> :
+      <Card className={styles.menuCard}>
+        <span style={slider}></span>
+        <div onClick={()=>{setSelectedIndex(1)}}>
+          <p>{followersLength}</p>
+          <span>
+            Followers
+          </span>
+        </div>
+
+        <div className={styles.posts} onClick={()=>{setSelectedIndex(2)}}>
+          <p>{postsLength}</p>
+          <span>
+            Posts
+          </span>
+        </div>
+
+        <div onClick={()=>{setSelectedIndex(3)}}>
+          <p>{followingLength}</p>
+          <span>
+            Following
+          </span>
+        </div>
+        
+      </Card>}
 
       {selectedIndex == 2 && 
       <div className={styles.fadeIn}>
-        <CreatePost {...temp}/>
-        {/* <NoPosts /> */}
-        <CardPost setShowToastr={setShowToastr}/>
+        {ownAccount && <CreatePost user={user} setPosts={setPosts}/>}
+        {loading && <h4 style={{textAlign="center"}}>Loading...</h4>}
+        {!loading && posts.length === 0 && <NoPosts />}
+        {!loading && posts.length > 0 && posts.map(post=>(
+          <CardPost key={post._id} post={post} user={user} setPosts={setPosts} setShowToastr={setShowToastr}/>
+        ))}
       </div>}
 
-      {selectedIndex != 2 && 
-      <div className={styles.fadeIn}>
-        <Friend />
-        <Friend />
-        <Friend />
-      </div>}
+      {selectedIndex == 1 && <div className={styles.fadeIn}>
+          <Followers
+            user={user}
+            loggedUserFollowStats={loggedUserFollowStats}
+            setUserFollowStats={setUserFollowStats}
+            profileUserId={profile._id}
+          />
+        </div>
+      }
+
+      {selectedIndex == 3 && <div className={styles.fadeIn}>
+          <Following
+            user={user}
+            loggedUserFollowStats={loggedUserFollowStats}
+            setUserFollowStats={setUserFollowStats}
+            profileUserId={profile._id}
+          />
+        </div>
+      }
 
     </div>
 
