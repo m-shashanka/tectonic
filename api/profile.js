@@ -4,7 +4,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const UserModel = require("../models/UserModel");
 const PostModel = require("../models/PostModel");
 const FollowerModel = require("../models/FollowerModel");
-const ProfileModel = require("../models/ProfileModel");
+// const ProfileModel = require("../models/ProfileModel");
 const bcrypt = require("bcryptjs");
 const {
   newFollowerNotification,
@@ -12,33 +12,33 @@ const {
 } = require("../utilsServer/notificationActions");
 
 // GET PROFILE INFO
-router.get("/:username", authMiddleware, async (req, res) => {
-  try {
-    const { username } = req.params;
+// router.get("/:username", authMiddleware, async (req, res) => {
+//   try {
+//     const { username } = req.params;
 
-    const user = await UserModel.findOne({ username: username.toLowerCase() });
-    if (!user) {
-      return res.status(404).send("No User Found");
-    }
+//     const user = await UserModel.findOne({ username: username.toLowerCase() });
+//     if (!user) {
+//       return res.status(404).send("No User Found");
+//     }
 
-    const profile = await ProfileModel.findOne({ user: user._id }).populate("user");
+//     const profile = await ProfileModel.findOne({ user: user._id }).populate("user");
 
-    const profileFollowStats = await FollowerModel.findOne({ user: user._id });
+//     const profileFollowStats = await FollowerModel.findOne({ user: user._id });
 
-    return res.json({
-      profile,
+//     return res.json({
+//       profile,
 
-      followersLength:
-        profileFollowStats.followers.length > 0 ? profileFollowStats.followers.length : 0,
+//       followersLength:
+//         profileFollowStats.followers.length > 0 ? profileFollowStats.followers.length : 0,
 
-      followingLength:
-        profileFollowStats.following.length > 0 ? profileFollowStats.following.length : 0
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send("Server Error");
-  }
-});
+//       followingLength:
+//         profileFollowStats.following.length > 0 ? profileFollowStats.following.length : 0
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).send("Server Error");
+//   }
+// });
 
 // GET POSTS OF USER
 router.get(`/posts/:username`, authMiddleware, async (req, res) => {
@@ -145,12 +145,12 @@ router.put("/unfollow/:userToUnfollowId", authMiddleware, async (req, res) => {
       return res.status(404).send("User not found");
     }
 
-    const isFollowing =
+    const notFollowing =
       user.following.length > 0 &&
       user.following.filter(following => following.user.toString() === userToUnfollowId)
         .length === 0;
 
-    if (isFollowing) {
+    if (notFollowing || user.following.length === 0) {
       return res.status(401).send("User Not Followed before");
     }
 
@@ -182,34 +182,23 @@ router.post("/update", authMiddleware, async (req, res) => {
   try {
     const { userId } = req;
 
-    const { bio, facebook, youtube, twitter, instagram, profilePicUrl } = req.body;
+    const { bio, profilePicUrl } = req.body;
 
-    let profileFields = {};
-    profileFields.user = userId;
+    // await ProfileModel.findOneAndUpdate(
+    //   { user: userId },
+    //   { $set: profileFields },
+    //   { new: true }
+    // );
 
-    profileFields.bio = bio;
+    const user = await UserModel.findById(userId);
 
-    profileFields.social = {};
+    if(bio)
+      user.bio = bio;
 
-    if (facebook) profileFields.social.facebook = facebook;
-
-    if (youtube) profileFields.social.youtube = youtube;
-
-    if (instagram) profileFields.social.instagram = instagram;
-
-    if (twitter) profileFields.social.twitter = twitter;
-
-    await ProfileModel.findOneAndUpdate(
-      { user: userId },
-      { $set: profileFields },
-      { new: true }
-    );
-
-    if (profilePicUrl) {
-      const user = await UserModel.findById(userId);
+    if (profilePicUrl) 
       user.profilePicUrl = profilePicUrl;
-      await user.save();
-    }
+
+    await user.save();
 
     return res.status(200).send("Success");
   } catch (error) {
