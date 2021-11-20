@@ -1,5 +1,4 @@
 import { useState,useEffect } from "react";
-import TopBar from "../../components/Layout/TopBar/TopBar";
 import { PostDeleteToastr } from "../../components/Layout/Toastr";
 import Card from "../../components/Layout/Card/Card";
 import DeletePost from "../../components/Post/CardPost/DeletePost/DeletePost";
@@ -18,18 +17,8 @@ export default function PostPage(){
     showToastr && setTimeout(() => setShowToastr(false), 3000);
   }, [showToastr]);
 
-  let user = {
-    unreadNotification:"hello",
-    email:"ha",
-    unreadMessage:"an",
-    username:"bs"
-  }
-
-  let temp = {user}
-
   return (
     <>
-    <TopBar {...temp}/>
   {showToastr && <PostDeleteToastr />}
   <div className="layContent">
     {/* <NoPostFound /> */}

@@ -3,8 +3,12 @@ import styles from "./noData.module.css";
 
 export const NoProfilePosts = () => (
   <>
-    <Message info icon="meh" header="Sorry" content="User has not posted anything yet!" />
-    <Button icon="long arrow alternate left" content="Go Back" as="a" href="/" />
+    <div className={styles.container}>
+      <i className="fas fa-meh"/>
+      <div>
+        <h4>User has not posted anything yet!</h4>
+      </div>
+    </div>
   </>
 );
 

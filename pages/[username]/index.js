@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import TopBar from "../../components/Layout/TopBar/TopBar";
 import Card from "../../components/Layout/Card/Card";
 import Button from "../../components/Layout/Button/Button";
 import Friend from "../../components/Profile/Friends/Friend";
@@ -23,22 +22,17 @@ import UpdateProfile from "../../components/Profile/UpdateProfile";
 import Settings from "../../components/Profile/Settings";
 import { PostDeleteToastr } from "../../components/Layout/Toastr";
 
-function ProfilePage(){
+function ProfilePage({profile, postsLength, followersLength, followingLength, errorLoading, user, userFollowStats}){
 
+  const router = useRouter();
+  
   const [showToastr, setShowToastr] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
   }, [showToastr]);  
-
-  let user = {
-    unreadNotification:"hello",
-    email:"ha",
-    unreadMessage:"an",
-    username:"bs"
-  }
-
-  let temp = {user}
 
   const [selectedIndex,setSelectedIndex] = useState(2);
 
@@ -61,8 +55,34 @@ function ProfilePage(){
     transition: "all 0.6s ease-in",
   }
 
+  if(errorLoading)
+    return (
+      <div className="layContent">
+        <NoProfile />
+      </div>
+    );
+
+    useEffect(() => {
+      const getPosts = async () => {
+        setLoading(true);
+
+        try {
+          const { username } = router.query;
+          const res = await axios.get(`${baseUrl}/api/profile/posts/${username}`, {
+            headers: { Authorization: cookie.get("token") }
+          });
+
+          setPosts(res.data);
+        } catch (error) {
+          alert("Error Loading Posts");
+        }
+
+        setLoading(false);
+      };
+      getPosts();
+    }, [router.query.username]);
+
   return <>
-  <TopBar {...temp}/>
   {showToastr && <PostDeleteToastr />}
     <div className="layContent">
 
@@ -70,7 +90,7 @@ function ProfilePage(){
         <img 
           className={styles.profilePic}
           src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-          alt=""
+          alt="Profile Pic"
         />
         <div className={styles.profileInfo}>
           <h2>Name</h2>
@@ -261,21 +281,21 @@ function ProfilePage(){
 //   );
 // }
 
-// ProfilePage.getInitialProps = async ctx => {
-//   try {
-//     const { username } = ctx.query;
-//     const { token } = parseCookies(ctx);
+ProfilePage.getInitialProps = async ctx => {
+  try {
+    const { username } = ctx.query;
+    const { token } = parseCookies(ctx);
 
-//     const res = await axios.get(`${baseUrl}/api/profile/${username}`, {
-//       headers: { Authorization: token }
-//     });
+    const res = await axios.get(`${baseUrl}/api/profile/${username}`, {
+      headers: { Authorization: token }
+    });
 
-//     const { profile, followersLength, followingLength } = res.data;
+    const { profile, postsLength, followersLength, followingLength } = res.data;
 
-//     return { profile, followersLength, followingLength };
-//   } catch (error) {
-//     return { errorLoading: true };
-//   }
-// };
+    return { profile, postsLength, followersLength, followingLength };
+  } catch (error) {
+    return { errorLoading: true };
+  }
+};
 
 export default ProfilePage;
