@@ -24,12 +24,12 @@ const Friend = ({ showButton, isFollowing, friend, updateStats }) => {
         {showButton && (
           <Button className={styles.followUserButton} 
           disabled={followLoading}
-          onClick={()=>{
+          onClick={async()=>{
             setFollowLoading(true);
 
             isFollowing
-              ? unfollowUser(friend._id, updateStats)
-              : followUser(friend._id, updateStats);
+              ? await unfollowUser(friend._id, updateStats)
+              : await followUser(friend._id, updateStats);
 
             setFollowLoading(false);
           }}

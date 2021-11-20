@@ -21,6 +21,7 @@ import Following from "../../components/Profile/Following";
 import UpdateProfile from "../../components/Profile/UpdateProfile";
 import Settings from "../../components/Profile/Settings";
 import { PostDeleteToastr } from "../../components/Layout/Toastr";
+import { followUser, unfollowUser } from "../../utils/profileActions";
 
 function ProfilePage({profile, postsLength, followersLength, followingLength, errorLoading, user, userFollowStats}){
 
@@ -29,6 +30,7 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
   const [showToastr, setShowToastr] = useState(false);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [followLoading, setFollowLoading] = useState(false);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
@@ -106,7 +108,19 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
         </div>
         {ownAccount ? 
           <Button className={styles.updateProfile}><i className="fas fa-user-edit"/>Update Profile</Button> :
-          <Button className={styles.followButton}>{isFollowing ? `Following` : `Follow`}</Button>
+          <Button 
+          className={styles.followButton}
+          disabled={followLoading}
+          onClick={async()=>{
+            setFollowLoading(true);
+
+            isFollowing
+              ? await unfollowUser(profile._id, setUserFollowStats)
+              : await followUser(profile._id, setUserFollowStats);
+
+            setFollowLoading(false);
+          }}
+          >{isFollowing ? `Following` : `Follow`}</Button>
         }
       </Card>
 
