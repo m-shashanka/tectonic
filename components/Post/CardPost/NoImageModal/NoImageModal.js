@@ -91,7 +91,7 @@ export default function NoImageModal({post,user,setLikes,likes,isLiked,comments,
 
           {showLikes && 
             <div className={styles.postLikes}>
-              {!loading && <div className={styles.allLikes}>
+              {!loading && likesList.length > 0 && <div className={styles.allLikes}>
                 {likesList.map(like=> <LikesListUser key={like._id} user={like.user} expand />)}
               </div>}
               {loading && <Spinner className={styles.likesLoader} />}

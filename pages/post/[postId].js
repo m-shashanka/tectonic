@@ -1,85 +1,118 @@
-import { useState,useEffect } from "react";
-import { PostDeleteToastr } from "../../components/Layout/Toastr";
+import { useState, useEffect } from "react";
 import Card from "../../components/Layout/Card/Card";
-import DeletePost from "../../components/Post/CardPost/DeletePost/DeletePost";
 import LikesListUser from "../../components/Post/LikesList/LikesListUser/LikesListUser";
 import Comment from "../../components/Post/Comment/Comment";
 import CommentInputField from "../../components/Post/CommentInputField/CommentInputField";
+import calculateTime from "../../utils/calculateTime";
+import { likePost } from "../../utils/postActions";
+import { Axios } from "../../utils/postActions";
+import catchErrors from "../../utils/catchErrors";
+import Link from "next/link";
+import { parseCookies } from "nookies";
 import { NoPostFound } from "../../components/Layout/NoData/NoData";
+import axios from "axios";
+import baseUrl from "../../utils/baseUrl";
+import Spinner from "../../components/Layout/Spinner/Spinner";
 import styles from "./post.module.css";
 
-export default function PostPage(){
+export default function PostPage({ post, errorLoading, user }){
+
   const [showLikes, setShowLikes] = useState(false);
 
-  const [showToastr, setShowToastr] = useState(false);
+  const [likes, setLikes] = useState(post.likes);
+
+  const [likesList,setLikesList] = useState([]);
+
+  const [loading,setLoading] = useState(false);
+
+  const isLiked = post.likes.length > 0 && post.likes.filter(like => like.user === user._id).length > 0;
+
+  const [comments, setComments] = useState(post.comments);
+
+  const getLikesList = async () => {
+    setLoading(true);
+    try {
+      const res = await Axios.get(`/like/${postId}`);
+      setLikesList(res.data);
+    } catch (error) {
+      alert(catchErrors(error));
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    showToastr && setTimeout(() => setShowToastr(false), 3000);
-  }, [showToastr]);
+    getLikesList();
+  }, [likes]);
 
   return (
     <>
-  {showToastr && <PostDeleteToastr />}
   <div className="layContent">
-    {/* <NoPostFound /> */}
-    <Card className={styles.postCard}>
+    {!errorLoading ? <Card className={styles.postCard}>
         <div className={styles.postHeader}>
           <div className={styles.postInfo}>
-            <div className={styles.userPic}>
-              <img
-                src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-                alt=""
-              />
-            </div>
+            <Link href={`/${post.user.username}`}>
+                <div className={styles.userPic}>
+                  <img
+                    src={post.user.profilePicUrl}
+                    alt="User Profile Pic"
+                  />
+                </div>
+            </Link>
             <div className={styles.userInfo}>
-              <h3>Shashank</h3>
-              <span>Date and Time</span>
-              <span>, Location</span>
+              <Link href={`/${post.user.username}`}>
+                <h3>{post.user.username}</h3>
+              </Link>
+              <span>{calculateTime(post.createdAt)}</span>
+              {post.location && <span>{`, ${post.location}`}</span>}
             </div>
           </div>
-          <DeletePost setShowToastr={setShowToastr}/>
-          {/* <DeletePost id={post._id} setPosts={setPosts} setShowToastr={setShowToastr} /> */}
         </div>
 
         <div className={styles.postContent}>
-          <p>Today was a good day!</p>
-          <img
-            src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-            alt=""
-          />
+          <p>{post.text}</p>
+          {post.picUrl && <img
+            src={post.picUrl}
+            alt="Post Image"
+          />}
         </div>
 
         <div className={styles.postStats}>
           <div className={styles.likes}>
-          <i className="fas fa-heart" />
-              <span
-                className={styles.likesCount}
-                onClick={() => setShowLikes(true)}
-              >5 likes</span>
+            <i 
+              className={isLiked ? "fas fa-heart" : "far fa-heart"} 
+              onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
+            />
+            {likes.length > 0 && 
+              <span className={styles.likesCount} onClick={() => setShowLikes(true)}>
+                {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}</span>}
           </div>
           <i className={`${styles.comments} far fa-comments`} onClick={() => setShowLikes(false)}/>
         </div>
 
         {!showLikes && <div className={styles.postComments}>
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-              <Comment />
-            <CommentInputField />
+            {comments.length > 0 &&
+              comments.map(
+                comment =>
+                    <Comment
+                      key={comment._id}
+                      comment={comment}
+                      postId={post._id}
+                      user={user}
+                      setComments={setComments}
+                    />
+            )}
+            <CommentInputField user={user} postId={post._id} setComments={setComments} />
           </div>}
 
           {showLikes && 
             <div className={styles.postLikes}>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
-                <LikesListUser expand={true}/>
+              {!loading && likesList.length > 0 && <div>
+                {likesList.map(like=> <LikesListUser key={like._id} user={like.user} expand />)}
+              </div>}
+              {loading && <Spinner className={styles.likesLoader} />}
             </div>
           }
-    </Card>
+    </Card> : <NoPostFound />}
   </div>
     </>
   );
@@ -194,19 +227,19 @@ export default function PostPage(){
 //   );
 // }
 
-// PostPage.getInitialProps = async ctx => {
-//   try {
-//     const { postId } = ctx.query;
-//     const { token } = parseCookies(ctx);
+PostPage.getInitialProps = async ctx => {
+  try {
+    const { postId } = ctx.query;
+    const { token } = parseCookies(ctx);
 
-//     const res = await axios.get(`${baseUrl}/api/posts/${postId}`, {
-//       headers: { Authorization: token }
-//     });
+    const res = await axios.get(`${baseUrl}/api/posts/${postId}`, {
+      headers: { Authorization: token }
+    });
 
-//     return { post: res.data };
-//   } catch (error) {
-//     return { errorLoading: true };
-//   }
-// };
+    return { post: res.data };
+  } catch (error) {
+    return { errorLoading: true };
+  }
+};
 
 // export default PostPage;

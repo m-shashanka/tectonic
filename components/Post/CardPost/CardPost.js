@@ -68,8 +68,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
             </div>
           </div>
           {(user.role === "root" || post.user._id === user._id) &&
-            <DeletePost id={post._id} setPosts={setPosts} setShowToastr={setShowToastr} />
-          }
+            <DeletePost id={post._id} setPosts={setPosts} setShowToastr={setShowToastr} />}
         </div>
 
         <div className={styles.postContent}>
