@@ -1,41 +1,68 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
+import cookie from "js-cookie";
 import CreatePost from "../components/Post/CreatePost/CreatePost";
 import CardPost from "../components/Post/CardPost/CardPost";
 import { PostDeleteToastr } from "../components/Layout/Toastr";
 import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData/NoData";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 function Index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
   const [showToastr, setShowToastr] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [pageNumber, setPageNumber] = useState(2);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
   }, [showToastr]);
 
-  if (errorLoading || posts.length === 0)
-    return (
-      <div className="layContent">
-        <NoPosts />
-      </div>
-    );
+  const fetchDataOnScroll = async () => {
+    try {
+      const res = await axios.get(`${baseUrl}/api/posts`, {
+        headers: { Authorization: cookie.get("token") },
+        params: { pageNumber },
+      });
+
+      if (res.data.length === 0) setHasMore(false);
+
+      setPosts((prev) => [...prev, ...res.data]);
+      setPageNumber((prev) => prev + 1);
+    } catch (error) {
+      alert("Error fetching Posts");
+    }
+  };
 
   return (
     <>
       {showToastr && <PostDeleteToastr />}
       <div className="layContent">
         <CreatePost user={user} setPosts={setPosts} />
-        {(errorLoading || posts.length === 0) ? <NoPosts /> : posts.map((post) => (
-          <CardPost
-            key={post._id}
-            post={post}
-            user={user}
-            setPosts={setPosts}
-            setShowToastr={setShowToastr}
-          />
-        ))}
+        {(errorLoading || posts.length === 0) ? <NoPosts /> : 
+          <InfiniteScroll
+            hasMore={hasMore}
+            next={fetchDataOnScroll}
+            loader={<h4 style={{ textAlign: 'center' }}>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+            dataLength={posts.length}
+          >
+          {posts.map((post) => (
+            <CardPost
+              key={post._id}
+              post={post}
+              user={user}
+              setPosts={setPosts}
+              setShowToastr={setShowToastr}
+            />
+          ))}
+          </InfiniteScroll>
+        }
       </div>
     </>
   );
@@ -191,7 +218,7 @@ Index.getInitialProps = async (ctx) => {
 
     const res = await axios.get(`${baseUrl}/api/posts`, {
       headers: { Authorization: token },
-      params: { pageNumber: 1 },
+      params: { pageNumber: 1 }, //will be available on backend in request.query
     });
 
     return { postsData: res.data };
