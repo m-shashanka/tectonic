@@ -1,10 +1,10 @@
 import { useState,useEffect } from "react";
-import TopBar from "../../components/Layout/TopBar/TopBar";
 import Card from "../../components/Layout/Card/Card";
 import Button from "../../components/Layout/Button/Button";
+import { passwordUpdate, toggleMessagePopup } from "../../utils/profileActions";
 import styles from "./settings.module.css";
 
-export default function Settings(){
+export default function Settings({user}){
 
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
@@ -20,17 +20,22 @@ export default function Settings(){
             };
         });
     }
-
-    const submit = () => {
-
+    
+    const [updatePassword,setUpdatePassword] = useState(false);
+    
+    const [showNotification,setShowNotification] = useState(user.newMessagePopup);
+    
+    const submit = async () => {
+        setLoading(true);
+        await passwordUpdate(setSuccess,password,setServerError);
+        setLoading(false);
+        setPassword({password1:"",password2:""});
+        setShowPassword1(false);
+        setShowPassword2(false);
     }
 
-    const [updatePassword,setUpdatePassword] = useState(false);
-
-    const [showNotification,setShowNotification] = useState(true);
-
     const handleNotification = (e) => {
-        setShowNotification(prev => ! prev);
+        toggleMessagePopup(showNotification,setShowNotification);
     }
 
     const [serverError,setServerError] = useState(null);
@@ -43,20 +48,13 @@ export default function Settings(){
             setTimeout(() => setSuccess(false), 5000);
             setPassword({password1:"",password2:""});
         }
-    }, [success]); 
-
-    let user = {
-        unreadNotification:"hello",
-        email:"ha",
-        unreadMessage:"an",
-        username:"bs"
-      }
-    
-      let temp = {user}
+        else if(!success && serverError){
+            setTimeout(() => setServerError(null), 5000);
+        }
+    }, [success,serverError]); 
 
     return (
         <>
-        <TopBar {...temp}/>
         <div className="layContent">
             <h1 style={{textAlign:"center"}}>Account Settings</h1>
             <Card className={styles.settingsCard}>
@@ -105,13 +103,13 @@ export default function Settings(){
                         }}
                         />
                     </div>
-                    <Button className={styles.submitButton} onClick={submit}>Confirm</Button>
+                    <Button className={styles.submitButton} onClick={submit} disabled={loading || password.password1 === "" || password.password2 === ""}>Confirm</Button>
                     {serverError && <p style={{color:"red"}}>{serverError}</p>}
                     {success && <p style={{color:"green"}}>Updated password successfully.</p>}
                 </section>}
                 <hr />
                 <section className={styles.popUpNotification}>
-                    <h3><i className="fab fa-telegram-plane"/>Show New Notification Popup?</h3>
+                    <h3><i className="fab fa-telegram-plane"/>Show New Message Popup?</h3>
                     <label className={styles.switch}>
                         <input type="checkbox" defaultChecked={showNotification} onChange={handleNotification} />
                         <span className={styles.slider}></span>

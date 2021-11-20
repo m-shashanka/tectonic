@@ -52,23 +52,20 @@ export const profileUpdate = async (profile, setLoading, setError, profilePicUrl
   }
 };
 
-export const passwordUpdate = async (setSuccess, userPasswords) => {
+export const passwordUpdate = async (setSuccess, userPasswords, setError) => {
   const { currentPassword, newPassword } = userPasswords;
   try {
     await Axios.post(`/settings/password`, { currentPassword, newPassword });
-
     setSuccess(true);
   } catch (error) {
-    alert(catchErrors(error));
+    setError(catchErrors(error));
   }
 };
 
-export const toggleMessagePopup = async (popupSetting, setPopupSetting, setSuccess) => {
+export const toggleMessagePopup = async (popupSetting, setPopupSetting) => {
   try {
     await Axios.post(`/settings/messagePopup`);
-
     setPopupSetting(!popupSetting);
-    setSuccess(true);
   } catch (error) {
     alert(catchErrors(error));
   }
