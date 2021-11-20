@@ -107,7 +107,9 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
           <p>{profile.bio}</p>
         </div>
         {ownAccount ? 
-          <Button className={styles.updateProfile}><i className="fas fa-user-edit"/>Update Profile</Button> :
+          <Button className={styles.updateProfile}
+            onClick={()=>{router.push('/update-profile')}}
+          ><i className="fas fa-user-edit"/>Update Profile</Button> :
           <Button 
           className={styles.followButton}
           disabled={followLoading}

@@ -35,21 +35,17 @@ export const unfollowUser = async (userToUnfollowId, setUserFollowStats) => {
   }
 };
 
-export const profileUpdate = async (profile, setLoading, setError, profilePicUrl) => {
+export const profileUpdate = async (profile, setLoading, setError, profilePicUrl,username) => {
   try {
-    const { bio, facebook, youtube, twitter, instagram } = profile;
+    const {bio} = profile;
 
     await Axios.post(`/update`, {
       bio,
-      facebook,
-      youtube,
-      twitter,
-      instagram,
       profilePicUrl
     });
 
     setLoading(false);
-    Router.reload();
+    Router.replace(`/${username}`);
   } catch (error) {
     setError(catchErrors(error));
     setLoading(false);

@@ -1,37 +1,52 @@
 import { useState } from "react";
-import TopBar from "../../components/Layout/TopBar/TopBar";
 import Button from "../../components/Layout/Button/Button";
 import Card from "../../components/Layout/Card/Card";
 import ProfilePic from "../../components/Authentication/Signup/ProfilePic/ProfilePic";
+import Spinner from "../../components/Layout/Spinner/Spinner";
+import { profileUpdate } from "../../utils/profileActions";
+import uploadPic from "../../utils/uploadPicToCloudinary";
 import styles from "./update-profile.module.css";
 
-export default function UpdateProfile(){
+export default function UpdateProfile({user}){
 
     const [media, setMedia] = useState(null);
-    const [text,setText] = useState("user's bio goes here");
+    const [text,setText] = useState(user.bio);
+    const [loading,setLoading] = useState(false);
+    const [serverError,setServerError] = useState(null);
 
-    let user = {
-        unreadNotification:"hello",
-        email:"ha",
-        unreadMessage:"an",
-        username:"bs"
-      }
-    
-      let temp = {user}
+    const submit = async () => {
+
+        setLoading(true);
+        
+        let profilePicUrl;
+        if(media != null){
+            profilePicUrl = await uploadPic(media);
+            if(!profilePicUrl){
+                setLoading(false);
+                setServerError('Error uploading image');
+                return;
+            }
+        }
+
+        let profile = {bio: text};
+
+        await profileUpdate(profile,setLoading,setServerError,profilePicUrl,user.username);
+    }
 
     return (
         <>
-        <TopBar {...temp}/>
         <div className="layContent">
             <Card className={styles.profileUpdate}>
                 <h1>Update Profile</h1>
-                <ProfilePic setMedia={setMedia} userImage={"https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"}/>
+                <ProfilePic setMedia={setMedia} userImage={user.profilePicUrl}/>
                 <div className={styles.bio}>
                     <i className="fas fa-info-circle" />
                     <textarea name="bio" placeholder="Bio" value={text} onChange={(e)=>setText(e.target.value)}/>
                 </div>
-                <Button className={styles.saveButton}>Save</Button>
+                {!loading && <Button className={styles.saveButton}>Save</Button>}
+                {loading && <Spinner />}
             </Card>
+            {serverError && <p style={{marginTop:"20px",color:"red"}}>{serverError}</p>}
         </div>
         </>
     );
