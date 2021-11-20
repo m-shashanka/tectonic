@@ -1,24 +1,46 @@
+import { useState } from "react";
+import Link from "next/link";
+import calculateTime from "../../../utils/calculateTime";
+import {followUser, unfollowUser} from "../../../utils/profileActions";
 import styles from "./followerNotification.module.css";
 
-export default function FollowerNotification() {
+export default function FollowerNotification({notification,loggedUserFollowStats,setUserFollowStats}) {
+
+  const [loading,setLoading] = useState(false);
+
+  const isFollowing = loggedUserFollowStats.following.length > 0 &&
+    loggedUserFollowStats.following.filter(following => following.user === notification.user._id).length > 0;
+
+  const handleChange = async() => {
+    if(loading)
+      return;
+    setLoading(true);
+    isFollowing ? await unfollowUser(notification.user._id, setUserFollowStats) 
+                    : await followUser(notification.user._id, setUserFollowStats);
+    setLoading(false);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.followerDetails}>
-        <div className={styles.userPic}>
-          <img
-            src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-            alt=""
-          />
-        </div>
+        <Link href={`/${notification.user.username}`}>
+          <div className={styles.userPic}>
+            <img
+              src={notification.user.profilePicUrl}
+              alt="Profile Pic"
+            />
+          </div>
+        </Link>
         <div className={styles.followerInfo}>
           <h4>
-            <span>Username</span> started following you.
+          <Link href={`/${notification.user.username}`}><span>{notification.user.username}</span></Link>
+           started following you.
           </h4>
-          <p>4 days ago</p>
+          <p>{calculateTime(notification.date)}</p>
         </div>
       </div>
-      <i className={`fas fa-user-plus ${styles.button}`} />
-      {/* <i className={`fas fa-user-check ${styles.button}`}/> */}
+      <i className={isFollowing ? `fas fa-user-check ${styles.button}` 
+          : `fas fa-user-plus ${styles.button}`} onClick={handleChange} />
     </div>
   );
 }

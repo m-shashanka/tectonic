@@ -1,3 +1,5 @@
 .notificationsCard{
     padding: 5px;
+    max-height: 72vh;
+    overflow-y: auto;
 }

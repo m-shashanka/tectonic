@@ -66,7 +66,7 @@ router.get("/", authMiddleware, async (req, res) => {
           .populate("user")
           .populate("comments.user");
       }
-      //
+      //because in operator needs atleast 2 values to work
       else {
         posts = await PostModel.find({ user: userId })
           .limit(size)

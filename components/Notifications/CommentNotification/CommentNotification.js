@@ -1,29 +1,38 @@
+import Link from "next/link";
+import calculateTime from "../../../utils/calculateTime";
 import styles from "./commentNotification.module.css";
 
-export default function CommentNotification() {
+export default function CommentNotification({notification}) {
   return (
     <div className={styles.container}>
       <div className={styles.commentDetails}>
-        <div className={styles.userPic}>
-          <img
-            src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-            alt=""
-          />
-        </div>
+        <Link href={`/${notification.user.username}`}>
+          <div className={styles.userPic}>
+            <img
+              src={notification.user.profilePicUrl}
+              alt="Profile Pic"
+            />
+          </div>
+        </Link>
         <div className={styles.commentInfo}>
-          <h4>
-            <span>Username</span> commented on your <span>post</span>
+        <h4>
+            <Link href={`/${notification.user.username}`}><span>{notification.user.username}</span></Link> 
+            commented on your 
+            <Link href={`/post/${notification.post._id}`}><span>post</span></Link>
           </h4>
-          <p>4 days ago</p>
+          <p>{calculateTime(notification.date)}</p>
         </div>
       </div>
-      <div className={styles.postImage}>
-        <img
-          src="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png"
-          alt=""
-        />
-      </div>
-      <p className={styles.comment}>Cut text after 5 words</p>
+      {notification.post.picUrl && <Link href={`/post/${notification.post._id}`}>
+        <div className={styles.postImage}>
+          <img
+            src={notification.post.picUrl}
+            alt="Post Pic"
+          />
+      </div></Link>}
+      <p className={styles.comment}>
+        {notification.text.length > 9 ? `${notification.text.substring(0,8)}...` : notification.text}
+      </p>
     </div>
   );
 }

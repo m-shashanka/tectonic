@@ -5,10 +5,13 @@ const setNotificationToUnread = async userId => {
   try {
     const user = await UserModel.findById(userId);
 
-    if (!user.unreadNotification) {
-      user.unreadNotification = true;
-      await user.save();
-    }
+    // if (!user.unreadNotification) {
+    //   user.unreadNotification = true;
+    //   await user.save();
+    // }
+
+    user.unreadNotification++;
+    await user.save();
 
     return;
   } catch (error) {

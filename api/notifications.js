@@ -26,7 +26,7 @@ router.post("/", authMiddleware, async (req, res) => {
     const user = await UserModel.findById(userId);
 
     if (user.unreadNotification) {
-      user.unreadNotification = false;
+      user.unreadNotification = 0;
       await user.save();
     }
     return res.status(200).send("Updated");
