@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styles from "./messageInputField.module.css";
 
-export default function MessageInputField() {
+export default function MessageInputField({socket,user,messagesWith}) {
+  
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
 

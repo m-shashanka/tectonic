@@ -47,37 +47,37 @@ export default function Messages({ chatsData, errorLoading, user }){
     }
   }, []);
 
-  // // LOAD MESSAGES useEffect
-  // useEffect(() => {
-  //   const loadMessages = () => {
-  //     socket.current.emit("loadMessages", {
-  //       userId: user._id,
-  //       messagesWith: router.query.message
-  //     });
+  // LOAD MESSAGES useEffect
+  useEffect(() => {
+    const loadMessages = () => {
+      socket.current.emit("loadMessages", {
+        userId: user._id,
+        messagesWith: router.query.message
+      });
 
-  //     socket.current.on("messagesLoaded", ({ chat }) => {
-  //       setMessages(chat.messages);
-  //       setBannerData({
-  //         username: chat.messagesWith.username,
-  //         profilePicUrl: chat.messagesWith.profilePicUrl
-  //       });
+      socket.current.on("messagesLoaded", ({ chat }) => {
+        setMessages(chat.messages);
+        setBannerData({
+          username: chat.messagesWith.username,
+          profilePicUrl: chat.messagesWith.profilePicUrl
+        });
 
-  //       openChatId.current = chat.messagesWith._id;
-  //       // divRef.current && scrollDivToBottom(divRef);
-  //     });
+        openChatId.current = chat.messagesWith._id;
+        // divRef.current && scrollDivToBottom(divRef);
+      });
 
-  //     // socket.current.on("noChatFound", async () => {
-  //     //   const { username, profilePicUrl } = await getUserInfo(router.query.message);
+      // socket.current.on("noChatFound", async () => {
+      //   const { username, profilePicUrl } = await getUserInfo(router.query.message);
 
-  //     //   setBannerData({ username, profilePicUrl });
-  //     //   setMessages([]);
+      //   setBannerData({ username, profilePicUrl });
+      //   setMessages([]);
 
-  //     //   openChatId.current = router.query.message;
-  //     // });
-  //   };
+      //   openChatId.current = router.query.message;
+      // });
+    };
 
-  //   if (socket.current && router.query.message) loadMessages();
-  // }, [router.query.message]);
+    if (socket.current && router.query.message) loadMessages();
+  }, [router.query.message]);
 
   return (
     <>
@@ -105,9 +105,17 @@ export default function Messages({ chatsData, errorLoading, user }){
         </div>
 
         <div className={styles.rightBar}>
+          {router.query.message && 
           <Card className={styles.chatBox}>
-            <ChatBox />
-          </Card>
+            <ChatBox 
+              bannerData={bannerData} 
+              messages={messages} 
+              user={user} 
+              setMessages={setMessages}
+              messagesWith={openChatId.current}
+              socket={socket.current}
+            />
+          </Card>}
         </div>
 
       </div>

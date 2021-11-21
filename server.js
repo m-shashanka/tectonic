@@ -74,11 +74,11 @@ io.on("connection", socket => {
   //   }
   // });
 
-  // socket.on("loadMessages", async ({ userId, messagesWith }) => {
-  //   const { chat, error } = await loadMessages(userId, messagesWith);
+  socket.on("loadMessages", async ({ userId, messagesWith }) => {
+    const { chat, error } = await loadMessages(userId, messagesWith);
 
-  //   !error ? socket.emit("messagesLoaded", { chat }) : socket.emit("noChatFound");
-  // });
+    !error ? socket.emit("messagesLoaded", { chat }) : socket.emit("noChatFound");
+  });
 
   // socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
   //   const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
