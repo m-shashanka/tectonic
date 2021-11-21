@@ -2,9 +2,13 @@ import {useRouter} from "next/router";
 import calculateTime from "../../../utils/calculateTime";
 import styles from "./messagePreview.module.css";
 
-export default function MessagePreview({chat,setChats}){
+export default function MessagePreview({chat, setChats, connectedUsers}){
 
     const router = useRouter();
+
+    //use this to show online
+    const isOnline = connectedUsers.length > 0 &&
+        connectedUsers.filter(user => user.userId === chat.messagesWith).length > 0;
 
     const isActive = (router.query.message === chat.messagesWith);
 

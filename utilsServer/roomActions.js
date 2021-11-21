@@ -1,33 +1,29 @@
 const users = [];
 
-const addUser = async (userId, socketId) => {
+const addUser = (userId, socketId) => {
   const user = users.find(user => user.userId === userId);
 
-  if (user && user.socketId === socketId) {
-    return users;
-  }
-  //
-  else {
-    if (user && user.socketId !== socketId) {
-      await removeUser(user.socketId);
-    }
+  if (user && user.socketId === socketId) 
+    return;
 
-    const newUser = { userId, socketId };
+  if (user && user.socketId !== socketId) 
+      removeUser(user.socketId);
 
-    users.push(newUser);
+  const newUser = { userId, socketId };
 
-    return users;
-  }
+  users.push(newUser);
 };
 
-const removeUser = async socketId => {
+const onlineUsers = (userId) => {
+  return users.filter(user => user.userId !== userId);
+}
+
+const removeUser = socketId => {
   const indexOf = users.map(user => user.socketId).indexOf(socketId);
 
-  await users.splice(indexOf, 1);
-
-  return;
+  users.splice(indexOf, 1);
 };
 
 const findConnectedUser = userId => users.find(user => user.userId === userId);
 
-module.exports = { addUser, removeUser, findConnectedUser };
+module.exports = { addUser, onlineUsers, removeUser, findConnectedUser };

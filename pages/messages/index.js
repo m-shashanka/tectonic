@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import io from "socket.io-client";
 import { useRouter } from "next/router";
 import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
@@ -16,12 +17,28 @@ export default function Messages({ chatsData, errorLoading, user }){
 
   const router = useRouter();
 
+  const socket = useRef();
+  const [connectedUsers, setConnectedUsers] = useState([]);
+
+  //CONNECTION useEffect
   useEffect(() => {
+    if (!socket.current) {
+      socket.current = io(baseUrl);
+    }
+
+    if (socket.current) {
+      socket.current.emit("join", { userId: user._id });
+
+      socket.current.on("connectedUsers", ({ users }) => {
+        setConnectedUsers(users);
+      });
+
       if (chats.length > 0 && !router.query.message) {
         router.push(`/messages?message=${chats[0].messagesWith}`, undefined, {
           shallow: true
         });
       }
+    }
   }, []);
 
   return (
@@ -40,6 +57,7 @@ export default function Messages({ chatsData, errorLoading, user }){
                     key={i}
                     chat={chat}
                     setChats={setChats}
+                    connectedUsers={connectedUsers}
                   />
                   {(i !== chats.length-1) && <hr />}
                 </>

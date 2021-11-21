@@ -3,7 +3,7 @@ require("dotenv").config({ path: "./config.env" });
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
-// const io = require("socket.io")(server);
+const io = require("socket.io")(server);
 
 const next = require("next");
 const dev = process.env.NODE_ENV !== "production";
@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3000;
 const connectDb = require("./utilsServer/connectDb");
 connectDb();
 
-// const { addUser, removeUser, findConnectedUser } = require("./utilsServer/roomActions");
+const { addUser, onlineUsers, removeUser, findConnectedUser } = require("./utilsServer/roomActions");
 // const {
 //   loadMessages,
 //   sendMsg,
@@ -27,93 +27,100 @@ connectDb();
 
 // const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
 
-// io.on("connection", socket => {
-//   socket.on("join", async ({ userId }) => {
-//     const users = await addUser(userId, socket.id);
-//     console.log(users);
+io.on("connection", socket => {
+  var interval;
+  
+  socket.on("join", ({ userId }) => {
+    addUser(userId, socket.id);
+    console.log(users);
 
-//     setInterval(() => {
-//       socket.emit("connectedUsers", {
-//         users: users.filter(user => user.userId !== userId)
-//       });
-//     }, 10000);
-//   });
+    if(interval)
+      clearInterval(interval);
 
-//   socket.on("likePost", async ({ postId, userId, like }) => {
-//     const {
-//       success,
-//       name,
-//       profilePicUrl,
-//       username,
-//       postByUserId,
-//       error
-//     } = await likeOrUnlikePost(postId, userId, like);
+    interval = setInterval(() => {
+      const connectedUsers = onlineUsers(userId);
+      socket.emit("connectedUsers", {users: connectedUsers});
+    }, 10000);
+  });
 
-//     if (success) {
-//       socket.emit("postLiked");
+  // socket.on("likePost", async ({ postId, userId, like }) => {
+  //   const {
+  //     success,
+  //     name,
+  //     profilePicUrl,
+  //     username,
+  //     postByUserId,
+  //     error
+  //   } = await likeOrUnlikePost(postId, userId, like);
 
-//       if (postByUserId !== userId) {
-//         const receiverSocket = findConnectedUser(postByUserId);
+  //   if (success) {
+  //     socket.emit("postLiked");
 
-//         if (receiverSocket && like) {
-//           // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
-//           io.to(receiverSocket.socketId).emit("newNotificationReceived", {
-//             name,
-//             profilePicUrl,
-//             username,
-//             postId
-//           });
-//         }
-//       }
-//     }
-//   });
+  //     if (postByUserId !== userId) {
+  //       const receiverSocket = findConnectedUser(postByUserId);
 
-//   socket.on("loadMessages", async ({ userId, messagesWith }) => {
-//     const { chat, error } = await loadMessages(userId, messagesWith);
+  //       if (receiverSocket && like) {
+  //         // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
+  //         io.to(receiverSocket.socketId).emit("newNotificationReceived", {
+  //           name,
+  //           profilePicUrl,
+  //           username,
+  //           postId
+  //         });
+  //       }
+  //     }
+  //   }
+  // });
 
-//     !error ? socket.emit("messagesLoaded", { chat }) : socket.emit("noChatFound");
-//   });
+  // socket.on("loadMessages", async ({ userId, messagesWith }) => {
+  //   const { chat, error } = await loadMessages(userId, messagesWith);
 
-//   socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
-//     const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
-//     const receiverSocket = findConnectedUser(msgSendToUserId);
+  //   !error ? socket.emit("messagesLoaded", { chat }) : socket.emit("noChatFound");
+  // });
 
-//     if (receiverSocket) {
-//       // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
-//       io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
-//     }
-//     //
-//     else {
-//       await setMsgToUnread(msgSendToUserId);
-//     }
+  // socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
+  //   const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
+  //   const receiverSocket = findConnectedUser(msgSendToUserId);
 
-//     !error && socket.emit("msgSent", { newMsg });
-//   });
+  //   if (receiverSocket) {
+  //     // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+  //     io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+  //   }
+  //   //
+  //   else {
+  //     await setMsgToUnread(msgSendToUserId);
+  //   }
 
-//   socket.on("deleteMsg", async ({ userId, messagesWith, messageId }) => {
-//     const { success } = await deleteMsg(userId, messagesWith, messageId);
+  //   !error && socket.emit("msgSent", { newMsg });
+  // });
 
-//     if (success) socket.emit("msgDeleted");
-//   });
+  // socket.on("deleteMsg", async ({ userId, messagesWith, messageId }) => {
+  //   const { success } = await deleteMsg(userId, messagesWith, messageId);
 
-//   socket.on("sendMsgFromNotification", async ({ userId, msgSendToUserId, msg }) => {
-//     const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
-//     const receiverSocket = findConnectedUser(msgSendToUserId);
+  //   if (success) socket.emit("msgDeleted");
+  // });
 
-//     if (receiverSocket) {
-//       // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
-//       io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
-//     }
-//     //
-//     else {
-//       await setMsgToUnread(msgSendToUserId);
-//     }
+  // socket.on("sendMsgFromNotification", async ({ userId, msgSendToUserId, msg }) => {
+  //   const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
+  //   const receiverSocket = findConnectedUser(msgSendToUserId);
 
-//     !error && socket.emit("msgSentFromNotification");
-//   });
+  //   if (receiverSocket) {
+  //     // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+  //     io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+  //   }
+  //   //
+  //   else {
+  //     await setMsgToUnread(msgSendToUserId);
+  //   }
 
-//   socket.on("disconnect", () => removeUser(socket.id));
-// });
+  //   !error && socket.emit("msgSentFromNotification");
+  // });
+
+  socket.on("disconnect", () => {
+    clearInterval(interval);
+    removeUser(socket.id)
+  });
+});
 
 nextApp.prepare().then(() => {
   app.use("/api/signup", require("./api/signup"));
