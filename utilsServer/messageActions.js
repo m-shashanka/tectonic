@@ -73,10 +73,8 @@ const setMsgToUnread = async userId => {
   try {
     const user = await UserModel.findById(userId);
 
-    if (!user.unreadMessage) {
-      user.unreadMessage = true;
-      await user.save();
-    }
+    user.unreadMessage++;
+    await user.save();
 
     return;
   } catch (error) {

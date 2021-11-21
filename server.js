@@ -20,8 +20,8 @@ connectDb();
 const { addUser, onlineUsers, removeUser, findConnectedUser } = require("./utilsServer/roomActions");
 const {
   loadMessages,
-  // sendMsg,
-  // setMsgToUnread,
+  sendMsg,
+  setMsgToUnread,
   // deleteMsg
 } = require("./utilsServer/messageActions");
 
@@ -80,21 +80,20 @@ io.on("connection", socket => {
     !error ? socket.emit("messagesLoaded", { chat }) : socket.emit("noChatFound");
   });
 
-  // socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
-  //   const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
-  //   const receiverSocket = findConnectedUser(msgSendToUserId);
+  socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
+    const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
+    const receiverSocket = findConnectedUser(msgSendToUserId);
 
-  //   if (receiverSocket) {
-  //     // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
-  //     io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
-  //   }
-  //   //
-  //   else {
-  //     await setMsgToUnread(msgSendToUserId);
-  //   }
+    if (receiverSocket) {
+      // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
+      io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+    }
+    else {
+      await setMsgToUnread(msgSendToUserId);
+    }
 
-  //   !error && socket.emit("msgSent", { newMsg });
-  // });
+    !error && socket.emit("msgSent", { newMsg });
+  });
 
   // socket.on("deleteMsg", async ({ userId, messagesWith, messageId }) => {
   //   const { success } = await deleteMsg(userId, messagesWith, messageId);

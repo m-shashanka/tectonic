@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./messageInputField.module.css";
 
-export default function MessageInputField({socket,user,messagesWith}) {
+export default function MessageInputField({sendMsg}) {
   
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -9,8 +9,10 @@ export default function MessageInputField({socket,user,messagesWith}) {
   const handleSubmit = async () =>{
     if(loading || !text || text.trim().length === 0)
       return;
-    // setLoading(true);
-    // setLoading(false);
+    setLoading(true);
+    sendMsg(text);
+    setLoading(false);
+    setText("");
   }
 
   return (
