@@ -30,7 +30,7 @@ export default function Messages({ chatsData, errorLoading, user }){
 
         <div className={styles.leftBar}>
           <h2>Messages</h2>
-          <SearchMessages />
+          <SearchMessages chats={chats} setChats={setChats} />
           
           <div className={styles.messagePreviews}>
             {(!errorLoading && chats.length) > 0 ? <>

@@ -34,7 +34,7 @@ export default function SearchBar() {
             })
           });
     
-          if (res.data.length === 0) {
+          if (!res.data || res.data.length === 0) {
             results.length > 0 && setResults([]);
     
             return setLoading(false);
