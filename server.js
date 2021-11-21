@@ -18,29 +18,31 @@ const connectDb = require("./utilsServer/connectDb");
 connectDb();
 
 const { addUser, onlineUsers, removeUser, findConnectedUser } = require("./utilsServer/roomActions");
-// const {
-//   loadMessages,
-//   sendMsg,
-//   setMsgToUnread,
-//   deleteMsg
-// } = require("./utilsServer/messageActions");
+const {
+  loadMessages,
+  // sendMsg,
+  // setMsgToUnread,
+  // deleteMsg
+} = require("./utilsServer/messageActions");
 
 // const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
 
 io.on("connection", socket => {
-  var interval;
-  
+  // var interval;
+
   socket.on("join", ({ userId }) => {
     addUser(userId, socket.id);
     console.log(users);
 
-    if(interval)
-      clearInterval(interval);
+    // if(interval)
+    //   clearInterval(interval);
 
-    interval = setInterval(() => {
-      const connectedUsers = onlineUsers(userId);
-      socket.emit("connectedUsers", {users: connectedUsers});
-    }, 10000);
+    // interval = setInterval(() => {
+    //   const connectedUsers = onlineUsers(userId);
+    //   socket.emit("connectedUsers", {users: connectedUsers});
+    // }, 10000);
+    const connectedUsers = onlineUsers();
+    io.emit('connectedUsers',{users: connectedUsers});
   });
 
   // socket.on("likePost", async ({ postId, userId, like }) => {
@@ -117,8 +119,10 @@ io.on("connection", socket => {
   // });
 
   socket.on("disconnect", () => {
-    clearInterval(interval);
-    removeUser(socket.id)
+    // clearInterval(interval);
+    removeUser(socket.id);
+    const connectedUsers = onlineUsers();
+    io.emit('connectedUsers',{users: connectedUsers});
   });
 });
 

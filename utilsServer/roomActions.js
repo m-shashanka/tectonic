@@ -14,8 +14,8 @@ const addUser = (userId, socketId) => {
   users.push(newUser);
 };
 
-const onlineUsers = (userId) => {
-  return users.filter(user => user.userId !== userId);
+const onlineUsers = () => {
+  return users;
 }
 
 const removeUser = socketId => {

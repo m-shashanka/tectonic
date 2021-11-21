@@ -20,6 +20,12 @@ export default function Messages({ chatsData, errorLoading, user }){
   const socket = useRef();
   const [connectedUsers, setConnectedUsers] = useState([]);
 
+  const [messages, setMessages] = useState([]);
+  const [bannerData, setBannerData] = useState({ username: "", profilePicUrl: "" });
+
+  // This ref is for persisting the state of query string in url throughout re-renders
+  const openChatId = useRef("");
+
   //CONNECTION useEffect
   useEffect(() => {
     if (!socket.current) {
@@ -40,6 +46,38 @@ export default function Messages({ chatsData, errorLoading, user }){
       }
     }
   }, []);
+
+  // // LOAD MESSAGES useEffect
+  // useEffect(() => {
+  //   const loadMessages = () => {
+  //     socket.current.emit("loadMessages", {
+  //       userId: user._id,
+  //       messagesWith: router.query.message
+  //     });
+
+  //     socket.current.on("messagesLoaded", ({ chat }) => {
+  //       setMessages(chat.messages);
+  //       setBannerData({
+  //         username: chat.messagesWith.username,
+  //         profilePicUrl: chat.messagesWith.profilePicUrl
+  //       });
+
+  //       openChatId.current = chat.messagesWith._id;
+  //       // divRef.current && scrollDivToBottom(divRef);
+  //     });
+
+  //     // socket.current.on("noChatFound", async () => {
+  //     //   const { username, profilePicUrl } = await getUserInfo(router.query.message);
+
+  //     //   setBannerData({ username, profilePicUrl });
+  //     //   setMessages([]);
+
+  //     //   openChatId.current = router.query.message;
+  //     // });
+  //   };
+
+  //   if (socket.current && router.query.message) loadMessages();
+  // }, [router.query.message]);
 
   return (
     <>
