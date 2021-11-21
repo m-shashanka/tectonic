@@ -11,6 +11,10 @@
     background-color: gainsboro;
 }
 
+.active{
+    background-color: gainsboro;
+}
+
 .messageInfo{
     display: flex;
 }

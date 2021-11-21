@@ -122,7 +122,7 @@ nextApp.prepare().then(() => {
   app.use("/api/posts",require('./api/posts'));
   app.use("/api/profile", require("./api/profile"));
   app.use("/api/notifications", require("./api/notifications"));
-  // app.use("/api/chats", require("./api/chats"));
+  app.use("/api/chats", require("./api/chats"));
   // app.use("/api/reset", require("./api/reset"));
 
   //(files/pages) in nextJS are server side rendered, so without below line pages folder files won't work

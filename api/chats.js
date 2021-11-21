@@ -17,9 +17,9 @@ router.get("/", authMiddleware, async (req, res) => {
     if (user.chats.length > 0) {
       chatsToBeSent = await user.chats.map(chat => ({
         messagesWith: chat.messagesWith._id,
-        name: chat.messagesWith.name,
+        username: chat.messagesWith.username,
         profilePicUrl: chat.messagesWith.profilePicUrl,
-        lastMessage: chat.messages[chat.messages.length - 1].msg,
+        lastMessage: chat.messages[chat.messages.length - 1].msg, //send the most recent message only
         date: chat.messages[chat.messages.length - 1].date
       }));
     }

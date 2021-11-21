@@ -1,24 +1,31 @@
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
+import baseUrl from "../../utils/baseUrl";
+import { parseCookies } from "nookies";
 import SearchMessages from "../../components/Messages/SearchMessages/SearchMessages";
-import TopBar from "../../components/Layout/TopBar/TopBar";
 import Card from "../../components/Layout/Card/Card";
 import styles from './messages.module.css';
 import MessagePreview from "../../components/Messages/MessagePreview/MessagePreview";
 import ChatBox from "../../components/Messages/ChatBox/ChatBox";
 import { NoMessages } from "../../components/Layout/NoData/NoData";
 
-export default function Messages(){
-  let user = {
-    unreadNotification: "hello",
-    email: "ha",
-    unreadMessage: "an",
-    username: "bs",
-  };
+export default function Messages({ chatsData, errorLoading, user }){
 
-  let temp = { user };
+  const [chats, setChats] = useState(chatsData || []);
+
+  const router = useRouter();
+
+  useEffect(() => {
+      if (chats.length > 0 && !router.query.message) {
+        router.push(`/messages?message=${chats[0].messagesWith}`, undefined, {
+          shallow: true
+        });
+      }
+  }, []);
 
   return (
     <>
-      <TopBar {...temp} />
       <div className={styles.layContent}>
 
         <div className={styles.leftBar}>
@@ -26,12 +33,18 @@ export default function Messages(){
           <SearchMessages />
           
           <div className={styles.messagePreviews}>
-            {/* <NoMessages /> */}
-            <MessagePreview />
-            <hr />
-            <MessagePreview />
-            <hr />
-            <MessagePreview />
+            {(!errorLoading && chats.length) > 0 ? <>
+              {chats.map((chat,i) => (
+                <>
+                  <MessagePreview 
+                    key={i}
+                    chat={chat}
+                    setChats={setChats}
+                  />
+                  {(i !== chats.length-1) && <hr />}
+                </>
+              ))}
+            </>: <NoMessages />}
           </div>
         </div>
 
@@ -332,18 +345,18 @@ export default function Messages(){
 //   );
 // }
 
-// Messages.getInitialProps = async ctx => {
-//   try {
-//     const { token } = parseCookies(ctx);
+Messages.getInitialProps = async ctx => {
+  try {
+    const { token } = parseCookies(ctx);
 
-//     const res = await axios.get(`${baseUrl}/api/chats`, {
-//       headers: { Authorization: token }
-//     });
+    const res = await axios.get(`${baseUrl}/api/chats`, {
+      headers: { Authorization: token }
+    });
 
-//     return { chatsData: res.data };
-//   } catch (error) {
-//     return { errorLoading: true };
-//   }
-// };
+    return { chatsData: res.data };
+  } catch (error) {
+    return { errorLoading: true };
+  }
+};
 
 // export default Messages;

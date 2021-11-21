@@ -31,7 +31,7 @@ export default function CommentNotification({notification}) {
           />
       </div></Link>}
       <p className={styles.comment}>
-        {notification.text.length > 9 ? `${notification.text.substring(0,8)}...` : notification.text}
+        {notification.text.length > 9 ? `${notification.text.substring(0,8)} ...` : notification.text}
       </p>
     </div>
   );
