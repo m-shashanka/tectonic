@@ -51,7 +51,7 @@ export default function CreatePostModal({ user, setPosts, closeModal }) {
       }
     }
 
-    await submitNewPost(user, newPost.text, newPost.location, picUrl,setPosts, setServerError);
+    await submitNewPost(newPost.text, newPost.location, picUrl,setPosts, setServerError);
 
     setLoading(false);
 

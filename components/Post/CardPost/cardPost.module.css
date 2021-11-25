@@ -1,6 +1,6 @@
 .postCard{
     padding: 1%;
-    margin: 25px 0;
+    margin: 25px 5px;
 }
 
 .postHeader{
@@ -21,7 +21,7 @@
 
 .userPic img{
     width: 100%;
-    height: auto;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
 }
