@@ -2,7 +2,7 @@ import { useState } from "react";
 import calculateTime from "../../../utils/calculateTime";
 import styles from "./message.module.css";
 
-export default function Message({message,user,setMessages,messagesWith}){
+export default function Message({divRef,message,user,setMessages,messagesWith}){
 
   const [deleteIcon,showDeleteIcon] = useState(false);
 
@@ -13,6 +13,7 @@ export default function Message({message,user,setMessages,messagesWith}){
       className={myMessage ? `${styles.messageContainer} ${styles.myMessage}`
         :`${styles.messageContainer} ${styles.yourMessage}`}
       onClick={() => myMessage && showDeleteIcon(!deleteIcon)}
+      ref={divRef}
     >
       <div className={styles.messageBody}>
         <span>{message.msg}</span>

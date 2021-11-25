@@ -13,6 +13,9 @@ import ChatBox from "../../components/Messages/ChatBox/ChatBox";
 import { NoMessages } from "../../components/Layout/NoData/NoData";
 import styles from './messages.module.css';
 
+const scrollDivToBottom = divRef =>
+  divRef.current !== null && divRef.current.scrollIntoView({ behaviour: "smooth" });
+
 export default function Messages({ chatsData, errorLoading, user }){
 
   const [chats, setChats] = useState(chatsData || []);
@@ -24,6 +27,8 @@ export default function Messages({ chatsData, errorLoading, user }){
 
   const [messages, setMessages] = useState([]);
   const [bannerData, setBannerData] = useState({ username: "", profilePicUrl: "" });
+
+  const divRef = useRef();
 
   // This ref is for persisting the state of query string in url throughout re-renders
   const openChatId = useRef("");
@@ -65,7 +70,7 @@ export default function Messages({ chatsData, errorLoading, user }){
         });
 
         openChatId.current = chat.messagesWith._id;
-        // divRef.current && scrollDivToBottom(divRef);
+        divRef.current && scrollDivToBottom(divRef);
       });
 
       socket.current.on("noChatFound", async () => {
@@ -171,6 +176,10 @@ export default function Messages({ chatsData, errorLoading, user }){
     }
   }, []);
 
+  useEffect(() => {
+    messages.length > 0 && scrollDivToBottom(divRef);
+  }, [messages]);
+
   return (
     <>
       <div className={styles.layContent}>
@@ -200,6 +209,7 @@ export default function Messages({ chatsData, errorLoading, user }){
           {router.query.message && 
           <Card className={styles.chatBox}>
             <ChatBox 
+              divRef={divRef}
               bannerData={bannerData} 
               messages={messages} 
               user={user} 
