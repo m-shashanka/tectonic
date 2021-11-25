@@ -2,7 +2,7 @@ import {useRouter} from "next/router";
 import calculateTime from "../../../utils/calculateTime";
 import styles from "./messagePreview.module.css";
 
-export default function MessagePreview({chat, setChats, connectedUsers}){
+export default function MessagePreview({chat, connectedUsers, deleteChat}){
 
     const router = useRouter();
 
@@ -36,7 +36,7 @@ export default function MessagePreview({chat, setChats, connectedUsers}){
                     </p>
                 </div>
             </div>
-            <i className="fas fa-trash" />
+            <i className="fas fa-trash" onClick={()=>deleteChat(chat.messagesWith)} />
         </div>
     );
 }

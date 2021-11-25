@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import { useRouter } from "next/router";
 import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
+import cookie from "js-cookie";
 import getUserInfo from "../../utils/getUserInfo";
 import newMsgSound from "../../utils/newMsgSound";
 import { parseCookies } from "nookies";
@@ -195,6 +196,19 @@ export default function Messages({ chatsData, errorLoading, user }){
     }
   };
 
+  const deleteChat = async messagesWith => {
+    try {
+      await axios.delete(`${baseUrl}/api/chats/${messagesWith}`, {
+        headers: { Authorization: cookie.get("token") }
+      });
+
+      setChats(prev => prev.filter(chat => chat.messagesWith !== messagesWith));
+      router.push("/messages", undefined, { shallow: true });
+    } catch (error) {
+      alert("Error deleting chat");
+    }
+  };
+
   return (
     <>
       <div className={styles.layContent}>
@@ -210,8 +224,8 @@ export default function Messages({ chatsData, errorLoading, user }){
                   <MessagePreview 
                     key={i}
                     chat={chat}
-                    setChats={setChats}
                     connectedUsers={connectedUsers}
+                    deleteChat={deleteChat}
                   />
                   {(i !== chats.length-1) && <hr />}
                 </>
