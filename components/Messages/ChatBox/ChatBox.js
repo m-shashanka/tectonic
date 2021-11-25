@@ -2,7 +2,7 @@ import MessageInputField from "./MessageInputField/MessageInputField";
 import styles from "./chatBox.module.css";
 import Message from "../Message/Message";
 
-export default function ChatBox({divRef,bannerData, messages,setMessages,user,messagesWith,socket,sendMsg}){
+export default function ChatBox({divRef,bannerData, messages,user,socket,sendMsg, deleteMsg}){
     return (
         <>
             <div className={styles.header}>
@@ -22,8 +22,7 @@ export default function ChatBox({divRef,bannerData, messages,setMessages,user,me
                     key={i}
                     message={message} 
                     user={user}
-                    setMessages={setMessages}
-                    messagesWith={messagesWith}
+                    deleteMsg={deleteMsg}
                 />)}
             </div>
             <MessageInputField sendMsg={sendMsg} />

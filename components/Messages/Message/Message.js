@@ -2,7 +2,7 @@ import { useState } from "react";
 import calculateTime from "../../../utils/calculateTime";
 import styles from "./message.module.css";
 
-export default function Message({divRef,message,user,setMessages,messagesWith}){
+export default function Message({divRef,message,user,deleteMsg}){
 
   const [deleteIcon,showDeleteIcon] = useState(false);
 
