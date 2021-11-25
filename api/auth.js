@@ -21,9 +21,12 @@ router.get("/", authMiddleware, async (req, res) => {
 
     const postsCount = await PostModel.count({ user: userId });
 
-    userFollowStats.postsCount = postsCount;
+    //to be able to set postsCount on result of mongoose query result
+    let stats = JSON.parse(JSON.stringify(userFollowStats));
 
-    return res.status(200).json({ user, userFollowStats });
+    stats.postsCount = postsCount;
+
+    return res.status(200).json({ user, userFollowStats:stats });
   } catch (error) {
     console.error(error);
     return res.status(500).send(`Server error`);

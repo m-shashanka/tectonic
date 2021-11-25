@@ -56,7 +56,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
                   onMouseLeave={toggleChatHover}
                 />
               </div>
-              {unreadMessage && <span className={styles.topbarIconBadge}>{unreadMessage}</span>}
+              {unreadMessage ? <span className={styles.topbarIconBadge}>{unreadMessage}</span> : null}
             </div>
             <div className={styles.topbarIconItem}>
               <div className={styles.bellIcon}>
@@ -68,7 +68,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
                   onMouseLeave={toggleNotificationHover}
                 />
               </div>
-              {unreadNotification && <span className={styles.topbarIconBadge}>{unreadNotification}</span>}
+              {unreadNotification ? <span className={styles.topbarIconBadge}>{unreadNotification}</span> : null}
             </div>
           </div>
 

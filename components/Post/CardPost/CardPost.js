@@ -43,7 +43,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
       comments,
       setComments,
       closeModal:() => setShowModal(false),
-      openLikes = {displayLikes}
+      openLikes : {displayLikes}
     });
 
   return (
