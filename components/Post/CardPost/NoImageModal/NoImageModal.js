@@ -20,7 +20,7 @@ export default function NoImageModal({post,user,setLikes,likes,isLiked,comments,
   const getLikesList = async () => {
     setLoading(true);
     try {
-      const res = await Axios.get(`/like/${postId}`);
+      const res = await Axios.get(`/like/${post._id}`);
       setLikesList(res.data);
     } catch (error) {
       alert(catchErrors(error));

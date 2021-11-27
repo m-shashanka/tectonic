@@ -27,7 +27,7 @@ export default function Signup() {
   const {register,formState: { errors },handleSubmit} = useForm();
 
   const onSubmit = async (data) => {
-    if(usernameErrorMessage || serverError)
+    if(usernameErrorMessage)
       return;
     
     setFormLoading(true);

@@ -43,7 +43,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
       comments,
       setComments,
       closeModal:() => setShowModal(false),
-      openLikes : {displayLikes}
+      openLikes : displayLikes
     });
 
   return (
@@ -89,7 +89,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
             {likes.length > 0 &&
               <LikesList likes={likes} showAllLikes={showAllLikes} postId={post._id} />}
           </div>
-          <i className={`${styles.comments} far fa-comments`} onClick={() => setShowModal(true)}/>
+          <i className={`${styles.comments} far fa-comments`} onClick={showAllComments}/>
         </div>
 
         <div className={styles.postComments}>

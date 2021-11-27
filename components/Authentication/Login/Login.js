@@ -19,6 +19,9 @@ export default function Login(){
 
     const onSubmit = async (data) => {
 
+      if(serverError)
+        setServerError(null);
+
       let user = {
         email: data.email,
         password: data.password

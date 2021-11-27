@@ -12,8 +12,8 @@ export const registerUser = async (user, profilePicUrl, setError, setLoading) =>
   } catch (error) {
     const errorMsg = catchErrors(error);
     setError(errorMsg);
+    setLoading(false);
   }
-  setLoading(false);
 };
 
 export const loginUser = async (user, setError, setLoading) => {
@@ -25,8 +25,8 @@ export const loginUser = async (user, setError, setLoading) => {
   } catch (error) {
     const errorMsg = catchErrors(error);
     setError(errorMsg);
+    setLoading(false);
   }
-  setLoading(false);
 };
 
 export const redirectUser = (ctx, location) => {
