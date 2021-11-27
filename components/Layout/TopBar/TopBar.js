@@ -54,6 +54,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
                   className={chatHovered ? "fas fa-comment" : "far fa-comment"}
                   onMouseEnter={toggleChatHover}
                   onMouseLeave={toggleChatHover}
+                  onClick={()=>router.push("/messages")}
                 />
               </div>
               {unreadMessage ? <span className={styles.topbarIconBadge}>{unreadMessage}</span> : null}
@@ -66,6 +67,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
                   }
                   onMouseEnter={toggleNotificationHover}
                   onMouseLeave={toggleNotificationHover}
+                  onClick={()=>router.push("/notifications")}
                 />
               </div>
               {unreadNotification ? <span className={styles.topbarIconBadge}>{unreadNotification}</span> : null}
