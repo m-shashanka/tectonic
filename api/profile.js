@@ -11,7 +11,7 @@ const {
   removeFollowerNotification
 } = require("../utilsServer/notificationActions");
 
-router.get("/account",authMiddleware,async (req,res) => {
+router.get("/account/info",authMiddleware,async (req,res) => {
   try{
     const { userId } = req;
     const profile = await UserModel.findById(userId).select("+bio");

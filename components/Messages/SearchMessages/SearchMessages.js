@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import cookie from "js-cookie";
 import {useRouter} from "next/router";
-import Spinner from "../Spinner/Spinner";
+import Spinner from "../../Layout/Spinner/Spinner";
 import baseUrl from "../../../utils/baseUrl";
 import styles from './searchMessages.module.css';
 let cancel;
@@ -78,7 +78,7 @@ export default function SearchMessages({chats,setChats}) {
     }, [text]);
 
     return (
-      <>
+      <div className={styles.container}>
         <div className={styles.searchbar}>
             <div className={styles.searchIcon}>
               <i className="fas fa-search" />
@@ -114,6 +114,6 @@ export default function SearchMessages({chats,setChats}) {
             </div>
           }
         </div>
-      </>
+      </div>
     );
 }

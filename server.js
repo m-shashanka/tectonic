@@ -32,7 +32,6 @@ io.on("connection", socket => {
 
   socket.on("join", ({ userId }) => {
     addUser(userId, socket.id);
-    console.log(users);
 
     // if(interval)
     //   clearInterval(interval);

@@ -5,7 +5,7 @@ import LikeNotification from "../../components/Notifications/LikeNotification/Li
 import CommentNotification from "../../components/Notifications/CommentNotification/CommentNotification";
 import FollowerNotification from "../../components/Notifications/FollowerNotification/FollowerNotification";
 import axios from "axios";
-import baseUrl from "../utils/baseUrl";
+import baseUrl from "../../utils/baseUrl";
 import { parseCookies } from "nookies";
 import cookie from "js-cookie";
 import styles from "./notifications.module.css";

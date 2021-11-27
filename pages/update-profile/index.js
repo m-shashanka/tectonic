@@ -59,7 +59,7 @@ UpdateProfile.getInitialProps = async ctx => {
     try {
         const { token } = parseCookies(ctx);
         
-        const res = await axios.get(`${baseUrl}/api/profile/account`, {
+        const res = await axios.get(`${baseUrl}/api/profile/account/info`, {
             headers: { Authorization: token }
         });
     
