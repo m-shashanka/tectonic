@@ -11,12 +11,26 @@ const {
   removeFollowerNotification
 } = require("../utilsServer/notificationActions");
 
+router.get("/account",authMiddleware,async (req,res) => {
+  try{
+    const { userId } = req;
+    const profile = await UserModel.findById(userId).select("+bio");
+    if (!profile) {
+      return res.status(404).send("User not Found");
+    }
+    return res.json(profile);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server Error");
+  }
+});
+
 //GET PROFILE INFO
 router.get("/:username", authMiddleware, async (req, res) => {
   try {
     const { username } = req.params;
 
-    const user = await UserModel.findOne({ username: username.toLowerCase() });
+    const user = await UserModel.findOne({ username: username.toLowerCase() }).select("+bio");
     if (!user) {
       return res.status(404).send("No User Found");
     }

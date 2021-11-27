@@ -5,12 +5,15 @@ import ProfilePic from "../../components/Authentication/Signup/ProfilePic/Profil
 import Spinner from "../../components/Layout/Spinner/Spinner";
 import { profileUpdate } from "../../utils/profileActions";
 import uploadPic from "../../utils/uploadPicToCloudinary";
+import { parseCookies } from "nookies";
+import axios from "axios";
+import baseUrl from "../../utils/baseUrl";
 import styles from "./update-profile.module.css";
 
-export default function UpdateProfile({user}){
+function UpdateProfile({account}){
 
     const [media, setMedia] = useState(null);
-    const [text,setText] = useState(user.bio);
+    const [text,setText] = useState(account.bio);
     const [loading,setLoading] = useState(false);
     const [serverError,setServerError] = useState(null);
 
@@ -38,12 +41,12 @@ export default function UpdateProfile({user}){
         <div className="layContent">
             <Card className={styles.profileUpdate}>
                 <h1>Update Profile</h1>
-                <ProfilePic setMedia={setMedia} userImage={user.profilePicUrl}/>
+                <ProfilePic setMedia={setMedia} userImage={account.profilePicUrl}/>
                 <div className={styles.bio}>
                     <i className="fas fa-info-circle" />
                     <textarea name="bio" placeholder="Bio" value={text} onChange={(e)=>setText(e.target.value)}/>
                 </div>
-                {!loading && <Button className={styles.saveButton}>Save</Button>}
+                {!loading && <Button className={styles.saveButton} onClick={submit}>Save</Button>}
                 {loading && <Spinner />}
             </Card>
             {serverError && <p style={{marginTop:"20px",color:"red"}}>{serverError}</p>}
@@ -51,3 +54,19 @@ export default function UpdateProfile({user}){
         </>
     );
 }
+
+UpdateProfile.getInitialProps = async ctx => {
+    try {
+        const { token } = parseCookies(ctx);
+        
+        const res = await axios.get(`${baseUrl}/api/profile/account`, {
+            headers: { Authorization: token }
+        });
+    
+        return { account:res.data };
+    } catch (error) {
+      return { errorLoading: true };
+    }
+};
+
+export default UpdateProfile;
