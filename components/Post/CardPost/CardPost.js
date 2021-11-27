@@ -20,7 +20,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
 
   const [likes, setLikes] = useState(post.likes);
 
-  const isLiked = post.likes.length > 0 && post.likes.filter(like => like.user === user._id).length > 0;
+  const isLiked = likes.length > 0 && likes.filter(like => like.user === user._id).length > 0;
 
   const [comments, setComments] = useState(post.comments);
 

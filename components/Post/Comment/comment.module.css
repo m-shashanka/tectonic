@@ -8,6 +8,10 @@
     flex-wrap: wrap;
 }
 
+.comment{
+    width: 100%;
+}
+
 .commentUser{
     font-weight: 500;
     margin-right: 8px;
@@ -27,15 +31,15 @@
 
 .commentUserPic img{
     width: 100%;
-    height: auto;
+    height: 100%;
     border-radius: 7px;
     object-fit: cover;
 }
 
 .deleteComment{
-    margin-left: 4%;
-    margin-top: 0;
+    margin-left: 2%;
+    margin-top: 2px;
     color: rgb(221, 42, 42);
-    transform: scale(0.9);
+    transform: scale(0.8);
     cursor: pointer;
 }
