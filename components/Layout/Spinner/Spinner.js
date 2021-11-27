@@ -5,7 +5,7 @@ export default function Spinner(props) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      className={props.className ? `${styles.svg} ${props.className}` : styles.svg}
+      className={props.className ? `${styles.svg} ${props.className}` : `${styles.svg} ${styles.default}`}
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid"
     >

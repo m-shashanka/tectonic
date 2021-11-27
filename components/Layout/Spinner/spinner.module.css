@@ -4,3 +4,8 @@
     display: block; 
     shape-rendering: auto;
 }
+
+.default{
+    width: 70px;
+    height: 70px;
+}

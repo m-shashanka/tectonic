@@ -11,9 +11,11 @@
     margin-bottom: 20px;
 }
 
+/* change size of profile pic for mobile */
+
 .profilePic{
-    width: 19%;
-    height: 19%;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     object-fit: cover;
     margin-top: 10px;

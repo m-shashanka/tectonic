@@ -179,8 +179,8 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
       {selectedIndex == 2 && 
       <div className={styles.fadeIn}>
         {ownAccount && <CreatePost user={user} setPosts={setPosts}/>}
-        {loading && <h4 style={{textAlign="center"}}>Loading...</h4>}
-        {!loading && posts.length === 0 && <NoPosts />}
+        {loading && <h4 style={{textAlign:"center"}}>Loading...</h4>}
+        {!loading && posts.length === 0 && <NoProfilePosts />}
         {!loading && posts.length > 0 && posts.map(post=>(
           <CardPost key={post._id} post={post} user={user} setPosts={setPosts} setShowToastr={setShowToastr}/>
         ))}
