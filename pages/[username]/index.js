@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import Card from "../../components/Layout/Card/Card";
 import Button from "../../components/Layout/Button/Button";
 import Friend from "../../components/Profile/Friends/Friend";
-import styles from './profile.module.css';
 import io from "socket.io-client";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -22,6 +21,9 @@ import UpdateProfile from "../../components/Profile/UpdateProfile";
 import Settings from "../../components/Profile/Settings";
 import { PostDeleteToastr } from "../../components/Layout/Toastr";
 import { followUser, unfollowUser } from "../../utils/profileActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserEdit } from "@fortawesome/free-solid-svg-icons";
+import styles from './profile.module.css';
 
 function ProfilePage({profile, postsLength, followersLength, followingLength, errorLoading, user, userFollowStats}){
 
@@ -108,9 +110,10 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
           <p>{profile.bio}</p>
         </div>
         {ownAccount ? 
-          <Button className={styles.updateProfile}
-            onClick={()=>{router.push('/update-profile')}}
-          ><i className="fas fa-user-edit"/>Update Profile</Button> :
+          <Button className={styles.updateProfile} onClick={()=>{router.push('/update-profile')}}>
+            <FontAwesomeIcon icon={faUserEdit} className={styles.item} />
+            Update Profile
+          </Button> :
           <Button 
           className={isFollowing ? `${styles.followButton} ${styles.followingButton}` : styles.followButton}
           disabled={followLoading}

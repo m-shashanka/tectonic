@@ -1,6 +1,6 @@
 .friendCard:hover{
     background-color: #1E1E3F;
-    transform: scale(1.03);
+    transform: scale(1.01);
 }
 
 .friendCard:hover h4{

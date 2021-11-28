@@ -7,6 +7,11 @@ import OnlineUser from "../../Profile/OnlineUser/OnlineUser";
 import UserStats from "../../Profile/UserStats/UserStats";
 import {logoutUser} from "../../../utils/authUser";
 import SearchBar from "../SearchBar/SearchBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { 
+  faPaw, faChevronLeft, faChevronRight, faTh, faBell, faComment, faUser, faCog, faSignOutAlt
+} from "@fortawesome/free-solid-svg-icons";
+import {faComment as farComment,faBell as farBell, faUser as farUser} from "@fortawesome/free-regular-svg-icons";
 import styles from "./topBar.module.css";
 
 export default function TopBar({user:{unreadNotification,email,unreadMessage,username,profilePicUrl},userFollowStats}) {
@@ -38,7 +43,8 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
       <div className={styles.topbarContainer}>
         <div className={styles.topbarLeft} onClick={()=>router.push('/')}>
           <span className={styles.logo}>
-            <i className="fas fa-paw" /> Social Media
+            <FontAwesomeIcon icon={faPaw} />
+            {` Social Media`}
           </span>
         </div>
 
@@ -49,38 +55,33 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
         <div className={styles.topbarRight}>
           <div className={styles.topbarIcons}>
             <div className={styles.topbarIconItem}>
-              <div className={styles.chatIcon}>
-                <i
-                  className={chatHovered ? "fas fa-comment" : "far fa-comment"}
+                <FontAwesomeIcon 
+                  icon={chatHovered ? faComment : farComment} 
+                  className={styles.chatIcon}
                   onMouseEnter={toggleChatHover}
                   onMouseLeave={toggleChatHover}
                   onClick={()=>router.push("/messages")}
                 />
-              </div>
               {unreadMessage ? <span className={styles.topbarIconBadge}>{unreadMessage}</span> : null}
             </div>
             <div className={styles.topbarIconItem}>
-              <div className={styles.bellIcon}>
-                <i
-                  className={
-                    notificationHovered ? "fas fa-bell" : "far fa-bell"
-                  }
+                <FontAwesomeIcon 
+                  icon={notificationHovered ? faBell : farBell} 
+                  className={styles.bellIcon}
                   onMouseEnter={toggleNotificationHover}
                   onMouseLeave={toggleNotificationHover}
                   onClick={()=>router.push("/notifications")}
                 />
-              </div>
               {unreadNotification ? <span className={styles.topbarIconBadge}>{unreadNotification}</span> : null}
             </div>
           </div>
 
-          <div className={styles.userIcon} onClick={rightMenuToggle}>
-            <i
-              className={
-                rightMenuOpen ? "fas fa-user fa-2x" : "far fa-user fa-2x"
-              }
-            />
-          </div>
+          <FontAwesomeIcon 
+            icon={rightMenuOpen ? faUser : farUser} 
+            size="2x" 
+            className={styles.userIcon} 
+            onClick={rightMenuToggle}
+          />
         </div>
       </div>
 
@@ -113,11 +114,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
           }
           onClick={leftMenuToggle}
         >
-          {leftMenuOpen ? (
-            <i className="fas fa-chevron-left" />
-          ) : (
-            <i className="fas fa-chevron-right" />
-          )}
+          <FontAwesomeIcon icon={leftMenuOpen ? faChevronLeft : faChevronRight} />
         </div>
       </div>}
 
@@ -145,38 +142,38 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
         <div className={styles.profileOptions}>
           <Link href="/">
             <div className={isActive('/') ? `${styles.profileFeed} ${styles.selectedOption}` : styles.profileFeed}>
-              <i className={"fas fa-th"}/>
+              <FontAwesomeIcon icon={faTh} className={styles.item} />
               <p>Feed</p>
             </div>
           </Link>
           <Link href="/notifications">
             <div className={isActive('/notifications') ? `${styles.profileNotifications} ${styles.selectedOption}` : styles.profileNotifications}>
-              <i className={"fas fa-bell"}/>
+              <FontAwesomeIcon icon={faBell} className={styles.item} />
               <p>Notifications</p>
             </div>
           </Link>
           <Link href="/messages">
             <div className={isActive('/messages') ? `${styles.profileMessages} ${styles.selectedOption}` : styles.profileMessages}>
-              <i className={"fas fa-comment"}/>
+              <FontAwesomeIcon icon={faComment} className={styles.item} />
               <p>Messages</p>
             </div>
           </Link>
           <Link href={`/${username}`}>
             <div className={(router.query.username === username) ? `${styles.profileUser} ${styles.selectedOption}` : styles.profileUser}>
-              <i className={"fas fa-user"}/>
+              <FontAwesomeIcon icon={faUser} className={styles.item} />
               <p>Profile</p>
             </div>
           </Link>
           <Link href={`/settings`}>
             <div className={isActive('/settings') ? `${styles.profileSettings} ${styles.selectedOption}` : styles.profileSettings}>
-              <i className={"fas fa-cog"}/>
+              <FontAwesomeIcon icon={faCog} className={styles.item} />
               <p>Settings</p>
             </div>
           </Link>
         </div>
 
         <div className={styles.userLogout} onClick={()=>logoutUser(email)}>
-          <i className={"fas fa-sign-out-alt"}/>
+          <FontAwesomeIcon icon={faSignOutAlt} className={styles.item} />
           <p>Logout</p>
         </div>
 
@@ -188,11 +185,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
           }
           onClick={rightMenuToggle}
         >
-          {rightMenuOpen ? (
-            <i className="fas fa-chevron-right" />
-          ) : (
-            <i className="fas fa-chevron-left" />
-          )}
+          <FontAwesomeIcon icon={rightMenuOpen ? faChevronRight : faChevronLeft} />
         </div>
       </div>
     </>

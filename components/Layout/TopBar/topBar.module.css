@@ -21,8 +21,12 @@
     transform: scale(1.5);
 }
 
-.userIcon > i:hover, .chatIcon > i:hover, .bellIcon > i:hover{
+.userIcon:hover{
     transform: scale(1.2);
+}
+
+.chatIcon:hover, .bellIcon:hover{
+    transform: scale(1.7);
 }
 
 .topbarLeft{
@@ -266,7 +270,7 @@
     line-height: 1.5;
 }
 
-.profileOptions i, .userLogout i{
+.profileOptions .item, .userLogout .item{
     margin-right: 16px;
     transform: scale(1.3);
 }
