@@ -74,18 +74,18 @@
 }
 
 .searchItem div{
-    width: 7%;
-    height: 7%;
-    margin: 10px 15px 2px 10px;
+    width: 30px;
+    height: 30px;
+    margin: 10px 15px 8px 10px;
 }
 
 .searchItem div img{
     width: 100%;
-    height: auto;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
 }
 
 .searchItem h4{
-    margin: 6px 0 0 5px;
+    margin: 1px 0 0 5px;
 }

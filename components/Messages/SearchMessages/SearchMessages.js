@@ -19,8 +19,10 @@ export default function SearchMessages({chats,setChats}) {
       const { value } = e.target;
       setText(value);
   
-      if (value.length === 0) return;
-      if (value.trim().length === 0) return;
+      if (value.length === 0 || value.trim().length === 0){
+        setResults([]);
+        return;
+      }
 
       setLoading(true);
   
