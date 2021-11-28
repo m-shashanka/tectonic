@@ -29,6 +29,7 @@ export default function Messages({ chatsData, errorLoading, user }){
   const [messages, setMessages] = useState([]);
   const [bannerData, setBannerData] = useState({ username: "", profilePicUrl: "" });
 
+
   const divRef = useRef();
 
   // This ref is for persisting the state of query string in url throughout re-renders
@@ -79,6 +80,17 @@ export default function Messages({ chatsData, errorLoading, user }){
 
         setBannerData({ username, profilePicUrl });
         setMessages([]);
+
+        if(!chats.some(i => i.messagesWith === router.query.message)){
+          const newChat = {
+            messagesWith: router.query.message,
+            username: username,
+            profilePicUrl: profilePicUrl,
+            lastMessage: "",
+            date: Date.now()
+          };
+          setChats(prev => [newChat, ...prev]);
+        }
 
         openChatId.current = router.query.message;
       });
@@ -205,7 +217,13 @@ export default function Messages({ chatsData, errorLoading, user }){
       setChats(prev => prev.filter(chat => chat.messagesWith !== messagesWith));
       router.push("/messages", undefined, { shallow: true });
     } catch (error) {
-      alert("Error deleting chat");
+      let index = chats.findIndex(i => i.messagesWith === messagesWith);
+      if(chats[index].lastMessage === ""){
+        setChats(prev => prev.filter(chat => chat.messagesWith !== messagesWith));
+        router.push("/messages", undefined, { shallow: true });
+      }
+      else
+        alert("Error deleting chat");
     }
   };
 
@@ -220,15 +238,14 @@ export default function Messages({ chatsData, errorLoading, user }){
           <div className={styles.messagePreviews}>
             {(!errorLoading && chats.length) > 0 ? <>
               {chats.map((chat,i) => (
-                <>
+                <div key={i}>
                   <MessagePreview 
-                    key={i}
                     chat={chat}
                     connectedUsers={connectedUsers}
                     deleteChat={deleteChat}
                   />
                   {(i !== chats.length-1) && <hr />}
-                </>
+                </div>
               ))}
             </>: <NoMessages />}
           </div>

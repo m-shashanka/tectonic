@@ -36,7 +36,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
   return (
     <>
       <div className={styles.topbarContainer}>
-        <div className={styles.topbarLeft}>
+        <div className={styles.topbarLeft} onClick={()=>router.push('/')}>
           <span className={styles.logo}>
             <i className="fas fa-paw" /> Social Media
           </span>
