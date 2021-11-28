@@ -36,22 +36,21 @@ export default function Notifications({ notifications, errorLoading, user, userF
           <h1 style={{textAlign:"center"}}>Notifications</h1>
           {(!errorLoading && notifications.length > 0) ?
             <Card className={styles.notificationsCard}>
-              {notifications.map(notification =><>
+              {notifications.map(notification =><div key={notification._id}>
 
                 {notification.type === "newLike" && notification.post !== null && 
-                  <LikeNotification key={notification._id} notification={notification}/>}
+                  <LikeNotification  notification={notification}/>}
 
                 {notification.type === "newComment" && notification.post !== null && 
-                  <CommentNotification key={notification._id} notification={notification}/>}
+                  <CommentNotification notification={notification}/>}
 
                 {notification.type === "newFollower" &&  
                   <FollowerNotification 
-                    key={notification._id}
                     notification={notification} 
                     loggedUserFollowStats={loggedUserFollowStats}
                     setUserFollowStats={setUserFollowStats}
                   />}
-              </>)}
+              </div>)}
           </Card> : <NoNotifications />}
       </div>
     </>

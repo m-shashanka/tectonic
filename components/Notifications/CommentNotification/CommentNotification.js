@@ -17,7 +17,7 @@ export default function CommentNotification({notification}) {
         <div className={styles.commentInfo}>
         <h4>
             <Link href={`/${notification.user.username}`}><span>{notification.user.username}</span></Link> 
-            commented on your 
+            {` commented on your `} 
             <Link href={`/post/${notification.post._id}`}><span>post</span></Link>
           </h4>
           <p>{calculateTime(notification.date)}</p>

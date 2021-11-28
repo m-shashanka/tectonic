@@ -34,7 +34,7 @@ export default function FollowerNotification({notification,loggedUserFollowStats
         <div className={styles.followerInfo}>
           <h4>
           <Link href={`/${notification.user.username}`}><span>{notification.user.username}</span></Link>
-           started following you.
+           {` started following you.`}
           </h4>
           <p>{calculateTime(notification.date)}</p>
         </div>

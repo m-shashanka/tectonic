@@ -17,7 +17,7 @@ export default function LikeNotification({notification}) {
         <div className={styles.likeInfo}>
           <h4>
             <Link href={`/${notification.user.username}`}><span>{notification.user.username}</span></Link> 
-            liked your 
+            {` liked your `} 
             <Link href={`/post/${notification.post._id}`}><span>post</span></Link>
           </h4>
           <p>{calculateTime(notification.date)}</p>
