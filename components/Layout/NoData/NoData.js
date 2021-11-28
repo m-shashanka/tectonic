@@ -3,7 +3,7 @@ import styles from "./noData.module.css";
 
 export const NoProfilePosts = () => (
   <>
-    <div className={styles.container}>
+    <div className={styles.container} style={{padding:"15px"}}>
       <i className="fas fa-meh"/>
       <div>
         <h4>User has not posted anything yet!</h4>

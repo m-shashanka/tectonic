@@ -40,6 +40,11 @@
     margin-top: 10px;
 }
 
+.followingButton{
+    background-color: aqua;
+    color: black;
+}
+
 .updateProfile{
     height: 26px;
     border-radius: 20px;

@@ -86,6 +86,7 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
         setLoading(false);
       };
       getPosts();
+      setSelectedIndex(2);
     }, [router.query.username]);
 
     const isFollowing =
@@ -111,7 +112,7 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
             onClick={()=>{router.push('/update-profile')}}
           ><i className="fas fa-user-edit"/>Update Profile</Button> :
           <Button 
-          className={styles.followButton}
+          className={isFollowing ? `${styles.followButton} ${styles.followingButton}` : styles.followButton}
           disabled={followLoading}
           onClick={async()=>{
             setFollowLoading(true);
