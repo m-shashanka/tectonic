@@ -86,7 +86,6 @@ export default function SearchMessages({chats,setChats}) {
             <input
               onBlur={()=>{
                 results.length > 0 && setResults([]);
-                loading && setLoading(false);
                 setText("");
               }}
               value={text}
@@ -98,7 +97,7 @@ export default function SearchMessages({chats,setChats}) {
         </div>
         <div className={styles.searchResult}>
           {results.map((data) => (
-            <div key={data._id} className={styles.searchItem} onClick={()=>addChat(data)}>
+            <div key={data._id} className={styles.searchItem} onMouseDown={()=>addChat(data)}>
               <div>
                 <img
                   src={data.profilePicUrl}

@@ -17,8 +17,10 @@ export default function SearchBar() {
         const { value } = e.target;
         setText(value);
     
-        if (value.length === 0) return;
-        if (value.trim().length === 0) return;
+        if (value.length === 0 || value.trim().length === 0){
+          setResults([]);
+          return;
+        }
 
         setLoading(true);
     
@@ -60,7 +62,6 @@ export default function SearchBar() {
             <input
               onBlur={()=>{
                   results.length > 0 && setResults([]);
-                  loading && setLoading(false);
                   setText("");
               }}
               value={text}
@@ -72,7 +73,7 @@ export default function SearchBar() {
         </div>
         <div className={styles.searchResult}>
           {results.map((data) => (
-            <div key={data._id} className={styles.searchItem} onClick={()=>Router.push(`/${data.username}`)}>
+            <div key={data._id} className={styles.searchItem} onMouseDown={()=>Router.push(`/${data.username}`)}>
               <div>
                 <img
                   src={data.profilePicUrl}
