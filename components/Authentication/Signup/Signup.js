@@ -6,6 +6,10 @@ import { registerUser } from "../../../utils/authUser";
 import uploadPic from "../../../utils/uploadPicToCloudinary";
 import Spinner from "../../Layout/Spinner/Spinner";
 import ProfilePic from "./ProfilePic/ProfilePic";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { 
+  faUser, faEnvelope, faLock, faEye, faEyeSlash, faUserCircle, faCheck, faTimes, faInfoCircle
+} from "@fortawesome/free-solid-svg-icons";
 import styles from "./signup.module.css";
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -90,7 +94,7 @@ export default function Signup() {
       <ProfilePic setMedia={setMedia} userImage="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png" />
 
       <div className={errors.name ? styles.invalid : null}>
-        <i className="fas fa-user" />
+        <FontAwesomeIcon icon={faUser} className={styles.item} />
         <input
           type="text"
           placeholder="Name"
@@ -102,7 +106,7 @@ export default function Signup() {
         )}
       </div>
       <div className={errors.email ? styles.invalid : null}>
-        <i className="fas fa-envelope" />
+        <FontAwesomeIcon icon={faEnvelope} className={styles.item} />
         <input
           type="email"
           placeholder="Email"
@@ -121,7 +125,7 @@ export default function Signup() {
         )}
       </div>
       <div className={errors.password ? styles.invalid : null}>
-        <i className="fas fa-lock" />
+        <FontAwesomeIcon icon={faLock} className={styles.item} />
         <input
           type={showPassword ? "text" : "password"}
           placeholder="Password"
@@ -134,27 +138,22 @@ export default function Signup() {
             },
           })}
         />
-        <i
-          className={
-            showPassword
-              ? `fas fa-eye-slash ${styles.eye}`
-              : `fas fa-eye ${styles.eye}`
-          }
-          onClick={() => {
-            setShowPassword((prev) => !prev);
-          }}
+        <FontAwesomeIcon 
+          icon={showPassword ? faEyeSlash : faEye} 
+          className={`${styles.item} ${styles.eye}`} 
+          onClick={()=>{setShowPassword(prev=>!prev)}}
         />
         {errors.password && (
           <p className={styles.errorMessage}>{errors.password.message}</p>
         )}
       </div>
       <div className={!usernameErrorMessage ? null : styles.invalid}>
-        {!usernameLoading && !username && <i className="fas fa-user-circle" />}
+        {!usernameLoading && !username && <FontAwesomeIcon icon={faUserCircle} className={styles.item} />}
         {!usernameLoading && username && !usernameErrorMessage && (
-          <span className={`${styles.green} fas fa-check`} />
+          <FontAwesomeIcon icon={faCheck} className={styles.green} />
         )}
         {!usernameLoading && username && usernameErrorMessage && (
-          <span className={`${styles.red} fas fa-times`} />
+          <FontAwesomeIcon icon={faTimes} className={styles.red} />
         )}
         {usernameLoading && <Spinner className={styles.usernameLoader} />}
         <input
@@ -180,7 +179,7 @@ export default function Signup() {
         )}
       </div>
       <div className={styles.bio}>
-        <i className="fas fa-info-circle" />
+        <FontAwesomeIcon icon={faInfoCircle} className={styles.item} />
         <textarea name="bio" {...register("bio")} placeholder="Bio" />
       </div>
       {!formLoading && <button

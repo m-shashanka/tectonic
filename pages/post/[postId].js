@@ -13,6 +13,9 @@ import { NoPostFound } from "../../components/Layout/NoData/NoData";
 import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
 import Spinner from "../../components/Layout/Spinner/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart, faComments as farComments } from "@fortawesome/free-regular-svg-icons";
 import styles from "./post.module.css";
 
 export default function PostPage({ post, errorLoading, user }){
@@ -78,15 +81,20 @@ export default function PostPage({ post, errorLoading, user }){
 
         <div className={styles.postStats}>
           <div className={styles.likes}>
-            <i 
-              className={isLiked ? "fas fa-heart" : "far fa-heart"} 
+            <FontAwesomeIcon 
+              icon={isLiked ? faHeart : farHeart} 
+              className={styles.item}
               onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
             />
             {likes.length > 0 && 
               <span className={styles.likesCount} onClick={() => setShowLikes(true)}>
-                {` ${likes.length} ${likes.length === 1 ? "like" : "likes"}`}</span>}
+                {` ${likes.length} ${likes.length === 1 ? " like" : " likes"}`}</span>}
           </div>
-          <i className={`${styles.comments} far fa-comments`} onClick={() => setShowLikes(false)}/>
+          <FontAwesomeIcon 
+            icon={farComments} 
+            className={styles.comments}
+            onClick={() => setShowLikes(false)}
+          />
         </div>
 
         {!showLikes && <div className={styles.postComments}>

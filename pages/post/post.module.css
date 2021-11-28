@@ -64,14 +64,14 @@
     margin-right: 30px;
 }
 
-.likes i{
+.likes .item{
     color: red;
     transform: scale(1.6);
     margin: 5px 11px 3px 7px;
     cursor: pointer;
 }
 
-.likes i:hover{
+.likes .item:hover{
     transform: scale(1.8);
 }
 

@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { loginUser } from "../../../utils/authUser";
 import Spinner from "../../Layout/Spinner/Spinner";
 import Link from "next/link";
-const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 import cookie from "js-cookie";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import styles from './login.module.css';
+const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default function Login(){
 
@@ -44,7 +46,7 @@ export default function Login(){
         <form onSubmit={handleSubmit(onSubmit)}>
             <h1>Sign in</h1>
             <div className={errors.email ? styles.invalid : null}>
-              <i className="fas fa-envelope" />
+              <FontAwesomeIcon icon={faEnvelope} className={styles.item} />
               <input type="email" placeholder="Email" name="email" defaultValue={userEmail || undefined}
                 {...register("email", {
                   required: "email required",
@@ -60,7 +62,7 @@ export default function Login(){
               )}
             </div>
             <div className={errors.password ? styles.invalid : null}>
-              <i className="fas fa-lock" />
+              <FontAwesomeIcon icon={faLock} className={styles.item} />
               <input type={showPassword ? "text" : "password"} placeholder="Password" name="password"
                 {...register("password", {
                   required: "password required",
@@ -73,7 +75,11 @@ export default function Login(){
               {errors.password && (
                 <p className={styles.errorMessage}>{errors.password.message}</p>
               )}
-              <i className={showPassword ? `fas fa-eye-slash ${styles.eye}`:`fas fa-eye ${styles.eye}`} onClick={()=>{setShowPassword(prev=>!prev)}}/>
+              <FontAwesomeIcon 
+                icon={showPassword ? faEyeSlash : faEye} 
+                className={`${styles.item} ${styles.eye}`} 
+                onClick={()=>{setShowPassword(prev=>!prev)}}
+              />
             </div>
             <Link href="#" style={{color:"#1877F2"}}>Forgot your password?</Link>
             {!formLoading && <button type="submit">Sign In</button>}

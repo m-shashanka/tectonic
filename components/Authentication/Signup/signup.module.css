@@ -24,6 +24,12 @@
     color: red;
 }
 
+.item{
+    position: absolute;
+    padding-left: 8px;
+    color: rgb(102, 99, 99);
+}
+
 .invalid{
     margin-bottom: 7px;
 }
@@ -38,7 +44,7 @@
     border: 2px solid red !important;
 }
 
-.bio i{
+.bio .item{
     top: 29%;
 }
 

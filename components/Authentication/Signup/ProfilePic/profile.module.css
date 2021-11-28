@@ -11,14 +11,20 @@
     border: 2px solid #1A6AC6;
 }
 
-.profilePic i{
+.item{
+    position: absolute;
+    padding-left: 8px;
+    color: rgb(102, 99, 99);
+}
+
+.profilePic .item{
     transform: scale(1.5);
     bottom: 12%;
     right: 11%;
     cursor: pointer;
 }
 
-.profilePic i:hover{
+.profilePic .item:hover{
     opacity: 0.8;
 }
 

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import styles from "./auth.module.css";
 import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import { loginUser } from "../../utils/authUser";
 import cookie from "js-cookie";
 import Login from "../../components/Authentication/Login/Login";
 import Signup from "../../components/Authentication/Signup/Signup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaw } from "@fortawesome/free-solid-svg-icons";
+import styles from "./auth.module.css";
 
 function Authentication() {
   const [rightPanelActive,setRightPanelActive] = useState(false);
@@ -28,7 +30,7 @@ function Authentication() {
           
             <div className={`${styles.overlayPanel} ${styles.overlayLeft}`}>
               <span className={`${styles.logo} ${styles.logoColorLeft}`}>
-                <i className="fas fa-paw fa-3x" />
+                <FontAwesomeIcon icon={faPaw} size="3x" />
                 <h1>Social Media</h1>
               </span>
               <h1>Welcome Back!</h1>
@@ -40,7 +42,7 @@ function Authentication() {
 
             <div className={`${styles.overlayPanel} ${styles.overlayRight}`}>
               <span className={`${styles.logo} ${styles.logoColorRight}`}>
-                <i className="fas fa-paw fa-3x" />
+              <FontAwesomeIcon icon={faPaw} size="3x" />
                 <h1>Social Media</h1>
               </span>
               <h1>Hello, Friend!</h1>

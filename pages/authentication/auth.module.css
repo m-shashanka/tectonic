@@ -87,12 +87,6 @@
     margin-bottom: 10px;
 }
 
-.formContainer div i{
-    position: absolute;
-    padding-left: 8px;
-    color: rgb(102, 99, 99);
-}
-
 .formContainer input,.formContainer textarea{
     background: #eee;
     border: none;

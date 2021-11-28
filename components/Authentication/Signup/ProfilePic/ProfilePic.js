@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import styles from "./profile.module.css";
 
 export default function ProfilePic({ setMedia,userImage }) {
@@ -40,7 +42,7 @@ export default function ProfilePic({ setMedia,userImage }) {
         name="media"
         ref={inputRef}
       />
-      <i className="fas fa-camera" onClick={()=>inputRef.current.click()}/>
+      <FontAwesomeIcon icon={faCamera} className={styles.item} onClick={()=>inputRef.current.click()} />
       {mediaPreview && <img src={mediaPreview} width="100%" height="100%" onClick={()=>inputRef.current.click()}/>}
     </div>
   );

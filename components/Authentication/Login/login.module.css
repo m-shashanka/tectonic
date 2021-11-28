@@ -3,6 +3,12 @@
     cursor: pointer;
 }
 
+.item{
+    position: absolute;
+    padding-left: 8px;
+    color: rgb(102, 99, 99);
+}
+
 .invalid{
     margin-bottom: 7px;
 }
