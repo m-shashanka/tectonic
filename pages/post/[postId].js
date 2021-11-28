@@ -25,14 +25,14 @@ export default function PostPage({ post, errorLoading, user }){
 
   const [loading,setLoading] = useState(false);
 
-  const isLiked = post.likes.length > 0 && post.likes.filter(like => like.user === user._id).length > 0;
+  const isLiked = likes.length > 0 && likes.filter(like => like.user === user._id).length > 0;
 
   const [comments, setComments] = useState(post.comments);
 
   const getLikesList = async () => {
     setLoading(true);
     try {
-      const res = await Axios.get(`/like/${postId}`);
+      const res = await Axios.get(`/like/${post._id}`);
       setLikesList(res.data);
     } catch (error) {
       alert(catchErrors(error));
@@ -84,7 +84,7 @@ export default function PostPage({ post, errorLoading, user }){
             />
             {likes.length > 0 && 
               <span className={styles.likesCount} onClick={() => setShowLikes(true)}>
-                {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}</span>}
+                {` ${likes.length} ${likes.length === 1 ? "like" : "likes"}`}</span>}
           </div>
           <i className={`${styles.comments} far fa-comments`} onClick={() => setShowLikes(false)}/>
         </div>
