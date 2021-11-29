@@ -8,6 +8,8 @@ import uploadPic from "../../utils/uploadPicToCloudinary";
 import { parseCookies } from "nookies";
 import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import styles from "./update-profile.module.css";
 
 function UpdateProfile({account}){
@@ -43,7 +45,7 @@ function UpdateProfile({account}){
                 <h1>Update Profile</h1>
                 <ProfilePic setMedia={setMedia} userImage={account.profilePicUrl}/>
                 <div className={styles.bio}>
-                    <i className="fas fa-info-circle" />
+                    <FontAwesomeIcon icon={faInfoCircle} className={styles.item} />
                     <textarea name="bio" placeholder="Bio" value={text} onChange={(e)=>setText(e.target.value)}/>
                 </div>
                 {!loading && <Button className={styles.saveButton} onClick={submit}>Save</Button>}

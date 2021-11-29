@@ -8,7 +8,7 @@
     color: white;
 }
 
-.container i{
+.container .item{
     transform: scale(2.9);
     margin: 0 35px 0 20px;
     color: cyan;

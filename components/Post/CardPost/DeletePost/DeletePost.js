@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { deletePost } from "../../../../utils/postActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./deletePost.module.css";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function DeletePost({
   id,
@@ -33,20 +35,21 @@ export default function DeletePost({
   };
 
   return (
-    <i
-      ref={ref}
-      className={`${styles.deletePost} fas fa-trash`}
+    <FontAwesomeIcon 
+      forwardedRef={ref} 
+      icon={faTrash} 
+      className={styles.deletePost} 
       onClick={() => setDeletePostConfirmation(true)}
     >
       {deletePostConfirmation && (
         <div className={styles.showTop}>
           <p>Are you sure?</p>
           <p className={styles.finalDelete} onClick={delPost}>
-            <i className="fas fa-trash" />
+            <FontAwesomeIcon icon={faTrash} className={styles.item} />
             &nbsp;Delete
           </p>
         </div>
       )}
-    </i>
+    </FontAwesomeIcon>
   );
 }

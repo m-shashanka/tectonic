@@ -13,7 +13,7 @@
     background-color: #ccc;
 }
 
-.settingsCard h3 i{
+.settingsCard h3 .item{
     color: #1E1E3F;
     margin-right: 6px;
 }
@@ -48,7 +48,7 @@
     font-weight: 500;
 }
 
-.settingsCard div i{
+.settingsCard div .item{
     position: absolute;
     padding-left: 8px;
     color: rgb(102, 99, 99);

@@ -2,6 +2,8 @@ import { useState } from "react";
 import Link from "next/link";
 import calculateTime from "../../../utils/calculateTime";
 import {followUser, unfollowUser} from "../../../utils/profileActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCheck, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import styles from "./followerNotification.module.css";
 
 export default function FollowerNotification({notification,loggedUserFollowStats,setUserFollowStats}) {
@@ -39,8 +41,7 @@ export default function FollowerNotification({notification,loggedUserFollowStats
           <p>{calculateTime(notification.date)}</p>
         </div>
       </div>
-      <i className={isFollowing ? `fas fa-user-check ${styles.button}` 
-          : `fas fa-user-plus ${styles.button}`} onClick={handleChange} />
+      <FontAwesomeIcon icon={isFollowing ? faUserCheck : faUserPlus} className={styles.button} onClick={handleChange} />
     </div>
   );
 }

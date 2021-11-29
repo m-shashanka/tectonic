@@ -9,6 +9,9 @@ import { Axios } from "../../../../utils/postActions";
 import catchErrors from "../../../../utils/catchErrors";
 import CommentInputField from "../../CommentInputField/CommentInputField";
 import Spinner from "../../../Layout/Spinner/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart, faComments as farComments } from "@fortawesome/free-regular-svg-icons";
 import styles from "./imageModal.module.css";
 
 export default function ImageModal({post,user,setLikes,likes,isLiked,comments,setComments,closeModal,openLikes}) {
@@ -67,16 +70,21 @@ export default function ImageModal({post,user,setLikes,likes,isLiked,comments,se
 
           <div className={styles.postStats}>
             <div className={styles.likes}>
-              <i 
-                className={isLiked ? "fas fa-heart" : "far fa-heart"} 
+              <FontAwesomeIcon
+                icon={isLiked ? faHeart : farHeart} 
+                className={styles.item} 
                 onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
               />
               {likes.length > 0 && <span
                 className={styles.likesCount}
                 onClick={() => setShowLikes(true)}
-              >{`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}</span>}
+              >{`${likes.length} ${likes.length === 1 ? " like" : " likes"}`}</span>}
             </div>
-            <i className={`${styles.comments} far fa-comments`} onClick={()=>setShowLikes(false)} />
+            <FontAwesomeIcon 
+              icon={farComments} 
+              className={styles.comments}
+              onClick={() => setShowLikes(false)}
+            />
           </div>
 
           {!showLikes && <div className={styles.postComments}>
@@ -106,7 +114,11 @@ export default function ImageModal({post,user,setLikes,likes,isLiked,comments,se
 
         </div>
       </Card>
-      <i className={`${styles.closeButton} fas fa-times`} onClick={() => closeModal()} />
+      <FontAwesomeIcon 
+        icon={faTimes} 
+        className={styles.closeButton}
+        onClick={() => closeModal()}
+      />
     </div>
   );
 }

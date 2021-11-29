@@ -19,7 +19,7 @@
     margin-bottom: 25px;
 }
 
-.profileUpdate div i{
+.profileUpdate div .item{
     position: absolute;
     padding-left: 8px;
     color: rgb(102, 99, 99);
@@ -34,7 +34,7 @@
     border-radius: 12px;
 }
 
-.bio i{
+.bio .item{
     top: 30%;
     left: 30px;
 }

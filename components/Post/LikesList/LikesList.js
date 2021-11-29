@@ -50,7 +50,7 @@ export default function LikesList({likes, showAllLikes, postId}) {
         }
       }
     >
-      {`${likes.length} ${likes.length === 1 ? "like" : "likes"}`}
+      {`${likes.length} ${likes.length === 1 ? " like" : " likes"}`}
       {showLikesList && (
         <div className={styles.container}>
           <div className={styles.likesContainer}>

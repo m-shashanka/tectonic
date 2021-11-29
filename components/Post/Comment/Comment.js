@@ -1,6 +1,8 @@
 import Link from "next/link";
 import calculateTime from "../../../utils/calculateTime";
 import { deleteComment } from "../../../utils/postActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./comment.module.css";
 
 export default function Comment({ comment, user, setComments, postId }) {
@@ -21,9 +23,10 @@ export default function Comment({ comment, user, setComments, postId }) {
           </Link>
           <span>{calculateTime(comment.date)}</span>
           {(user.role === "root" || comment.user._id === user._id) &&
-            <i 
-              className={`${styles.deleteComment} fas fa-trash`} 
-              onClick={()=>deleteComment(postId,comment._id,setComments)}
+            <FontAwesomeIcon 
+              icon={faTrash} 
+              className={styles.deleteComment} 
+              onClick={()=>deleteComment(postId,comment._id,setComments)} 
             />
           }
         </div>

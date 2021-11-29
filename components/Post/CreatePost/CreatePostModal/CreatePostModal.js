@@ -3,6 +3,8 @@ import Button from "../../../Layout/Button/Button";
 import uploadPic from "../../../../utils/uploadPicToCloudinary";
 import { submitNewPost } from "../../../../utils/postActions";
 import Spinner from "../../../Layout/Spinner/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faImage, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import styles from "./createPostModal.module.css";
 
 export default function CreatePostModal({ user, setPosts, closeModal }) {
@@ -62,7 +64,7 @@ export default function CreatePostModal({ user, setPosts, closeModal }) {
     <>
       <div className={styles.title}>
         <h3>New Post</h3>
-        <i className="fas fa-times" onClick={closeModal} />
+        <FontAwesomeIcon icon={faTimes} className={styles.item} onClick={closeModal} />
       </div>
       <div className={styles.content}>
         <textarea
@@ -95,11 +97,11 @@ export default function CreatePostModal({ user, setPosts, closeModal }) {
       <div className={styles.footer}>
         <div className={styles.photoLocation}>
           <p onClick={() => inputRef.current.click()}>
-            <i className="fas fa-image" />
+            <FontAwesomeIcon icon={faImage} className={styles.item} />
             &ensp;Add Photo
           </p>
           <p onClick={() => setAddLocation(true)}>
-            <i className="fas fa-map-marker-alt" />
+            <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.item} />
             &ensp;Add Location
           </p>
         </div>

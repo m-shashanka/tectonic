@@ -1,8 +1,10 @@
 import React, { useState, useRef } from "react";
 import Card from "../../Layout/Card/Card";
-import styles from "./createPost.module.css";
 import Modal from "../../Layout/Modal/Modal";
 import CreatePostModal from "./CreatePostModal/CreatePostModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faImage, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import styles from "./createPost.module.css";
 
 function CreatePost({ user, setPosts }) {
   const [showModal, setShowModal] = useState(false);
@@ -24,15 +26,15 @@ function CreatePost({ user, setPosts }) {
         </div>
         <div className={styles.options}>
           <p>
-            <i className="fas fa-edit" />
+            <FontAwesomeIcon icon={faEdit} />
             &ensp;Create Post
           </p>
           <p>
-            <i className="fas fa-image" />
+            <FontAwesomeIcon icon={faImage} />
             &ensp;Photo
           </p>
           <p>
-            <i className="fas fa-map-marker-alt" />
+            <FontAwesomeIcon icon={faMapMarkerAlt} />
             &ensp;Check in
           </p>
         </div>

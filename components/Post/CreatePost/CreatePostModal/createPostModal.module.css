@@ -11,14 +11,14 @@
     margin: 0;
 }
 
-.title i{
+.title .item{
     position: absolute;
     right: 9px;
     cursor: pointer;
     color: grey;
 }
 
-.title i:hover{
+.title .item:hover{
     color: white;
 }
 
@@ -89,7 +89,7 @@
     color: black;
 }
 
-.photoLocation i{
+.photoLocation .item{
     transform: scale(1.6);
 }
 

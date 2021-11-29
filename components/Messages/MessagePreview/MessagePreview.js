@@ -1,5 +1,7 @@
 import {useRouter} from "next/router";
 import calculateTime from "../../../utils/calculateTime";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./messagePreview.module.css";
 
 export default function MessagePreview({chat, connectedUsers, deleteChat}){
@@ -36,7 +38,7 @@ export default function MessagePreview({chat, connectedUsers, deleteChat}){
                     </p>
                 </div>
             </div>
-            <i className="fas fa-trash" onClick={()=>deleteChat(chat.messagesWith)} />
+            <FontAwesomeIcon icon={faTrash} className={styles.item} onClick={()=>deleteChat(chat.messagesWith)} />
         </div>
     );
 }

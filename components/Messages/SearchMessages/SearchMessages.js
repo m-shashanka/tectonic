@@ -4,6 +4,8 @@ import cookie from "js-cookie";
 import {useRouter} from "next/router";
 import Spinner from "../../Layout/Spinner/Spinner";
 import baseUrl from "../../../utils/baseUrl";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import styles from './searchMessages.module.css';
 let cancel;
 
@@ -82,9 +84,7 @@ export default function SearchMessages({chats,setChats}) {
     return (
       <div className={styles.container}>
         <div className={styles.searchbar}>
-            <div className={styles.searchIcon}>
-              <i className="fas fa-search" />
-            </div>
+            <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
             <input
               onBlur={()=>{
                 results.length > 0 && setResults([]);

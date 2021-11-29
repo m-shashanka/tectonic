@@ -11,6 +11,9 @@ import {likePost} from "../../../utils/postActions";
 import Link from "next/link";
 import CommentInputField from "../CommentInputField/CommentInputField";
 import LikesList from "../LikesList/LikesList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart, faComments as farComments } from "@fortawesome/free-regular-svg-icons";
 import styles from "./cardPost.module.css";
 
 export default function CardPost({ post, user, setPosts, setShowToastr, socket }) {
@@ -82,14 +85,19 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
 
         <div className={styles.postStats}>
           <div className={styles.likes}>
-            <i 
-              className={isLiked ? "fas fa-heart" : "far fa-heart"} 
-              onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
-            />
+            <FontAwesomeIcon
+                icon={isLiked ? faHeart : farHeart} 
+                className={styles.item} 
+                onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
+              />
             {likes.length > 0 &&
               <LikesList likes={likes} showAllLikes={showAllLikes} postId={post._id} />}
           </div>
-          <i className={`${styles.comments} far fa-comments`} onClick={showAllComments}/>
+          <FontAwesomeIcon 
+              icon={farComments} 
+              className={styles.comments}
+              onClick={showAllComments}
+            />
         </div>
 
         <div className={styles.postComments}>
