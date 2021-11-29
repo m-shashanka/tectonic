@@ -48,4 +48,5 @@
     padding: 6px;
     border-radius: 12px;
     cursor: pointer;
+    transform: scale(0.85);
 }

@@ -26,15 +26,15 @@ function CreatePost({ user, setPosts }) {
         </div>
         <div className={styles.options}>
           <p>
-            <FontAwesomeIcon icon={faEdit} />
+            <FontAwesomeIcon icon={faEdit} className={styles.item} />
             &ensp;Create Post
           </p>
           <p>
-            <FontAwesomeIcon icon={faImage} />
+            <FontAwesomeIcon icon={faImage} className={styles.item} />
             &ensp;Photo
           </p>
           <p>
-            <FontAwesomeIcon icon={faMapMarkerAlt} />
+            <FontAwesomeIcon icon={faMapMarkerAlt} className={styles.item} />
             &ensp;Check in
           </p>
         </div>

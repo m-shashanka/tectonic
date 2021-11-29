@@ -60,7 +60,7 @@ export default function Settings({user}){
         <div className="layContent">
             <h1 style={{textAlign:"center"}}>Account Settings</h1>
             <Card className={styles.settingsCard}>
-                <h3 onClick={()=>setUpdatePassword(prev=> !prev)}>
+                <h3 onClick={()=>setUpdatePassword(prev=> !prev)} className={styles.dropDown}>
                     <FontAwesomeIcon icon={faKey} className={styles.item} />
                     Update Password
                 </h3>

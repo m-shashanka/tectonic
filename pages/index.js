@@ -47,7 +47,7 @@ function Index({ user, postsData, errorLoading }) {
             loader={<h4 style={{ textAlign: 'center',marginBottom: '10px' }}>Loading...</h4>}
             endMessage={
               <p style={{ textAlign: 'center',marginBottom: '10px' }}>
-                <b>Yay! You have seen it all</b>
+                <b>Yay! You have seen it all.</b>
               </p>
             }
             dataLength={posts.length}

@@ -1,14 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { deletePost } from "../../../../utils/postActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./deletePost.module.css";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import styles from "./deletePost.module.css";
 
 export default function DeletePost({
   id,
   setPosts,
-  setShowToastr,
-  closeModal
+  setShowToastr
 }) {
   const ref = useRef();
   const [deletePostConfirmation, setDeletePostConfirmation] = useState(false);
@@ -31,16 +30,14 @@ export default function DeletePost({
 
   const delPost = async () => {
     await deletePost(id, setPosts, setShowToastr);
-    closeModal && closeModal();
   };
 
   return (
-    <FontAwesomeIcon 
-      forwardedRef={ref} 
-      icon={faTrash} 
-      className={styles.deletePost} 
-      onClick={() => setDeletePostConfirmation(true)}
-    >
+    <div ref={ref} className={styles.deletePost} >
+      <FontAwesomeIcon 
+        icon={faTrash} 
+        onClick={() => setDeletePostConfirmation(true)}
+      />
       {deletePostConfirmation && (
         <div className={styles.showTop}>
           <p>Are you sure?</p>
@@ -50,6 +47,6 @@ export default function DeletePost({
           </p>
         </div>
       )}
-    </FontAwesomeIcon>
+    </div>
   );
 }

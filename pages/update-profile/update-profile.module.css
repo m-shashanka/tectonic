@@ -37,6 +37,7 @@
 .bio .item{
     top: 30%;
     left: 30px;
+    transform: scale(2.24);
 }
 
 .bio textarea{

@@ -30,7 +30,7 @@ function Authentication() {
           
             <div className={`${styles.overlayPanel} ${styles.overlayLeft}`}>
               <span className={`${styles.logo} ${styles.logoColorLeft}`}>
-                <FontAwesomeIcon icon={faPaw} size="3x" />
+                <FontAwesomeIcon icon={faPaw} size="4x" />
                 <h1>Social Media</h1>
               </span>
               <h1>Welcome Back!</h1>
@@ -42,7 +42,7 @@ function Authentication() {
 
             <div className={`${styles.overlayPanel} ${styles.overlayRight}`}>
               <span className={`${styles.logo} ${styles.logoColorRight}`}>
-              <FontAwesomeIcon icon={faPaw} size="3x" />
+              <FontAwesomeIcon icon={faPaw} size="4x" />
                 <h1>Social Media</h1>
               </span>
               <h1>Hello, Friend!</h1>

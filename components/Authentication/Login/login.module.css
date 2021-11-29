@@ -1,12 +1,14 @@
-.eye{
-    right: 2%;
-    cursor: pointer;
-}
-
 .item{
     position: absolute;
     padding-left: 8px;
     color: rgb(102, 99, 99);
+    transform: scale(2.25);
+}
+
+.eye{
+    right: 15px;
+    cursor: pointer;
+    transform: scale(2.2);
 }
 
 .invalid{

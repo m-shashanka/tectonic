@@ -41,7 +41,12 @@ export default function FollowerNotification({notification,loggedUserFollowStats
           <p>{calculateTime(notification.date)}</p>
         </div>
       </div>
-      <FontAwesomeIcon icon={isFollowing ? faUserCheck : faUserPlus} className={styles.button} onClick={handleChange} />
+      <FontAwesomeIcon 
+        icon={isFollowing ? faUserCheck : faUserPlus} 
+        size="2x"
+        className={styles.button} 
+        onClick={handleChange} 
+      />
     </div>
   );
 }

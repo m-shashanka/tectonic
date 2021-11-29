@@ -50,11 +50,11 @@
     border-radius: 12px;
 }
 
-.options p:nth-child(1) i{
+.options p:nth-child(1) .item{
     color: #166FE5;
 }
 
-.options p:nth-child(2) i{
+.options p:nth-child(2) .item{
     color: rgb(255, 115, 0);
     transform: scale(1.15);
 }
@@ -63,6 +63,6 @@
     margin-bottom: 15px;
 }
 
-.options p:nth-child(3) i{
+.options p:nth-child(3) .item{
     color: rgb(11, 196, 11);
 }
