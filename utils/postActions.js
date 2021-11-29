@@ -36,18 +36,23 @@ export const deletePost = async (postId, setPosts, setShowToastr) => {
 };
 
 export const likePost = async (postId, userId, setLikes, like = true) => {
-  try {
-    if (like) {
-      await Axios.post(`/like/${postId}`);
+  if (like) {
+    try{
       setLikes(prev => [...prev, { user: userId }]);
-    }
-    //
-    else if (!like) {
-      await Axios.put(`/unlike/${postId}`);
+      await Axios.post(`/like/${postId}`);
+    } catch(error){
+      alert(catchErrors(error));
       setLikes(prev => prev.filter(like => like.user !== userId));
     }
-  } catch (error) {
-    alert(catchErrors(error));
+  }
+  else if (!like) {
+    try{
+      setLikes(prev => prev.filter(like => like.user !== userId));
+      await Axios.put(`/unlike/${postId}`);
+    } catch(error){
+      alert(catchErrors(error));
+      setLikes(prev => [...prev, { user: userId }]);
+    }
   }
 };
 

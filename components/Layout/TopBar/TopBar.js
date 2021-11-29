@@ -38,6 +38,12 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
 
   const isActive = route => router.pathname === route;
 
+  if(isActive('/notifications'))
+    unreadNotification=0;
+  
+  if(isActive('/messages'))
+    unreadMessage=0;
+
   return (
     <>
       <div className={styles.topbarContainer}>
