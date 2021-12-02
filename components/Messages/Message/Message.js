@@ -44,6 +44,7 @@ export default function Message({divRef,message,user,deleteMsg}){
         {(deleteIcon && myMessage) && <FontAwesomeIcon 
           icon={faTrash} 
           className={styles.deleteMessage}
+          onClick={()=>deleteMsg(message._id)}
         />}
 
         <span {...longPressEvent}>
