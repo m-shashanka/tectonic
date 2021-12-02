@@ -1,5 +1,7 @@
 import { useState } from "react";
 import calculateTime from "../../../utils/calculateTime";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import styles from "./message.module.css";
 
 export default function Message({divRef,message,user,deleteMsg}){
@@ -12,13 +14,21 @@ export default function Message({divRef,message,user,deleteMsg}){
     <div 
       className={myMessage ? `${styles.messageContainer} ${styles.myMessage}`
         :`${styles.messageContainer} ${styles.yourMessage}`}
-      onClick={() => myMessage && showDeleteIcon(!deleteIcon)}
       ref={divRef}
     >
       <div className={styles.messageBody}>
-        <span>{message.msg}</span>
+
+        {(deleteIcon && myMessage) && <FontAwesomeIcon 
+          icon={faTrash} 
+          className={styles.deleteMessage}
+        />}
+
+        <span onClick={() => myMessage && showDeleteIcon(!deleteIcon)}>{message.msg}</span>
+        
         <p>{calculateTime(message.date)}</p>
+
       </div>
+
     </div>
   );
 }
