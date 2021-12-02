@@ -29,11 +29,12 @@ export default function MessagePreview({chat, connectedUsers, deleteChat}){
                 <div className={styles.userInfo}>
                     <section>
                         <h5>{chat.username}</h5>
+                        {isOnline && <div className={styles.online}></div>}
                         <p>{calculateTime(chat.date)}</p>
                     </section>
                     <p className={styles.message}>
-                        {chat.lastMessage.length > 9
-                            ? `${chat.lastMessage.substring(0, 9)} ...`
+                        {chat.lastMessage.length > 15
+                            ? `${chat.lastMessage.substring(0, 15)} ...`
                             : chat.lastMessage}
                     </p>
                 </div>
