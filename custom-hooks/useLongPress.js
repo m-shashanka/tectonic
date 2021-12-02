@@ -1,11 +1,11 @@
 import { useCallback, useRef} from "react";
 
-const useLongPress = (onLongPress,delay = 300) => {
+const useLongPress = (onLongPress,delay = 500) => {
 
     const timeout = useRef();
 
-    const start = useCallback(event => {
-        timeout.current = setTimeout(() => {onLongPress(event)}, delay);
+    const start = useCallback(() => {
+        timeout.current = setTimeout(() => {onLongPress()}, delay);
     },[onLongPress, delay]);
 
     const clear = useCallback(() => {
@@ -13,9 +13,9 @@ const useLongPress = (onLongPress,delay = 300) => {
     },[]);
 
     return {
-        onMouseDown: e => start(e),
-        onMouseUp: e => clear(e),
-        onMouseLeave: e => clear(e),
+        onMouseDown: e => start(),
+        onMouseUp: e => clear(),
+        onMouseLeave: e => clear(),
     };
 };
 

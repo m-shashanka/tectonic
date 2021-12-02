@@ -15,7 +15,7 @@ export default function DeletePost({
   useEffect(() => {
     function handleClickOutside(event) {
       if (ref.current && !ref.current.contains(event.target)) {
-        setDeletePostConfirmation(false);
+        deletePostConfirmation && setDeletePostConfirmation(false);
       }
     }
 
@@ -26,7 +26,7 @@ export default function DeletePost({
       // Unbind the event listener on clean up
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
+  }, [ref, deletePostConfirmation]);
 
   const delPost = async () => {
     await deletePost(id, setPosts, setShowToastr);
