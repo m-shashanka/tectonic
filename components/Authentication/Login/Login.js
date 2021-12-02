@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { loginUser } from "../../../utils/authUser";
 import Spinner from "../../Layout/Spinner/Spinner";
-import Link from "next/link";
 import cookie from "js-cookie";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import styles from './login.module.css';
@@ -17,7 +17,15 @@ export default function Login(){
 
     const [serverError,setServerError] = useState(null);
 
-    const {register,formState: { errors },handleSubmit} = useForm();
+    const {register,formState: { errors },handleSubmit, setValue} = useForm();
+
+    useEffect(()=>{
+      const previousUserEmail = cookie.get('userEmail');
+      if(previousUserEmail){
+        document.title = 'Welcome Back';
+        setValue("email",previousUserEmail);
+      }
+    },[]);
 
     const onSubmit = async (data) => {
 
@@ -32,22 +40,12 @@ export default function Login(){
       await loginUser(user, setServerError, setFormLoading);
     };
 
-    const [userEmail,setUserEmail] = useState("");
-
-    useEffect(()=>{
-      const previousUserEmail = cookie.get('userEmail');
-      if(previousUserEmail){
-        document.title = 'Welcome Back';
-        setUserEmail(previousUserEmail);
-      }
-    },[]);
-
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <h1>Sign in</h1>
             <div className={errors.email ? styles.invalid : null}>
               <FontAwesomeIcon icon={faEnvelope} className={styles.item} />
-              <input type="email" placeholder="Email" name="email" defaultValue={userEmail || undefined}
+              <input type="email" placeholder="Email" name="email"
                 {...register("email", {
                   required: "email required",
                   pattern: {
