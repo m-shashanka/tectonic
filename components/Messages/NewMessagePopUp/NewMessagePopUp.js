@@ -16,5 +16,6 @@ export default function NewMessagePopUp({closeModal}){
             </div>
         </div>
         <MessageInputField isPopUp={true}/>
+        <span className={styles.viewMore} >View all messages</span>
     </div>);
 }

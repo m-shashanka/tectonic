@@ -3,7 +3,7 @@
     margin-left: 10%;
     background-color: white;
     border-radius: 8px;
-    padding-bottom: 2px;
+    padding-bottom: 6px;
 }
 
 .title{
@@ -54,4 +54,11 @@
     background-color: purple;
     color: white;
     padding: 5px;
+}
+
+.viewMore{
+    margin-left: 12px;
+    background-color: white;
+    color: #166FE5;
+    cursor: pointer;
 }
