@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./messageInputField.module.css";
 
-export default function MessageInputField({sendMsg}) {
+export default function MessageInputField({sendMsg,isPopUp}) {
   
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ export default function MessageInputField({sendMsg}) {
   }
 
   return (
-    <div className={styles.yourMessage}>
+    <div className={isPopUp ? styles.yourMessage : `${styles.yourMessage} ${styles.chatBox}`}>
       <input
         type="text"
         placeholder="Send Message"

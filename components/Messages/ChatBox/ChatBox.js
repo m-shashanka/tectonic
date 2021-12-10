@@ -1,5 +1,5 @@
 import Link from "next/link";
-import MessageInputField from "./MessageInputField/MessageInputField";
+import MessageInputField from "../MessageInputField/MessageInputField";
 import Message from "../Message/Message";
 import styles from "./chatBox.module.css";
 

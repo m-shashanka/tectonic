@@ -3,6 +3,9 @@
     align-items: center;
     margin: 0 1%;
     width: 98%;
+}
+
+.chatBox{
     position: absolute;
     bottom: 2px;
 }

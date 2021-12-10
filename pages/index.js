@@ -4,16 +4,20 @@ import baseUrl from "../utils/baseUrl";
 import cookie from "js-cookie";
 import CreatePost from "../components/Post/CreatePost/CreatePost";
 import CardPost from "../components/Post/CardPost/CardPost";
+import Modal from "../components/Layout/Modal/Modal";
 import { PostDeleteToastr } from "../components/Layout/Toastr";
 import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData/NoData";
 import InfiniteScroll from "react-infinite-scroll-component";
+import NewMessagePopUp from "../components/Messages/NewMessagePopUp/NewMessagePopUp";
 
 function Index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
   const [showToastr, setShowToastr] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(2);
+
+  const [showModal,setShowModal] = useState(false);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
@@ -64,6 +68,10 @@ function Index({ user, postsData, errorLoading }) {
           ))}
           </InfiniteScroll>
         }
+        <button onClick={()=>setShowModal(true)}>Testing</button>
+        {showModal && <Modal closeModal={()=>setShowModal(false)}>
+          <NewMessagePopUp closeModal={()=>setShowModal(false)} />
+        </Modal>}
       </div>
     </>
   );
