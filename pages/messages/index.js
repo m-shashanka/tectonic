@@ -54,6 +54,21 @@ export default function Messages({ chatsData, errorLoading, user }){
         });
       }
     }
+
+    const messageRead = async () => {
+      try {
+        await axios.post(
+          `${baseUrl}/api/notifications/readMessages`,
+          {},
+          { headers: { Authorization: cookie.get("token") } }
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    messageRead();
+
   }, []);
 
   // LOAD MESSAGES useEffect

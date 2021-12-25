@@ -36,4 +36,21 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
+router.post("/readMessages",authMiddleware,async (req,res) => {
+  try {
+    const { userId } = req;
+
+    const user = await UserModel.findById(userId);
+
+    if (user.unreadMessage) {
+      user.unreadMessage = 0;
+      await user.save();
+    }
+    return res.status(200).send("Updated");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;

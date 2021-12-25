@@ -26,24 +26,25 @@ function Index({ user, postsData, errorLoading }) {
   const [newMessageModal, showNewMessageModal] = useState(false);
 
     useEffect(() => {
-      if (!socket.current) {
+      if (!socket.current && user.newMessagePopup) {
         socket.current = io(baseUrl);
       }
 
-      if (socket.current) {
+      if (socket.current && user.newMessagePopup) {
         socket.current.emit("join", { userId: user._id });
 
         socket.current.on("newMsgReceived", async ({ newMsg }) => {
           const { username, profilePicUrl } = await getUserInfo(newMsg.sender);
 
-          if (user.newMessagePopup) {
-            setNewMessageReceived({
-              ...newMsg,
-              senderName: username,
-              senderProfilePic: profilePicUrl
-            });
-            showNewMessageModal(true);
-          }
+          
+          setNewMessageReceived({
+            ...newMsg,
+            senderName: username,
+            senderProfilePic: profilePicUrl
+          });
+
+          showNewMessageModal(true);
+
           newMsgSound(username);
         });
       }
