@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import io from "socket.io-client";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import cookie from "js-cookie";
@@ -10,6 +11,8 @@ import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData/NoData";
 import InfiniteScroll from "react-infinite-scroll-component";
 import NewMessagePopUp from "../components/Messages/NewMessagePopUp/NewMessagePopUp";
+import getUserInfo from "../utils/getUserInfo";
+import newMsgSound from "../utils/newMsgSound";
 
 function Index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
@@ -17,7 +20,35 @@ function Index({ user, postsData, errorLoading }) {
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(2);
 
-  const [showModal,setShowModal] = useState(false);
+  const socket = useRef();
+
+  const [newMessageReceived, setNewMessageReceived] = useState(null);
+  const [newMessageModal, showNewMessageModal] = useState(false);
+
+    useEffect(() => {
+      if (!socket.current) {
+        socket.current = io(baseUrl);
+      }
+
+      if (socket.current) {
+        socket.current.emit("join", { userId: user._id });
+
+        socket.current.on("newMsgReceived", async ({ newMsg }) => {
+          const { username, profilePicUrl } = await getUserInfo(newMsg.sender);
+
+          if (user.newMessagePopup) {
+            setNewMessageReceived({
+              ...newMsg,
+              senderName: username,
+              senderProfilePic: profilePicUrl
+            });
+            showNewMessageModal(true);
+          }
+          newMsgSound(username);
+        });
+      }
+
+    }, []);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
@@ -42,6 +73,14 @@ function Index({ user, postsData, errorLoading }) {
   return (
     <>
       {showToastr && <PostDeleteToastr />}
+      {newMessageModal && <Modal closeModal={()=>showNewMessageModal(false)}>
+          <NewMessagePopUp 
+            closeModal={()=>showNewMessageModal(false)} 
+            socket={socket}
+            newMessageReceived={newMessageReceived}
+            user={user}
+          />
+        </Modal>}
       <div className="layContent">
         <CreatePost user={user} setPosts={setPosts} />
         {(errorLoading || posts.length === 0) ? <NoPosts /> : 
@@ -68,10 +107,6 @@ function Index({ user, postsData, errorLoading }) {
           ))}
           </InfiniteScroll>
         }
-        <button onClick={()=>setShowModal(true)}>Testing</button>
-        {showModal && <Modal closeModal={()=>setShowModal(false)}>
-          <NewMessagePopUp closeModal={()=>setShowModal(false)} />
-        </Modal>}
       </div>
     </>
   );

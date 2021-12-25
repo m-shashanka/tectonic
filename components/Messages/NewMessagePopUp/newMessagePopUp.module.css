@@ -23,7 +23,8 @@
 
 .title .item{
     position: absolute;
-    right: 92px;
+    top: 10px;
+    right: 11%;
     cursor: pointer;
     color: white;
 }
