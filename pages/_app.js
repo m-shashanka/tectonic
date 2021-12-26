@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+import io from "socket.io-client";
 import axios from "axios";
 import { parseCookies, destroyCookie } from "nookies"; //to retrieve cookies from server side
 import baseUrl from "../utils/baseUrl";
@@ -11,9 +13,18 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatically since it's being imported above
 
 function MyApp({ Component, pageProps }) {
+
+  const socket = useRef();
+
+  useEffect(() => {
+    if (!socket.current) 
+      socket.current = io(baseUrl);
+    
+  }, []);
+
   return (
-    <Layout {...pageProps}>
-      <Component {...pageProps} />
+    <Layout {...pageProps} socket={socket} >
+      <Component {...pageProps} socket={socket} />
     </Layout>
   );
 }

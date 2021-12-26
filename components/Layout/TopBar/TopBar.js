@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import Card from "../Card/Card";
@@ -14,7 +14,7 @@ import {
 import {faComment as farComment,faBell as farBell, faUser as farUser} from "@fortawesome/free-regular-svg-icons";
 import styles from "./topBar.module.css";
 
-export default function TopBar({user:{unreadNotification,email,unreadMessage,username,profilePicUrl},userFollowStats}) {
+export default function TopBar({user:{unreadNotification,email,unreadMessage,username,profilePicUrl,_id},userFollowStats, socket}) {
 
   const [chatHovered, setChatHovered] = useState(false);
   const toggleChatHover = () => setChatHovered(!chatHovered);
@@ -25,6 +25,20 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
 
   const [leftMenuOpen, setLeftMenuOpen] = useState(true);
   const [rightMenuOpen, setRightMenuOpen] = useState(true);
+
+  const [connectedUsers, setConnectedUsers] = useState([]);
+
+  useEffect(() => {
+
+    if (socket.current) {
+      socket.current.emit("join", { userId: _id });
+
+      socket.current.on("connectedUsers", ({ users }) => {
+        setConnectedUsers(users);
+      });
+    }
+
+  }, []);
 
   const leftMenuToggle = () => {
     setLeftMenuOpen((prevValue) => !prevValue);
@@ -109,10 +123,11 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
         </div>
         <p>Online Users</p>
         <div className={styles.layOnlineUsers}>
+          {connectedUsers.map((onlineUser)=><OnlineUser onlineUser={onlineUser.userId} />)}
+          {/* <OnlineUser />
           <OnlineUser />
           <OnlineUser />
-          <OnlineUser />
-          <OnlineUser />
+          <OnlineUser /> */}
         </div>
         <div
           className={

@@ -14,24 +14,24 @@ import NewMessagePopUp from "../components/Messages/NewMessagePopUp/NewMessagePo
 import getUserInfo from "../utils/getUserInfo";
 import newMsgSound from "../utils/newMsgSound";
 
-function Index({ user, postsData, errorLoading }) {
+function Index({ user, postsData, errorLoading , socket}) {
   const [posts, setPosts] = useState(postsData || []);
   const [showToastr, setShowToastr] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(2);
 
-  const socket = useRef();
+  // const socket = useRef();
 
   const [newMessageReceived, setNewMessageReceived] = useState(null);
   const [newMessageModal, showNewMessageModal] = useState(false);
 
     useEffect(() => {
-      if (!socket.current && user.newMessagePopup) {
-        socket.current = io(baseUrl);
-      }
+      // if (!socket.current) {
+      //   socket.current = io(baseUrl);
+      // }
 
       if (socket.current && user.newMessagePopup) {
-        socket.current.emit("join", { userId: user._id });
+        // socket.current.emit("join", { userId: user._id });
 
         socket.current.on("newMsgReceived", async ({ newMsg }) => {
           const { username, profilePicUrl } = await getUserInfo(newMsg.sender);

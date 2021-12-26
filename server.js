@@ -28,6 +28,7 @@ const {
 // const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
 
 io.on("connection", socket => {
+  console.log("Connection established");
   // var interval;
 
   socket.on("join", ({ userId }) => {
@@ -87,9 +88,7 @@ io.on("connection", socket => {
       // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
       io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
     }
-    else {
-      await setMsgToUnread(msgSendToUserId);
-    }
+    await setMsgToUnread(msgSendToUserId);
 
     !error && socket.emit("msgSent", { newMsg });
   });

@@ -17,13 +17,13 @@ import styles from './messages.module.css';
 const scrollDivToBottom = divRef =>
   divRef.current !== null && divRef.current.scrollIntoView({ behaviour: "smooth" });
 
-export default function Messages({ chatsData, errorLoading, user }){
+export default function Messages({ chatsData, errorLoading, user , socket}){
 
   const [chats, setChats] = useState(chatsData || []);
 
   const router = useRouter();
 
-  const socket = useRef();
+  // const socket = useRef();
   const [connectedUsers, setConnectedUsers] = useState([]);
 
   const [messages, setMessages] = useState([]);
@@ -37,12 +37,12 @@ export default function Messages({ chatsData, errorLoading, user }){
 
   //CONNECTION useEffect
   useEffect(() => {
-    if (!socket.current) {
-      socket.current = io(baseUrl);
-    }
+    // if (!socket.current) {
+    //   socket.current = io(baseUrl);
+    // }
 
     if (socket.current) {
-      socket.current.emit("join", { userId: user._id });
+      // socket.current.emit("join", { userId: user._id });
 
       socket.current.on("connectedUsers", ({ users }) => {
         setConnectedUsers(users);
@@ -68,6 +68,8 @@ export default function Messages({ chatsData, errorLoading, user }){
     };
 
     messageRead();
+
+    return () => { messageRead() };
 
   }, []);
 
