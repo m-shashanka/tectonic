@@ -1,55 +1,19 @@
 import { useState, useEffect, useRef } from "react";
-import io from "socket.io-client";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import cookie from "js-cookie";
 import CreatePost from "../components/Post/CreatePost/CreatePost";
 import CardPost from "../components/Post/CardPost/CardPost";
-import Modal from "../components/Layout/Modal/Modal";
 import { PostDeleteToastr } from "../components/Layout/Toastr";
 import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData/NoData";
 import InfiniteScroll from "react-infinite-scroll-component";
-import NewMessagePopUp from "../components/Messages/NewMessagePopUp/NewMessagePopUp";
-import getUserInfo from "../utils/getUserInfo";
-import newMsgSound from "../utils/newMsgSound";
 
-function Index({ user, postsData, errorLoading , socket}) {
+function Index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
   const [showToastr, setShowToastr] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(2);
-
-  // const socket = useRef();
-
-  const [newMessageReceived, setNewMessageReceived] = useState(null);
-  const [newMessageModal, showNewMessageModal] = useState(false);
-
-    useEffect(() => {
-      // if (!socket.current) {
-      //   socket.current = io(baseUrl);
-      // }
-
-      if (socket.current && user.newMessagePopup) {
-        // socket.current.emit("join", { userId: user._id });
-
-        socket.current.on("newMsgReceived", async ({ newMsg }) => {
-          const { username, profilePicUrl } = await getUserInfo(newMsg.sender);
-
-          
-          setNewMessageReceived({
-            ...newMsg,
-            senderName: username,
-            senderProfilePic: profilePicUrl
-          });
-
-          showNewMessageModal(true);
-
-          newMsgSound(username);
-        });
-      }
-
-    }, []);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
@@ -74,14 +38,6 @@ function Index({ user, postsData, errorLoading , socket}) {
   return (
     <>
       {showToastr && <PostDeleteToastr />}
-      {newMessageModal && <Modal closeModal={()=>showNewMessageModal(false)}>
-          <NewMessagePopUp 
-            closeModal={()=>showNewMessageModal(false)} 
-            socket={socket}
-            newMessageReceived={newMessageReceived}
-            user={user}
-          />
-        </Modal>}
       <div className="layContent">
         <CreatePost user={user} setPosts={setPosts} />
         {(errorLoading || posts.length === 0) ? <NoPosts /> : 

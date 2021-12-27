@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-import io from "socket.io-client";
 import axios from "axios";
 import { parseCookies, destroyCookie } from "nookies"; //to retrieve cookies from server side
 import baseUrl from "../utils/baseUrl";
@@ -14,17 +12,9 @@ config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatic
 
 function MyApp({ Component, pageProps }) {
 
-  const socket = useRef();
-
-  useEffect(() => {
-    if (!socket.current) 
-      socket.current = io(baseUrl);
-    
-  }, []);
-
   return (
-    <Layout {...pageProps} socket={socket} >
-      <Component {...pageProps} socket={socket} />
+    <Layout {...pageProps} >
+      <Component {...pageProps} />
     </Layout>
   );
 }

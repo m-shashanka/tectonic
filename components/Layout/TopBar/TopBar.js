@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import io from "socket.io-client";
+import baseUrl from "../../../utils/baseUrl";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import Card from "../Card/Card";
@@ -7,6 +9,10 @@ import OnlineUser from "../../Profile/OnlineUser/OnlineUser";
 import UserStats from "../../Profile/UserStats/UserStats";
 import {logoutUser} from "../../../utils/authUser";
 import SearchBar from "../SearchBar/SearchBar";
+import Modal from "../Modal/Modal";
+import NewMessagePopUp from "../../Messages/NewMessagePopUp/NewMessagePopUp";
+import getUserInfo from "../../../utils/getUserInfo";
+import newMsgSound from "../../../utils/newMsgSound";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faPaw, faChevronLeft, faChevronRight, faTh, faBell, faComment, faUser, faCog, faSignOutAlt
@@ -14,7 +20,7 @@ import {
 import {faComment as farComment,faBell as farBell, faUser as farUser} from "@fortawesome/free-regular-svg-icons";
 import styles from "./topBar.module.css";
 
-export default function TopBar({user:{unreadNotification,email,unreadMessage,username,profilePicUrl,_id},userFollowStats, socket}) {
+export default function TopBar({user:{unreadNotification,email,unreadMessage,username,profilePicUrl,_id,newMessagePopup},userFollowStats}) {
 
   const [chatHovered, setChatHovered] = useState(false);
   const toggleChatHover = () => setChatHovered(!chatHovered);
@@ -28,7 +34,19 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
 
   const [connectedUsers, setConnectedUsers] = useState([]);
 
+  const socket = useRef();
+
+  const [newMessageReceived, setNewMessageReceived] = useState(null);
+  const [newMessageModal, showNewMessageModal] = useState(false);
+
+  const router = useRouter();
+
+  const isActive = route => router.pathname === route;
+
   useEffect(() => {
+    if (!socket.current) {
+      socket.current = io(baseUrl);
+    }
 
     if (socket.current) {
       socket.current.emit("join", { userId: _id });
@@ -38,7 +56,26 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
       });
     }
 
+    if (socket.current && newMessagePopup) {
+
+      socket.current.on("newMsgReceived", async ({ newMsg }) => {
+        const { username, profilePicUrl } = await getUserInfo(newMsg.sender);
+
+        
+        setNewMessageReceived({
+          ...newMsg,
+          senderName: username,
+          senderProfilePic: profilePicUrl
+        });
+
+        showNewMessageModal(true);
+
+        newMsgSound(username);
+      });
+    }
+
   }, []);
+
 
   const leftMenuToggle = () => {
     setLeftMenuOpen((prevValue) => !prevValue);
@@ -48,10 +85,6 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
     setRightMenuOpen((prevValue) => !prevValue);
   };
 
-  const router = useRouter();
-
-  const isActive = route => router.pathname === route;
-
   if(isActive('/notifications'))
     unreadNotification=0;
   
@@ -60,6 +93,14 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
 
   return (
     <>
+      {newMessageModal && !isActive('/messages') && <Modal closeModal={()=>showNewMessageModal(false)}>
+          <NewMessagePopUp 
+            closeModal={()=>showNewMessageModal(false)} 
+            socket={socket}
+            newMessageReceived={newMessageReceived}
+            userId={_id}
+          />
+        </Modal>}
       <div className={styles.topbarContainer}>
         <div className={styles.topbarLeft} onClick={()=>router.push('/')}>
           <span className={styles.logo}>

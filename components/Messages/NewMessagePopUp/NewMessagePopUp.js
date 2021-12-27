@@ -6,12 +6,12 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import MessageInputField from "../MessageInputField/MessageInputField";
 import styles from "./newMessagePopUp.module.css";
 
-export default function NewMessagePopUp({closeModal,socket,newMessageReceived,user}){
+export default function NewMessagePopUp({closeModal,socket,newMessageReceived,userId}){
     
     const sendMsg = msg => {
         if (socket.current) {
           socket.current.emit("sendNewMsg", {
-            userId: user._id,
+            userId: userId,
             msgSendToUserId: newMessageReceived.sender,
             msg
           });

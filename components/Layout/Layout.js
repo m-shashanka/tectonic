@@ -17,7 +17,7 @@ function Layout({children, user, userFollowStats, socket}){
     <>
     <style jsx global>{`body {background-color: aliceblue;}`}</style>
       <HeadTags />
-      {(user && authenticated) && <TopBar user={user} userFollowStats={userFollowStats} socket={socket} />}
+      {(user && authenticated) && <TopBar user={user} userFollowStats={userFollowStats} />}
       {children}
     </>
   );

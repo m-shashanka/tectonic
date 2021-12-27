@@ -21,7 +21,12 @@ const onlineUsers = () => {
 const removeUser = socketId => {
   const indexOf = users.map(user => user.socketId).indexOf(socketId);
 
-  users.splice(indexOf, 1);
+  if(indexOf === -1)
+    return -1;
+  else{
+    users.splice(indexOf, 1);
+    return 1;
+  }
 };
 
 const findConnectedUser = userId => users.find(user => user.userId === userId);

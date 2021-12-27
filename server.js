@@ -18,6 +18,7 @@ const connectDb = require("./utilsServer/connectDb");
 connectDb();
 
 const { addUser, onlineUsers, removeUser, findConnectedUser } = require("./utilsServer/roomActions");
+const { addChatUser, removeChatUser, findConnectedChatUser } = require("./utilsServer/chatRoomActions");
 const {
   loadMessages,
   sendMsg,
@@ -28,7 +29,6 @@ const {
 // const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
 
 io.on("connection", socket => {
-  console.log("Connection established");
   // var interval;
 
   socket.on("join", ({ userId }) => {
@@ -43,6 +43,12 @@ io.on("connection", socket => {
     // }, 10000);
     const connectedUsers = onlineUsers();
     io.emit('connectedUsers',{users: connectedUsers});
+  });
+
+  socket.on("joinChat", ({ userId }) => {
+    addChatUser(userId, socket.id);
+    const connectedUsers = onlineUsers();
+    socket.emit('connectedUsers',{users: connectedUsers});
   });
 
   // socket.on("likePost", async ({ postId, userId, like }) => {
@@ -82,12 +88,18 @@ io.on("connection", socket => {
 
   socket.on("sendNewMsg", async ({ userId, msgSendToUserId, msg }) => {
     const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
-    const receiverSocket = findConnectedUser(msgSendToUserId);
+    const receiverSocket1 = findConnectedUser(msgSendToUserId);
+    const receiverSocket2 = findConnectedChatUser(msgSendToUserId);
 
-    if (receiverSocket) {
+    if (receiverSocket1) {
       // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
-      io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
+      io.to(receiverSocket1.socketId).emit("newMsgReceived", { newMsg });
     }
+
+    if(receiverSocket2){
+      io.to(receiverSocket2.socketId).emit("newMsgReceived", { newMsg });
+    }
+
     await setMsgToUnread(msgSendToUserId);
 
     !error && socket.emit("msgSent", { newMsg });
@@ -117,9 +129,12 @@ io.on("connection", socket => {
 
   socket.on("disconnect", () => {
     // clearInterval(interval);
-    removeUser(socket.id);
-    const connectedUsers = onlineUsers();
-    io.emit('connectedUsers',{users: connectedUsers});
+    removeChatUser(socket.id);
+    var present = removeUser(socket.id);
+    if(present === 1){
+      const connectedUsers = onlineUsers();
+      io.emit('connectedUsers',{users: connectedUsers});
+    }
   });
 });
 
