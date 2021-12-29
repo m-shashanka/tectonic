@@ -54,7 +54,10 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
       socket.current.emit("join", { userId: _id });
 
       socket.current.on("connectedUsers", ({ users }) => {
-        const onlineUsers = users.filter(connectedUser => connectedUser.userId != _id);
+        const onlineUsers = users.filter(connectedUser => {
+          return userFollowStats.following.length > 0 &&
+          userFollowStats.following.filter(following => following.user === connectedUser.userId).length > 0;
+        });
         setConnectedUsers(onlineUsers);
       });
     }
@@ -165,7 +168,7 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
           <UserSuggestion />
           <UserSuggestion />
         </div>
-        <p>Online Users</p>
+        {connectedUsers.length > 0 && <p>Online Users</p>}
         <div className={styles.layOnlineUsers}>
           {connectedUsers.map((onlineUser)=><OnlineUser onlineUser={onlineUser.userId} />)}
           {/* <OnlineUser />
