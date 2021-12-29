@@ -38,7 +38,8 @@ export default function Messages({ chatsData, errorLoading, user }){
   //CONNECTION useEffect
   useEffect(() => {
     if (!socket.current) {
-      socket.current = io(baseUrl);
+      const token = cookie.get("token");
+      socket.current = io(baseUrl, {auth: {token}});
     }
 
     if (socket.current) {
@@ -117,7 +118,7 @@ export default function Messages({ chatsData, errorLoading, user }){
   }, [router.query.message]);
   
   
-  // Confirming msg is sent and receving the messages useEffect
+  // Confirming msg is sent and receiving the messages useEffect
   useEffect(() => {
     if (socket.current) {
       socket.current.on("msgSent", ({ newMsg }) => {

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import baseUrl from "../../../utils/baseUrl";
+import cookie from "js-cookie";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import Card from "../Card/Card";
@@ -45,7 +46,8 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
 
   useEffect(() => {
     if (!socket.current) {
-      socket.current = io(baseUrl);
+      const token = cookie.get("token");
+      socket.current = io(baseUrl, {auth: {token}});
     }
 
     if (socket.current) {

@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
+const jwt = require("jsonwebtoken");
 
 const next = require("next");
 const dev = process.env.NODE_ENV !== "production";
@@ -28,7 +29,19 @@ const {
 
 // const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
 
-io.on("connection", socket => {
+io.use((socket, next) => {
+  if (socket.handshake.auth && socket.handshake.auth.token){
+    jwt.verify(socket.handshake.auth.token, process.env.jwtSecret, function(err, decoded) {
+      if (err) return next(new Error('Authentication error'));
+      socket.decoded = decoded;
+      next();
+    });
+  }
+  else {
+    next(new Error('Authentication error'));
+  }    
+})
+.on("connection", socket => {
   // var interval;
 
   socket.on("join", ({ userId }) => {
