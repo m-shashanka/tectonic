@@ -54,7 +54,8 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
       socket.current.emit("join", { userId: _id });
 
       socket.current.on("connectedUsers", ({ users }) => {
-        setConnectedUsers(users);
+        const onlineUsers = users.filter(connectedUser => connectedUser.userId != _id);
+        setConnectedUsers(onlineUsers);
       });
     }
 
