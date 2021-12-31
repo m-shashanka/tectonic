@@ -15,12 +15,7 @@ export default function Settings({user}){
 
     const handleChange = (e) => {
         const {name,value} = e.target;
-        setPassword(prevValue => {
-            return {
-                ...prevValue,
-                [name]: value
-            };
-        });
+        setPassword((prev) => ({ ...prev, [name]: value }));
     }
     
     const [updatePassword,setUpdatePassword] = useState(false);
