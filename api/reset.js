@@ -4,7 +4,7 @@ const UserModel = require("../models/UserModel");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const sendGridTransport = require("nodemailer-sendgrid-transport");
-const crypto = require("crypto");
+const crypto = require("crypto"); //to generate token
 const baseUrl = require("../utils/baseUrl");
 const isEmail = require("validator/lib/isEmail");
 const options = {
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
     const token = crypto.randomBytes(32).toString("hex");
 
     user.resetToken = token;
-    user.expireToken = Date.now() + 3600000;
+    user.expireToken = Date.now() + 3600000; //valid for one hour
 
     await user.save();
 
@@ -42,10 +42,8 @@ router.post("/", async (req, res) => {
     const mailOptions = {
       to: user.email,
       from: "shashanka318@gmail.com",
-      subject: "Hi there! Password reset request",
-      html: `<p>Hey ${user.name
-        .split(" ")[0]
-        .toString()}, There was a request for password reset. <a href=${href}>Click this link to reset the password </a>   </p>
+      subject: "Password reset request",
+      html: `<p>Hey ${user.name.split(" ")[0].toString()}, There was a request for password reset. <a href=${href}>Click this link to reset the password </a>   </p>
       <p>This token is valid for only 1 hour.</p>`
     };
 
