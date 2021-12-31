@@ -62,25 +62,40 @@ export default function TopBar({user:{unreadNotification,email,unreadMessage,use
       });
     }
 
-    if (socket.current && newMessagePopup) {
-
-      socket.current.on("newMsgReceived", async ({ newMsg }) => {
-        const { username, profilePicUrl } = await getUserInfo(newMsg.sender);
-
-        
-        setNewMessageReceived({
-          ...newMsg,
-          senderName: username,
-          senderProfilePic: profilePicUrl
-        });
-
-        showNewMessageModal(true);
-
-        newMsgSound(username);
-      });
+    return () => {
+      socket.current && socket.current.disconnect();
     }
 
   }, []);
+
+  useEffect(() => {
+
+    if(!router.isReady) return;
+
+    const handler = async ({ newMsg }) => {
+
+      const { username, profilePicUrl } = await getUserInfo(newMsg.sender);
+      
+      setNewMessageReceived({
+        ...newMsg,
+        senderName: username,
+        senderProfilePic: profilePicUrl
+      });
+
+      showNewMessageModal(true);
+
+      newMsgSound(username);
+    };
+
+    if (socket.current && newMessagePopup && router.pathname !== '/messages') {
+      socket.current.on("newMsgReceived", handler);
+    }
+
+    return () => {
+      socket.current && socket.current.off("newMsgReceived", handler);
+    }
+
+  }, [router.isReady,router.pathname]);
 
 
   const leftMenuToggle = () => {

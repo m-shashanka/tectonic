@@ -70,7 +70,10 @@ export default function Messages({ chatsData, errorLoading, user }){
 
     messageRead();
 
-    return () => { messageRead() };
+    return () => { 
+      messageRead();
+      socket.current && socket.current.disconnect();
+    };
 
   }, []);
 
