@@ -37,6 +37,16 @@
     color: red;
 }
 
+.reset{
+    color: #1877F2;
+    cursor: pointer;
+    margin: 10px 0 14px 0 !important;
+}
+
+.reset:hover{
+    font-weight: 500;
+}
+
 .loading{
     position: absolute;
     background-color: transparent;

@@ -3,7 +3,7 @@ import TopBar from "./TopBar/TopBar";
 import nprogress from "nprogress";
 import Router, { useRouter } from "next/router";
 
-function Layout({children, user, userFollowStats, socket}){
+function Layout({children, user, userFollowStats}){
 
   Router.onRouteChangeStart = () => nprogress.start();
   Router.onRouteChangeComplete = () => nprogress.done();
@@ -11,7 +11,7 @@ function Layout({children, user, userFollowStats, socket}){
 
   const router = useRouter();
 
-  const authenticated = !(router.pathname === "/authentication");
+  const authenticated = !(router.pathname === "/authentication" || router.pathname === "/reset" || router.pathname === "/reset/[token]");
   
   return (
     <>

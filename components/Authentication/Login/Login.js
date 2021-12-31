@@ -79,7 +79,7 @@ export default function Login(){
                 onClick={()=>{setShowPassword(prev=>!prev)}}
               />
             </div>
-            <Link href="#" style={{color:"#1877F2"}}>Forgot your password?</Link>
+            <Link href="/reset"><p className={styles.reset}>Forgot password?</p></Link>
             {!formLoading && <button type="submit">Sign In</button>}
             {formLoading && <Spinner className={styles.loading}/>}
             {serverError && <p className={styles.serverError}>{serverError}</p>}

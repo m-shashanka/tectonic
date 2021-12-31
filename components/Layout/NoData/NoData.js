@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMeh, faUserFriends, faPaperPlane, faGrin } from "@fortawesome/free-solid-svg-icons";
+import { faMeh, faUserFriends, faPaperPlane, faGrin, faCogs } from "@fortawesome/free-solid-svg-icons";
 import styles from "./noData.module.css";
 
 export const NoProfilePosts = () => (
@@ -70,6 +70,17 @@ export const NoNotifications = () => (
      <div>
        <h4>No Notifications</h4>
      </div>
+  </div>
+);
+
+export const Reset = () => (
+  <div className={styles.reset}>
+    <div className={styles.container} style={{padding:"15px",borderRadius:"25px"}}>
+      <FontAwesomeIcon icon={faCogs} className={styles.item} />
+      <div>
+        <h1>Reset Password</h1>
+      </div>
+    </div>
   </div>
 );
 
