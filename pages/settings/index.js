@@ -52,7 +52,6 @@ export default function Settings({user}){
 
     return (
         <>
-        <div className="layContent">
             <h1 style={{textAlign:"center"}}>Account Settings</h1>
             <Card className={styles.settingsCard}>
                 <h3 onClick={()=>setUpdatePassword(prev=> !prev)} className={styles.dropDown}>
@@ -109,7 +108,6 @@ export default function Settings({user}){
                     </label>
                 </section>
             </Card>
-        </div>
         </>
     );
 }

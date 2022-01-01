@@ -1,9 +1,9 @@
 .layContent{
-    position: absolute;
+    /* position: absolute;
     top: 70px;
-    right: 25vw;
+    right: 25vw; */
     display: flex;
-    width: calc(100% - 25vw);
+    /* width: calc(100% - 25vw); */
 }
 
 .leftBar{

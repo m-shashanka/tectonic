@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import axios from "axios";
 import { parseCookies, destroyCookie } from "nookies"; //to retrieve cookies from server side
 import baseUrl from "../utils/baseUrl";
@@ -9,12 +10,44 @@ import "cropperjs/dist/cropper.css";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CSS
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false; // Tell Font Awesome to skip adding the CSS automatically since it's being imported above
+import { Media, MediaContextProvider } from "../Responsive/Media";
 
 function MyApp({ Component, pageProps }) {
 
+  const router = useRouter();
+
+  const needMedia = !(router.pathname === "/authentication" || router.pathname === "/reset" || router.pathname === "/reset/[token]");
+
+  if(!needMedia)
+    return (
+      <Layout {...pageProps} >
+        <Component {...pageProps} />
+      </Layout>
+    );
+
   return (
     <Layout {...pageProps} >
-      <Component {...pageProps} />
+      <MediaContextProvider>
+      <Media greaterThanOrEqual="computer">
+        {router.pathname === "/messages" ? 
+          (<div className="layContentForTablet">
+            <Component {...pageProps} />
+          </div>): <div className="layContent">
+            <Component {...pageProps} />
+          </div>
+        }
+        </Media>
+        <Media between={["tablet", "computer"]}>
+          <div className="layContentForTablet">
+            <Component {...pageProps} />
+          </div>
+        </Media>
+        <Media between={["mobile", "tablet"]}>
+          <div className="layContentBelowTablet">
+            <Component {...pageProps} />
+          </div>
+        </Media>
+      </MediaContextProvider>
     </Layout>
   );
 }

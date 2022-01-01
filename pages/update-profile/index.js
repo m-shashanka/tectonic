@@ -39,8 +39,7 @@ function UpdateProfile({account}){
     }
 
     return (
-        <>
-        <div className="layContent">
+        <div className={styles.layContent}>
             <Card className={styles.profileUpdate}>
                 <h1>Update Profile</h1>
                 <ProfilePic setMedia={setMedia} userImage={account.profilePicUrl}/>
@@ -53,7 +52,6 @@ function UpdateProfile({account}){
             </Card>
             {serverError && <p style={{marginTop:"20px",color:"red"}}>{serverError}</p>}
         </div>
-        </>
     );
 }
 

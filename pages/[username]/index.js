@@ -64,11 +64,7 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
   }
 
   if(errorLoading)
-    return (
-      <div className="layContent">
-        <NoProfile />
-      </div>
-    );
+    return (<NoProfile />);
 
     useEffect(() => {
       const getPosts = async () => {
@@ -97,7 +93,6 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
 
   return <>
   {showToastr && <PostDeleteToastr />}
-    <div className="layContent">
 
       <Card className={styles.profileCard}>
         <img 
@@ -209,8 +204,6 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
           />
         </div>
       }
-
-    </div>
 
   </>
 }

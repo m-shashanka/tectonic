@@ -97,7 +97,7 @@ export default function SearchMessages({chats,setChats}) {
             />
             {loading && <Spinner className={styles.userLoading}/>}
         </div>
-        <div className={styles.searchResult}>
+        {text && <div className={styles.searchResult}>
           {results.map((data) => (
             <div key={data._id} className={styles.searchItem} onMouseDown={()=>addChat(data)}>
               <div>
@@ -114,7 +114,7 @@ export default function SearchMessages({chats,setChats}) {
               <h4>No results found</h4>
             </div>
           }
-        </div>
+        </div>}
       </div>
     );
 }

@@ -32,7 +32,6 @@ export default function Notifications({ notifications, errorLoading, user, userF
 
   return (
     <>
-      <div className="layContent">
           <h1 style={{textAlign:"center"}}>Notifications</h1>
           {(!errorLoading && notifications.length > 0) ?
             <Card className={styles.notificationsCard}>
@@ -52,7 +51,6 @@ export default function Notifications({ notifications, errorLoading, user, userF
                   />}
               </div>)}
           </Card> : <NoNotifications />}
-      </div>
     </>
   );
 }

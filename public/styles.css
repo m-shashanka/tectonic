@@ -30,6 +30,13 @@ body {
   right: 26vw;
 }
 
+.layContentBelowTablet{
+  position: absolute;
+  top: 82px;
+  left: 10px;
+  right: 10px;
+}
+
 /* 
 .mySpinner {
   border: 5px solid #f3f3f3;
