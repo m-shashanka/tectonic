@@ -1,3 +1,14 @@
+.backdrop{
+    position: fixed;
+    top: 9.4vh;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.75);
+    cursor: default;
+}
+
 .searchbar{
     width: 85%;
     height: 30px;
@@ -37,7 +48,7 @@
 
 .searchResult{
     position: fixed;
-    z-index: 1000;
+    z-index: 2005;
     width: 35.3%;
     max-height: 88vh;
     top: 58px;
@@ -60,6 +71,7 @@
     padding: 1% 1% 2% 1%;
     background-color: gainsboro !important;
     cursor: default !important;
+    z-index: 2005;
 }
 
 .searchItem:hover{

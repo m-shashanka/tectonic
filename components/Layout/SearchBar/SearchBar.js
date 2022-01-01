@@ -57,6 +57,7 @@ export default function SearchBar() {
 
     return (
       <>
+        {(text.length > 0) && <div className={styles.backdrop}></div>}
         <div className={styles.searchbar}>
             <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
             <input
