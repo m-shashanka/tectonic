@@ -8,6 +8,14 @@ import { PostDeleteToastr } from "../components/Layout/Toastr";
 import { parseCookies } from "nookies";
 import { NoPosts } from "../components/Layout/NoData/NoData";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { createMedia } from "@artsy/fresnel";
+
+const AppMedia = createMedia({
+  breakpoints: { zero: 0, mobile: 549, tablet: 985, computer: 1080 },
+});
+
+const mediaStyles = AppMedia.createMediaStyle();
+const { Media, MediaContextProvider } = AppMedia;
 
 function Index({ user, postsData, errorLoading }) {
   const [posts, setPosts] = useState(postsData || []);
@@ -37,34 +45,70 @@ function Index({ user, postsData, errorLoading }) {
 
   return (
     <>
+      <style>{mediaStyles}</style>
+
       {showToastr && <PostDeleteToastr />}
-      <div className="layContent">
-        <CreatePost user={user} setPosts={setPosts} />
-        {(errorLoading || posts.length === 0) ? <NoPosts /> : 
-          <InfiniteScroll
-            hasMore={hasMore}
-            next={fetchDataOnScroll}
-            loader={<h4 style={{ textAlign: 'center',marginBottom: '10px' }}>Loading...</h4>}
-            endMessage={
-              <p style={{ textAlign: 'center',marginBottom: '10px' }}>
-                <b>Yay! You have seen it all.</b>
-              </p>
+
+      <MediaContextProvider>
+        <Media greaterThanOrEqual="computer">
+          <div className="layContent">
+            <CreatePost user={user} setPosts={setPosts} />
+            {(errorLoading || posts.length === 0) ? <NoPosts /> : 
+              <InfiniteScroll
+                hasMore={hasMore}
+                next={fetchDataOnScroll}
+                loader={<h4 style={{ textAlign: 'center',marginBottom: '10px' }}>Loading...</h4>}
+                endMessage={
+                  <p style={{ textAlign: 'center',marginBottom: '10px' }}>
+                    <b>Yay! You have seen it all.</b>
+                  </p>
+                }
+                dataLength={posts.length}
+                style={{overflow:"visible"}}
+              >
+              {posts.map((post) => (
+                <CardPost
+                  key={post._id}
+                  post={post}
+                  user={user}
+                  setPosts={setPosts}
+                  setShowToastr={setShowToastr}
+                />
+              ))}
+              </InfiniteScroll>
             }
-            dataLength={posts.length}
-            style={{overflow:"visible"}}
-          >
-          {posts.map((post) => (
-            <CardPost
-              key={post._id}
-              post={post}
-              user={user}
-              setPosts={setPosts}
-              setShowToastr={setShowToastr}
-            />
-          ))}
-          </InfiniteScroll>
-        }
-      </div>
+          </div>
+        </Media>
+        <Media between={["tablet", "computer"]} >
+          <div className="layContentForTablet">
+            <CreatePost user={user} setPosts={setPosts} />
+            {(errorLoading || posts.length === 0) ? <NoPosts /> : 
+              <InfiniteScroll
+                hasMore={hasMore}
+                next={fetchDataOnScroll}
+                loader={<h4 style={{ textAlign: 'center',marginBottom: '10px' }}>Loading...</h4>}
+                endMessage={
+                  <p style={{ textAlign: 'center',marginBottom: '10px' }}>
+                    <b>Yay! You have seen it all.</b>
+                  </p>
+                }
+                dataLength={posts.length}
+                style={{overflow:"visible"}}
+              >
+              {posts.map((post) => (
+                <CardPost
+                  key={post._id}
+                  post={post}
+                  user={user}
+                  setPosts={setPosts}
+                  setShowToastr={setShowToastr}
+                />
+              ))}
+              </InfiniteScroll>
+            }
+          </div>
+        </Media>
+      </MediaContextProvider>
     </>
   );
 }

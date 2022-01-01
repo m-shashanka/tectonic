@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { mediaStyles } from "../../Responsive/Media";
 
 const HeadTags = () => (
     <Head>
@@ -9,11 +10,11 @@ const HeadTags = () => (
 
       <link rel="icon" href="/favicon.png" sizes="16*16" type="image/png" />
 
-      <link rel="stylesheet" type="text/css" href="/listMessages.css" />
-
       <link rel="stylesheet" type="text/css" href="/nprogress.css" />
 
       <link rel="stylesheet" type="text/css" href="/styles.css" />
+
+      <style>{mediaStyles}</style>
 
       <title>Social Media</title>
     </Head>

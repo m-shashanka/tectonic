@@ -23,6 +23,13 @@ body {
   right: 26vw;
 }
 
+.layContentForTablet{
+  position: absolute;
+  top: 82px;
+  left: 10px;
+  right: 26vw;
+}
+
 /* 
 .mySpinner {
   border: 5px solid #f3f3f3;
