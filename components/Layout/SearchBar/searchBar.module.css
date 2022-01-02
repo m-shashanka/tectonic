@@ -17,10 +17,28 @@
     display: flex;
     align-items: center;
     position: relative;
+    margin: 0 auto;
 }
 
 .searchbar:hover, .searchbar:focus-within{
     outline: 3px solid aqua; 
+    box-shadow: 0 0 1px 1px white;
+}
+
+.mobileSearchBar{
+    width: 85%;
+    height: 30px;
+    background-color: white;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+    border: 1px solid grey;
+}
+
+.mobileSearchBar:hover, .mobileSearchBar:focus-within{
+    outline: 2px solid grey; 
     box-shadow: 0 0 1px 1px white;
 }
 
@@ -57,12 +75,30 @@
     overflow-x: hidden;
 }
 
-.searchItem{
+.mobileSearchResult{
+    width: 85%;
+    margin: 10px auto;
+    top: 120px;
+    border-radius: 12px;
+    overflow-x: hidden;
+}
+
+.searchResult .searchItem{
     width: 100%;
     height: auto;
     display: flex;
     align-items: center;
     background-color: white;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.mobileSearchResult .searchItem{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    background-color: gainsboro;
     border-radius: 12px;
     cursor: pointer;
 }

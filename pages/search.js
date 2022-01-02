@@ -1,8 +1,7 @@
-import React from "react";
-import Search from "../components/Layout/Search";
+import SearchBar from "../components/Layout/SearchBar/SearchBar";
 
 function SearchPage() {
-  return <Search />;
+  return <SearchBar mobile={true} />;
 }
 
 export default SearchPage;

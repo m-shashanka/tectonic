@@ -9,7 +9,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import styles from './searchBar.module.css';
 let cancel;
 
-export default function SearchBar() {
+export default function SearchBar({mobile}) {
 
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
@@ -57,8 +57,8 @@ export default function SearchBar() {
 
     return (
       <>
-        {(text.length > 0) && <div className={styles.backdrop}></div>}
-        <div className={styles.searchbar}>
+        {(text.length > 0 && !mobile) && <div className={styles.backdrop}></div>}
+        <div className={mobile ? styles.mobileSearchBar : styles.searchbar}>
             <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
             <input
               onBlur={()=>{
@@ -72,7 +72,7 @@ export default function SearchBar() {
             />
             {loading && <Spinner className={styles.userLoading}/>}
         </div>
-        <div className={styles.searchResult}>
+        <div className={mobile ? styles.mobileSearchResult : styles.searchResult}>
           {results.map((data) => (
             <div key={data._id} className={styles.searchItem} onMouseDown={()=>Router.push(`/${data.username}`)}>
               <div>

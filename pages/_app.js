@@ -42,8 +42,8 @@ function MyApp({ Component, pageProps }) {
             <Component {...pageProps} />
           </div>
         </Media>
-        <Media between={["mobile", "tablet"]}>
-          <div className="layContentBelowTablet">
+        <Media lessThan="tablet">
+          <div className="layContentForMobile">
             <Component {...pageProps} />
           </div>
         </Media>

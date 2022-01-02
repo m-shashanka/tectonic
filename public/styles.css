@@ -30,7 +30,7 @@ body {
   right: 26vw;
 }
 
-.layContentBelowTablet{
+.layContentForMobile{
   position: absolute;
   top: 82px;
   left: 10px;

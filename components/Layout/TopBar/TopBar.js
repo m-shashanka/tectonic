@@ -24,6 +24,7 @@ import {
   faComment,
   faUser,
   faCog,
+  faSearch,
   faHome,
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
@@ -136,16 +137,19 @@ export default function TopBar({
   return (
     <>
       <MediaContextProvider>
-        {newMessageModal && !isActive("/messages") && (
-          <Modal closeModal={() => showNewMessageModal(false)}>
-            <NewMessagePopUp
-              closeModal={() => showNewMessageModal(false)}
-              socket={socket}
-              newMessageReceived={newMessageReceived}
-              userId={_id}
-            />
-          </Modal>
-        )}
+
+        <Media greaterThanOrEqual="tablet">
+          {newMessageModal && !isActive("/messages") && (
+            <Modal closeModal={() => showNewMessageModal(false)}>
+              <NewMessagePopUp
+                closeModal={() => showNewMessageModal(false)}
+                socket={socket}
+                newMessageReceived={newMessageReceived}
+                userId={_id}
+              />
+            </Modal>
+          )}
+        </Media>
 
         <Media greaterThanOrEqual="tablet">
           <div className={styles.topbarContainer}>
@@ -318,32 +322,70 @@ export default function TopBar({
 
             <div className={styles.topbarTabletRight}>
               <FontAwesomeIcon
-                className={isActive("/") ? styles.selectedTabletMenuItem : styles.tabletMenuItem}
+                className={isActive("/") ? styles.selectedMenuItem : styles.menuItem}
                 icon={faHome}
                 onClick={() => router.push("/")}
               />
               <FontAwesomeIcon
-                className={isActive("/messages") ? styles.selectedTabletMenuItem : styles.tabletMenuItem}
+                className={isActive("/messages") ? styles.selectedMenuItem : styles.menuItem}
                 icon={faComment}
                 onClick={() => router.push("/messages")}
               />
               <FontAwesomeIcon
-                className={isActive("/notifications") ? styles.selectedTabletMenuItem : styles.tabletMenuItem}
+                className={isActive("/notifications") ? styles.selectedMenuItem : styles.menuItem}
                 icon={faBell}
                 onClick={() => router.push("/notifications")}
               />
               <FontAwesomeIcon 
-                className={isActive("/settings") ? styles.selectedTabletMenuItem : styles.tabletMenuItem} 
+                className={isActive("/settings") ? styles.selectedMenuItem : styles.menuItem} 
                 icon={faCog} 
                 onClick={() => router.push("/settings")}
               />
               <FontAwesomeIcon
-                className={router.query.username === username ? styles.selectedTabletMenuItem : styles.tabletMenuItem}
+                className={router.query.username === username ? styles.selectedMenuItem : styles.menuItem}
                 icon={faUser}
                 onClick={() => router.push(`/${username}`)}
               />
               <FontAwesomeIcon
-                className={styles.tabletMenuItem}
+                className={styles.menuItem}
+                icon={faSignOutAlt}
+                onClick={() => logoutUser(email)}
+              />
+            </div>
+          </div>
+        </Media>
+
+        <Media lessThan="mobile">
+          <div className={styles.topbarContainer}>
+
+            <div className={styles.topbarMobile}>
+              <FontAwesomeIcon
+                className={isActive("/") ? styles.selectedMenuItem : styles.menuItem}
+                icon={faHome}
+                onClick={() => router.push("/")}
+              />
+              <FontAwesomeIcon
+                className={isActive("/messages") ? styles.selectedMenuItem : styles.menuItem}
+                icon={faComment}
+                onClick={() => router.push("/messages")}
+              />
+              <FontAwesomeIcon
+                className={isActive("/notifications") ? styles.selectedMenuItem : styles.menuItem}
+                icon={faBell}
+                onClick={() => router.push("/notifications")}
+              />
+              <FontAwesomeIcon 
+                className={isActive("/search") ? styles.selectedMenuItem : styles.menuItem} 
+                icon={faSearch} 
+                onClick={() => router.push("/search")}
+              />
+              <FontAwesomeIcon
+                className={router.query.username === username ? styles.selectedMenuItem : styles.menuItem}
+                icon={faUser}
+                onClick={() => router.push(`/${username}`)}
+              />
+              <FontAwesomeIcon
+                className={styles.menuItem}
                 icon={faSignOutAlt}
                 onClick={() => logoutUser(email)}
               />
