@@ -365,11 +365,6 @@ export default function TopBar({
                 onClick={() => router.push("/")}
               />
               <FontAwesomeIcon
-                className={isActive("/messages") ? styles.selectedMenuItem : styles.menuItem}
-                icon={faComment}
-                onClick={() => router.push("/messages")}
-              />
-              <FontAwesomeIcon
                 className={isActive("/notifications") ? styles.selectedMenuItem : styles.menuItem}
                 icon={faBell}
                 onClick={() => router.push("/notifications")}
