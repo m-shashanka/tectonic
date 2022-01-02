@@ -10,6 +10,12 @@
     /* padding: 10px; */
 }
 
+.postCardMobile{
+    width: 100%;
+    height: 48vh;
+    display: flex;
+}
+
 .closeButton{
     position: absolute;
     top: 0;
@@ -33,6 +39,12 @@
 
 .post{
     flex: 47%;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.postMobile{
+    flex: 100%;
     border-radius: 12px;
     padding: 10px;
 }
