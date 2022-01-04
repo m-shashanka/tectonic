@@ -34,6 +34,19 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
   const [loading, setLoading] = useState(false);
   const [followLoading, setFollowLoading] = useState(false);
 
+  const socket = useRef();
+
+  useEffect(() => {
+    if (!socket.current) {
+      const token = cookie.get("token");
+      socket.current = io(baseUrl, { auth: { token } });
+    }
+
+    return () => {
+      socket.current && socket.current.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
   }, [showToastr]);  
@@ -181,7 +194,7 @@ function ProfilePage({profile, postsLength, followersLength, followingLength, er
         {loading && <h4 style={{textAlign:"center"}}>Loading...</h4>}
         {!loading && posts.length === 0 && <NoProfilePosts />}
         {!loading && posts.length > 0 && posts.map(post=>(
-          <CardPost key={post._id} post={post} user={user} setPosts={setPosts} setShowToastr={setShowToastr}/>
+          <CardPost socket={socket} key={post._id} post={post} user={user} setPosts={setPosts} setShowToastr={setShowToastr}/>
         ))}
       </div>}
 

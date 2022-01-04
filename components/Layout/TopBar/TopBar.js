@@ -94,10 +94,15 @@ export default function TopBar({
         setConnectedUsers(onlineUsers);
       });
 
-      socket.current.on("newNotificationReceived",({ name, profilePicUrl, username, postId }) => {
-          setNewNotification({ name, profilePicUrl, username, postId });
+      socket.current.on("newNotificationReceived",({userId, name, profilePicUrl, username, postId }) => {
 
-          showNotificationPopup(true);
+          if(userFollowStats.following.length > 0 &&
+            userFollowStats.following.filter((following) => following.user === userId).length > 0){
+
+              setNewNotification({ name, profilePicUrl, username, postId });
+    
+              showNotificationPopup(true);
+          }
         }
       );
     }

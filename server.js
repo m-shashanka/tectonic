@@ -79,6 +79,7 @@ io.use((socket, next) => {
 
         if (receiverSocket && like) {
           io.to(receiverSocket.socketId).emit("newNotificationReceived", {
+            userId,
             name,
             profilePicUrl,
             username,
