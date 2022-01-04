@@ -74,22 +74,21 @@ io.use((socket, next) => {
       error
     } = await likeOrUnlikePost(postId, userId, like);
 
-    if (success) {
-      socket.emit("postLiked");
+    if (success && postByUserId !== userId) {
+        const receiverSocket = findConnectedUser(postByUserId);
 
-      // if (postByUserId !== userId) {
-      //   const receiverSocket = findConnectedUser(postByUserId);
+        if (receiverSocket && like) {
+          io.to(receiverSocket.socketId).emit("newNotificationReceived", {
+            name,
+            profilePicUrl,
+            username,
+            postId
+          });
+      }
+    }
 
-      //   if (receiverSocket && like) {
-      //     // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
-      //     io.to(receiverSocket.socketId).emit("newNotificationReceived", {
-      //       name,
-      //       profilePicUrl,
-      //       username,
-      //       postId
-      //     });
-      //   }
-      // }
+    if(error){
+      socket.emit("failed",{like});
     }
   });
 

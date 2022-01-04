@@ -51,6 +51,7 @@ function Index({ user, postsData, errorLoading }) {
 
   return (
     <>
+
       {showToastr && <PostDeleteToastr />}
 
       <CreatePost user={user} setPosts={setPosts} />

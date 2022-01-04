@@ -34,6 +34,7 @@ import {
   faUser as farUser,
 } from "@fortawesome/free-regular-svg-icons";
 import { Media, MediaContextProvider } from "../../../Responsive/Media";
+import NotificationPortal from "../../Home/NotificationPortal";
 import styles from "./topBar.module.css";
 
 export default function TopBar({
@@ -65,6 +66,9 @@ export default function TopBar({
   const [newMessageReceived, setNewMessageReceived] = useState(null);
   const [newMessageModal, showNewMessageModal] = useState(false);
 
+  const [newNotification, setNewNotification] = useState(null);
+  const [notificationPopup, showNotificationPopup] = useState(false);
+
   const router = useRouter();
 
   const isActive = (route) => router.pathname === route;
@@ -89,6 +93,13 @@ export default function TopBar({
         });
         setConnectedUsers(onlineUsers);
       });
+
+      socket.current.on("newNotificationReceived",({ name, profilePicUrl, username, postId }) => {
+          setNewNotification({ name, profilePicUrl, username, postId });
+
+          showNotificationPopup(true);
+        }
+      );
     }
 
     return () => {
@@ -139,7 +150,8 @@ export default function TopBar({
       <MediaContextProvider>
 
         <Media greaterThanOrEqual="tablet">
-          {newMessageModal && !isActive("/messages") && (
+
+        {newMessageModal && !isActive("/messages") && (
             <Modal closeModal={() => showNewMessageModal(false)}>
               <NewMessagePopUp
                 closeModal={() => showNewMessageModal(false)}
@@ -149,9 +161,14 @@ export default function TopBar({
               />
             </Modal>
           )}
-        </Media>
+          {notificationPopup && newNotification !== null && (
+            <NotificationPortal
+              newNotification={newNotification}
+              notificationPopup={notificationPopup}
+              showNotificationPopup={showNotificationPopup}
+            />
+          )}
 
-        <Media greaterThanOrEqual="tablet">
           <div className={styles.topbarContainer}>
             <div className={styles.topbarLeft} onClick={() => router.push("/")}>
               <span className={styles.logo}>

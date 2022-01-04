@@ -96,11 +96,17 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
                         like: !isLiked
                       });
 
-                      socket.current.on("postLiked", () => {
-                        if (isLiked) {
+                      if (isLiked) {
+                        setLikes(prev => prev.filter(like => like.user !== user._id));
+                      }
+                      else {
+                        setLikes(prev => [...prev, { user: user._id }]);
+                      }
+
+                      socket.current.on("failed", ({like}) => {
+                        if(like){
                           setLikes(prev => prev.filter(like => like.user !== user._id));
-                        }
-                        else {
+                        }else{
                           setLikes(prev => [...prev, { user: user._id }]);
                         }
                       });
