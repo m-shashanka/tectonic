@@ -27,7 +27,7 @@ const {
   deleteMsg
 } = require("./utilsServer/messageActions");
 
-// const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
+const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
 
 io.use((socket, next) => {
   if (socket.handshake.auth && socket.handshake.auth.token){
@@ -64,34 +64,34 @@ io.use((socket, next) => {
     socket.emit('connectedUsers',{users: connectedUsers});
   });
 
-  // socket.on("likePost", async ({ postId, userId, like }) => {
-  //   const {
-  //     success,
-  //     name,
-  //     profilePicUrl,
-  //     username,
-  //     postByUserId,
-  //     error
-  //   } = await likeOrUnlikePost(postId, userId, like);
+  socket.on("likePost", async ({ postId, userId, like }) => {
+    const {
+      success,
+      name,
+      profilePicUrl,
+      username,
+      postByUserId,
+      error
+    } = await likeOrUnlikePost(postId, userId, like);
 
-  //   if (success) {
-  //     socket.emit("postLiked");
+    if (success) {
+      socket.emit("postLiked");
 
-  //     if (postByUserId !== userId) {
-  //       const receiverSocket = findConnectedUser(postByUserId);
+      // if (postByUserId !== userId) {
+      //   const receiverSocket = findConnectedUser(postByUserId);
 
-  //       if (receiverSocket && like) {
-  //         // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
-  //         io.to(receiverSocket.socketId).emit("newNotificationReceived", {
-  //           name,
-  //           profilePicUrl,
-  //           username,
-  //           postId
-  //         });
-  //       }
-  //     }
-  //   }
-  // });
+      //   if (receiverSocket && like) {
+      //     // WHEN YOU WANT TO SEND DATA TO ONE PARTICULAR CLIENT
+      //     io.to(receiverSocket.socketId).emit("newNotificationReceived", {
+      //       name,
+      //       profilePicUrl,
+      //       username,
+      //       postId
+      //     });
+      //   }
+      // }
+    }
+  });
 
   socket.on("loadMessages", async ({ userId, messagesWith }) => {
     const { chat, error } = await loadMessages(userId, messagesWith);

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import io from "socket.io-client";
 import axios from "axios";
 import baseUrl from "../utils/baseUrl";
 import cookie from "js-cookie";
@@ -14,6 +15,19 @@ function Index({ user, postsData, errorLoading }) {
   const [showToastr, setShowToastr] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [pageNumber, setPageNumber] = useState(2);
+
+  const socket = useRef();
+
+  useEffect(() => {
+    if (!socket.current) {
+      const token = cookie.get("token");
+      socket.current = io(baseUrl, { auth: { token } });
+    }
+
+    return () => {
+      socket.current && socket.current.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     showToastr && setTimeout(() => setShowToastr(false), 3000);
@@ -61,6 +75,7 @@ function Index({ user, postsData, errorLoading }) {
         >
           {posts.map((post) => (
             <CardPost
+              socket={socket}
               key={post._id}
               post={post}
               user={user}

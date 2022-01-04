@@ -27,10 +27,10 @@ const likeOrUnlikePost = async (postId, userId, like) => {
     }
     //
     else {
-      const isLiked =
+      const isNotLiked =
         post.likes.filter(like => like.user.toString() === userId).length === 0;
 
-      if (isLiked) return { error: "Post not liked before" };
+      if (isNotLiked) return { error: "Post not liked before" };
 
       const indexOf = post.likes.map(like => like.user.toString()).indexOf(userId);
 

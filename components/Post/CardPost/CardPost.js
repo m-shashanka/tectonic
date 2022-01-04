@@ -88,7 +88,27 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
             <FontAwesomeIcon
                 icon={isLiked ? faHeart : farHeart} 
                 className={styles.item} 
-                onClick={()=>likePost(post._id,user._id,setLikes,!isLiked)}
+                onClick={()=>{
+                    if(socket && socket.current){
+                      socket.current.emit("likePost", {
+                        postId: post._id,
+                        userId: user._id,
+                        like: !isLiked
+                      });
+
+                      socket.current.on("postLiked", () => {
+                        if (isLiked) {
+                          setLikes(prev => prev.filter(like => like.user !== user._id));
+                        }
+                        else {
+                          setLikes(prev => [...prev, { user: user._id }]);
+                        }
+                      });
+                    }else{
+                      likePost(post._id,user._id,setLikes,!isLiked);
+                    }
+                  }
+                }
               />
             {likes.length > 0 &&
               <LikesList likes={likes} showAllLikes={showAllLikes} postId={post._id} />}
