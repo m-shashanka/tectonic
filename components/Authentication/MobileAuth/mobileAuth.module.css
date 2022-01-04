@@ -1,0 +1,40 @@
+.container{
+    background-color: #05386B;
+    padding: 6px 0 40px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+}
+
+.title{
+    min-width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: aqua;
+}
+
+.title h1{
+    margin: 0;
+    font-size: 35px;
+}
+
+.cardContainer{
+    width: 75%;
+    margin: 20px auto;
+    overflow-y: auto;
+}
+
+.authButton{
+    text-align: center;
+    color: gainsboro;
+    cursor: pointer;
+}
+
+.authButton:hover{
+    color: white;
+}

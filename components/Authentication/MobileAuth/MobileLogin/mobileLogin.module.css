@@ -1,0 +1,101 @@
+.container{
+    text-align: center;
+    margin: auto;
+    padding: 8px 10px 22px 10px;
+}
+
+.container div{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.container input{
+    background: #eee;
+    border: none;
+    padding: 12px 15px 12px 28px;
+    margin: 8px 0;
+    width: 100%;
+    border-radius: 12px;
+}
+
+.container button{
+    border-radius: 20px;
+    border: 1px solid #204BBA;
+    background: #204BBA;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.container button:active{
+    transform: scale(0.95);
+}
+
+.container button:hover{
+    background-color: #1877F2;
+}
+
+.container button:focus{
+    outline: none;
+}
+
+.invalid{
+    margin-bottom: 7px;
+}
+
+.invalid input{
+    background-color: rgb(255, 237, 237);
+    border: 1px solid red;
+}
+
+.invalid input:focus{
+    outline: none;
+    border: 2px solid red;
+}
+
+.item{
+    position: absolute;
+    padding-left: 8px;
+    color: rgb(102, 99, 99);
+    transform: scale(2.25);
+}
+
+.eye{
+    right: 15px;
+    cursor: pointer;
+    transform: scale(2.2);
+}
+
+.errorMessage{
+    color: red;
+    margin: -6px 0 2px 5px;
+    text-align: left;
+}
+
+.reset{
+    color: #1877F2;
+    cursor: pointer;
+    margin: 20px 0;
+}
+
+.reset:hover{
+    font-weight: 500;
+}
+
+.loading{
+    background-color: transparent;
+    width: 50px;
+    height: 50px;
+    bottom: 20%;
+}
+
+.serverError{
+    margin-top: 10px;
+    color: red;
+}
