@@ -9,3 +9,12 @@
 .deletePost button{
     color: white;
 }
+
+.notification{
+    margin-top: 80px;
+    cursor: default;
+}
+
+.notification ~ .notification{
+    margin-top: 0;
+}

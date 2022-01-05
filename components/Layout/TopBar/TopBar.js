@@ -34,7 +34,7 @@ import {
   faUser as farUser,
 } from "@fortawesome/free-regular-svg-icons";
 import { Media, MediaContextProvider } from "../../../Responsive/Media";
-import NotificationPortal from "../../Home/NotificationPortal";
+import { Notification } from "../Toastr";
 import styles from "./topBar.module.css";
 
 export default function TopBar({
@@ -94,12 +94,12 @@ export default function TopBar({
         setConnectedUsers(onlineUsers);
       });
 
-      socket.current.on("newNotificationReceived",({userId, name, profilePicUrl, username, postId }) => {
+      socket.current.on("newNotificationReceived",({userId, profilePicUrl, username, postId }) => {
 
           if(userFollowStats.following.length > 0 &&
             userFollowStats.following.filter((following) => following.user === userId).length > 0){
 
-              setNewNotification({ name, profilePicUrl, username, postId });
+              setNewNotification({profilePicUrl, username, postId });
     
               showNotificationPopup(true);
           }
@@ -138,6 +138,10 @@ export default function TopBar({
     };
   }, [router.isReady, router.pathname]);
 
+  useEffect(() => {
+    notificationPopup && setTimeout(() => showNotificationPopup(false), 5000);
+  }, [notificationPopup]);
+
   const leftMenuToggle = () => {
     setLeftMenuOpen((prevValue) => !prevValue);
   };
@@ -166,12 +170,9 @@ export default function TopBar({
               />
             </Modal>
           )}
-          {notificationPopup && newNotification !== null && (
-            <NotificationPortal
-              newNotification={newNotification}
-              notificationPopup={notificationPopup}
-              showNotificationPopup={showNotificationPopup}
-            />
+          
+          {notificationPopup && newNotification && (
+            <Notification like={true} newNotification={newNotification} />
           )}
 
           <div className={styles.topbarContainer}>

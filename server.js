@@ -67,7 +67,6 @@ io.use((socket, next) => {
   socket.on("likePost", async ({ postId, userId, like }) => {
     const {
       success,
-      name,
       profilePicUrl,
       username,
       postByUserId,
@@ -80,7 +79,6 @@ io.use((socket, next) => {
         if (receiverSocket && like) {
           io.to(receiverSocket.socketId).emit("newNotificationReceived", {
             userId,
-            name,
             profilePicUrl,
             username,
             postId

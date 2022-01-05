@@ -45,11 +45,10 @@ const likeOrUnlikePost = async (postId, userId, like) => {
 
     const user = await UserModel.findById(userId);
 
-    const { name, profilePicUrl, username } = user;
+    const { profilePicUrl, username } = user;
 
     return {
       success: true,
-      name,
       profilePicUrl,
       username,
       postByUserId: post.user.toString()
