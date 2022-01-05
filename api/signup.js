@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const UserModel = require("../models/UserModel");
-const ProfileModel = require("../models/ProfileModel");
 const FollowerModel = require("../models/FollowerModel");
 const NotificationModel = require("../models/NotificationModel");
 const ChatModel = require("../models/ChatModel");

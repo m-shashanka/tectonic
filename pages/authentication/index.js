@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
-import { loginUser } from "../../utils/authUser";
 import Login from "../../components/Authentication/Login/Login";
 import Signup from "../../components/Authentication/Signup/Signup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
