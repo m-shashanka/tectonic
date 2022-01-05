@@ -28,6 +28,7 @@ const {
 } = require("./utilsServer/messageActions");
 
 const { likeOrUnlikePost } = require("./utilsServer/likeOrUnlikePost");
+const {commentOnPost} = require("./utilsServer/commentOnPost");
 
 io.use((socket, next) => {
   if (socket.handshake.auth && socket.handshake.auth.token){
@@ -64,30 +65,40 @@ io.use((socket, next) => {
     socket.emit('connectedUsers',{users: connectedUsers});
   });
 
-  socket.on("likePost", async ({ postId, userId, like }) => {
-    const {
-      success,
-      profilePicUrl,
-      username,
-      postByUserId,
-      error
-    } = await likeOrUnlikePost(postId, userId, like);
+  socket.on("likePost", async ({ postId, userId}) => {
+    const {profilePicUrl,username,postByUserId,error} = await likeOrUnlikePost(postId, userId);
 
-    if (success && postByUserId !== userId) {
+    if (!error && postByUserId !== userId) {
         const receiverSocket = findConnectedUser(postByUserId);
 
-        if (receiverSocket && like) {
+        if (receiverSocket) {
           io.to(receiverSocket.socketId).emit("newNotificationReceived", {
             userId,
             profilePicUrl,
             username,
-            postId
+            postId,
+            like:true
           });
       }
     }
 
-    if(error){
-      socket.emit("failed",{like});
+  });
+
+  socket.on("commentOnPost",async ({ postId, userId }) => {
+    const {profilePicUrl,username,postByUserId,error} = await commentOnPost(postId,userId);
+    
+    if (!error && postByUserId !== userId) {
+        const receiverSocket = findConnectedUser(postByUserId);
+
+        if (receiverSocket) {
+          io.to(receiverSocket.socketId).emit("newNotificationReceived", {
+            userId,
+            profilePicUrl,
+            username,
+            postId,
+            like:false
+          });
+      }
     }
   });
 

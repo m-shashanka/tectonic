@@ -90,6 +90,10 @@
     margin: 9px 10px;
 }
 
+.postContent p{
+    font-size: 18px;
+}
+
 .postStats{
     display: flex;
     align-items: center;

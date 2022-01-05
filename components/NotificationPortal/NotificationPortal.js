@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import calculateTime from "../../utils/calculateTime";
 import styles from "./notificationPortal.module.css";
 
-export default function NotificationPortal({ like, newNotification }) {
+export default function NotificationPortal({ newNotification }) {
   const router = useRouter();
 
-  const { profilePicUrl, username, postId } = newNotification;
+  const { profilePicUrl, username, postId, like } = newNotification;
 
   useEffect(() => {
     newMsgSound();

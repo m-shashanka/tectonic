@@ -27,7 +27,7 @@ export const PostDeleteToastr = () => {
   );
 };
 
-export const Notification = ({like,newNotification}) => {
+export const Notification = ({newNotification}) => {
   return (
     <ToastContainer
     position="top-right"
@@ -38,7 +38,7 @@ export const Notification = ({like,newNotification}) => {
     pauseOnFocusLoss={false}
     draggable
     pauseOnHover>
-      {toast(<NotificationPortal like={like} newNotification={newNotification} />, {
+      {toast(<NotificationPortal newNotification={newNotification} />, {
         className: `${styles.notification}`,
         position: "top-right",
         autoClose: 5000,

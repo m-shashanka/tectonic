@@ -94,12 +94,12 @@ export default function TopBar({
         setConnectedUsers(onlineUsers);
       });
 
-      socket.current.on("newNotificationReceived",({userId, profilePicUrl, username, postId }) => {
+      socket.current.on("newNotificationReceived",({userId, profilePicUrl, username, postId, like }) => {
 
           if(userFollowStats.following.length > 0 &&
             userFollowStats.following.filter((following) => following.user === userId).length > 0){
 
-              setNewNotification({profilePicUrl, username, postId });
+              setNewNotification({profilePicUrl, username, postId, like });
     
               showNotificationPopup(true);
           }
@@ -172,7 +172,7 @@ export default function TopBar({
           )}
           
           {notificationPopup && newNotification && (
-            <Notification like={true} newNotification={newNotification} />
+            <Notification newNotification={newNotification} />
           )}
 
           <div className={styles.topbarContainer}>
@@ -432,7 +432,7 @@ export default function TopBar({
               {connectedUsers.length > 0 && <p>Online Users</p>}
               <div className={styles.layOnlineUsers}>
                 {connectedUsers.map((onlineUser) => (
-                  <OnlineUser onlineUser={onlineUser.userId} />
+                  <OnlineUser key={onlineUser.userId} onlineUser={onlineUser.userId} />
                 ))}
               </div>
               <div

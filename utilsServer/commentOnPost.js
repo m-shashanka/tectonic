@@ -1,16 +1,11 @@
 const UserModel = require("../models/UserModel");
 const PostModel = require("../models/PostModel");
 
-const likeOrUnlikePost = async (postId, userId, like) => {
+const commentOnPost = async (postId, userId) => {
   try {
     const post = await PostModel.findById(postId);
 
     if (!post) return { error: "No post found" };
-
-    const isLiked =
-        post.likes.filter(like => like.user.toString() === userId).length > 0;
-
-    if (isLiked) return { error: "Post liked before" };
 
     const user = await UserModel.findById(userId);
 
@@ -26,4 +21,4 @@ const likeOrUnlikePost = async (postId, userId, like) => {
   }
 };
 
-module.exports = { likeOrUnlikePost };
+module.exports = { commentOnPost };

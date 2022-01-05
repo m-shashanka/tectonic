@@ -89,30 +89,9 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
                 icon={isLiked ? faHeart : farHeart} 
                 className={styles.item} 
                 onClick={()=>{
-                    if(socket && socket.current){
-                      socket.current.emit("likePost", {
-                        postId: post._id,
-                        userId: user._id,
-                        like: !isLiked
-                      });
-
-                      if (isLiked) {
-                        setLikes(prev => prev.filter(like => like.user !== user._id));
-                      }
-                      else {
-                        setLikes(prev => [...prev, { user: user._id }]);
-                      }
-
-                      socket.current.on("failed", ({like}) => {
-                        if(like){
-                          setLikes(prev => prev.filter(like => like.user !== user._id));
-                        }else{
-                          setLikes(prev => [...prev, { user: user._id }]);
-                        }
-                      });
-                    }else{
-                      likePost(post._id,user._id,setLikes,!isLiked);
-                    }
+                    if(socket.current && !isLiked)
+                      socket.current.emit("likePost", {postId: post._id,userId: user._id});
+                    likePost(post._id,user._id,setLikes,!isLiked);
                   }
                 }
               />
@@ -144,7 +123,7 @@ export default function CardPost({ post, user, setPosts, setShowToastr, socket }
             {comments.length > 2 && 
               (<Button className={styles.viewMore} onClick={showAllComments}>View More</Button>)}
 
-          <CommentInputField user={user} postId={post._id} setComments={setComments} />
+          <CommentInputField user={user} postId={post._id} setComments={setComments} socket={socket} />
         </div>
     </Card>
     {showModal && (
