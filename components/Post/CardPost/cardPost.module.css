@@ -33,6 +33,7 @@
 .userInfo h3{
     margin: 0;
     cursor: pointer;
+    font-weight: 500;
 }
 
 .userInfo h3:hover{
@@ -45,6 +46,7 @@
 
 .postContent p{
     font-size: 18px;
+    margin-bottom: 5px;
 }
 
 .postContent img{
@@ -71,13 +73,13 @@
 
 .likes .item{
     color: red;
-    transform: scale(1.6);
+    transform: scale(1.5);
     margin: 5px 11px 3px 7px;
     cursor: pointer;
 }
 
 .likes .item:hover{
-    transform: scale(1.8);
+    transform: scale(1.7);
 }
 
 .comments{

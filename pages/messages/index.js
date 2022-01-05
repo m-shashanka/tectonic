@@ -166,8 +166,7 @@ export default function Messages({ chatsData, errorLoading, user }) {
         //
         else {
           const ifPreviouslyMessaged =
-            chats.filter((chat) => chat.messagesWith === newMsg.sender).length >
-            0;
+            chats.filter((chat) => chat.messagesWith === newMsg.sender).length > 0;
 
           if (ifPreviouslyMessaged) {
             setChats((prev) => {

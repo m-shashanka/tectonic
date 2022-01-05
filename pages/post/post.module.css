@@ -33,6 +33,7 @@
 .userInfo h3{
     margin: 0;
     cursor: pointer;
+    font-weight: 500;
 }
 
 .userInfo h3:hover{
@@ -44,6 +45,7 @@
 }
 
 .postContent img{
+    margin-top: 6px;
     width: 100%;
     height: auto;
     object-fit: cover;

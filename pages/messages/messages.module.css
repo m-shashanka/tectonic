@@ -8,7 +8,8 @@
 
 .leftBar{
     flex: 30%;
-    height: calc(100vh - 70px);
+    box-sizing: border-box;
+    height: calc(100vh - 83px);
 }
 
 .leftBar h2{
@@ -18,7 +19,8 @@
 
 .rightBar{
     flex: 70%;
-    height: calc(100vh - 70px);
+    box-sizing: border-box;
+    height: calc(100vh - 83px);
     padding: 12px 22px;
 }
 
@@ -41,6 +43,7 @@
 }
 
 .chatBox{
+    box-sizing: border-box;
     width: 100%;
     height: calc(100vh - 125px);
     padding-bottom: 110px;

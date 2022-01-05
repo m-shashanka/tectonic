@@ -1,13 +1,3 @@
-.friendCard:hover{
-    background-color: #1E1E3F;
-    transform: scale(1.03);
-    cursor: pointer;
-}
-
-.friendCard:hover h4{
-    color: white;
-}
-
 .user{
     position: relative;
     display: flex;
@@ -38,6 +28,10 @@
     flex: 1;
     justify-content: flex-start;
     margin-left: 18px;
+}
+
+.username h4{
+    font-weight: 500;
 }
 
 .userPic{

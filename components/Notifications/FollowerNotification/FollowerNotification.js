@@ -43,7 +43,7 @@ export default function FollowerNotification({notification,loggedUserFollowStats
       </div>
       <FontAwesomeIcon 
         icon={isFollowing ? faUserCheck : faUserPlus} 
-        size="2x"
+        // size="2x"
         className={styles.button} 
         onClick={handleChange} 
       />

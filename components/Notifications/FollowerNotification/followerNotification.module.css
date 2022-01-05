@@ -32,6 +32,10 @@
     display: inline;
 }
 
+.followerInfo h4{
+    font-weight: 500;
+}
+
 .followerInfo p{
     margin-left: 8px;
 }

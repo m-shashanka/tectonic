@@ -11,6 +11,20 @@ body {
   background: var(--bodyBg);
 }
 
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: gainsboro;
+  border-radius: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: grey;
+  border-radius: 12px;
+}
+
 .spanLikesList:hover {
   text-decoration: underline;
   cursor: pointer;
@@ -35,32 +49,4 @@ body {
   top: 82px;
   left: 10px;
   right: 10px;
-}
-
-/* 
-.mySpinner {
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #16d47b;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 0.8s linear infinite;
-  margin: auto;
-}
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} */
-
-.refreshIcon {
-  text-align: center;
-}
-
-.ui.styled.accordion .content {
-  margin: 0;
-  padding: 0.5em 1em 0.75em !important;
 }

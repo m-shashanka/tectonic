@@ -16,6 +16,10 @@
     cursor: pointer;
 }
 
+.user h4{
+    font-weight: 500;
+}
+
 .user{
     position: relative;
     display: flex;

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Button, Image, List } from "semantic-ui-react";
 import Spinner from "../Layout/Spinner/Spinner";
 import Friend from "./Friends/Friend";
 import { NoFollowData } from "../Layout/NoData/NoData";

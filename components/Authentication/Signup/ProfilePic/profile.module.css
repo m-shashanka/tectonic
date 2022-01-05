@@ -20,9 +20,9 @@
 }
 
 .profilePic .item{
-    transform: scale(2.75);
-    bottom: 14%;
-    right: 14%;
+    transform: scale(1.5);
+    bottom: 12%;
+    right: 12%;
     cursor: pointer;
 }
 

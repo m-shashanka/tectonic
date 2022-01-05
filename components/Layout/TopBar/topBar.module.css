@@ -278,6 +278,8 @@
 
 .userProfile h3{
     margin-top: 2px;
+    margin-bottom: 5px;
+    font-weight: 500;
 }
 
 .userLogout{

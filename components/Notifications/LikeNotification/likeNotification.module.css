@@ -29,6 +29,10 @@
     display: inline;
 }
 
+.likeInfo h4{
+    font-weight: 500;
+}
+
 .likeInfo p{
     margin-left: 8px;
 }

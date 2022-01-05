@@ -24,6 +24,7 @@
 
 .content{
     background-color: white;
+    /* overflow-x: hidden; */
     padding: 12px;
     max-height: 50vh;
     overflow-y: auto;
@@ -39,6 +40,7 @@
 .content textarea{
     resize: none;
     width: 100%;
+    box-sizing: border-box;
     font-size: large;
     border: none;
     margin-bottom: 5px;
@@ -66,7 +68,7 @@
     display: flex;
     background: white;
     justify-content: space-between;
-    padding: 2px 12px 5px 18px;
+    padding: 2px 12px 9px 18px;
     position: relative;
 }
 
@@ -100,10 +102,6 @@
 .photoLocation p:nth-child(2) .item{
     transform: scale(1.5);
     color: rgb(11, 196, 11);
-}
-
-.photoLocation p:nth-child(2){
-    margin-bottom: 16px;
 }
 
 .publishPost{

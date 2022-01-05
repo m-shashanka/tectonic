@@ -29,6 +29,10 @@
     display: inline;
 }
 
+.commentInfo h4{
+    font-weight: 500;
+}
+
 .commentInfo p{
     margin-left: 8px;
 }
