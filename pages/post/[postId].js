@@ -49,7 +49,6 @@ export default function PostPage({ post, errorLoading, user }){
 
   return (
     <>
-  <div className="layContent">
     {!errorLoading ? <Card className={styles.postCard}>
         <div className={styles.postHeader}>
           <div className={styles.postInfo}>
@@ -121,7 +120,6 @@ export default function PostPage({ post, errorLoading, user }){
             </div>
           }
     </Card> : <NoPostFound />}
-  </div>
     </>
   );
 }
