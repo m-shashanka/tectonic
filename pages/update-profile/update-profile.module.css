@@ -20,6 +20,7 @@
 }
 
 .profileUpdate h1{
+    margin-top: 5px;
     margin-bottom: 25px;
     font-size: 26px;
 }
@@ -30,7 +31,7 @@
     color: rgb(102, 99, 99);
 }
 
-.profileUpdate textarea{
+.profileUpdate textarea, .name input{
     background: #eee;
     border: none;
     padding: 12px 15px 12px 28px;
@@ -39,8 +40,17 @@
     border-radius: 12px;
 }
 
+.name .item{
+    left: 30px;
+    margin-bottom: 1px;
+}
+
+.name input{
+    margin: 10px 30px;
+}
+
 .bio .item{
-    top: 30%;
+    top: 28%;
     left: 30px;
 }
 
@@ -58,4 +68,10 @@
 
 .saveButton:hover{
     transform: scale(1.2);
+}
+
+.loading{
+    width: 50px;
+    height: 50px;
+    background-color: white;
 }

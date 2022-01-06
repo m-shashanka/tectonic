@@ -195,9 +195,14 @@ router.post("/update", authMiddleware, async (req, res) => {
   try {
     const { userId } = req;
 
-    const { bio, profilePicUrl } = req.body;
+    const { bio, profilePicUrl, name } = req.body;
 
     const user = await UserModel.findById(userId);
+
+    if(!name || name.length < 1)
+      return res.status(500).send("Name cannot be empty");
+    
+    user.name = name;
 
     if(bio)
       user.bio = bio;

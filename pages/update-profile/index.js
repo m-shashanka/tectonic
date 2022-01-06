@@ -9,17 +9,21 @@ import { parseCookies } from "nookies";
 import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import styles from "./update-profile.module.css";
 
 function UpdateProfile({account}){
 
     const [media, setMedia] = useState(null);
-    const [text,setText] = useState(account.bio);
+    const [bio,setBio] = useState(account.bio);
+    const [name,setName] = useState(account.name);
     const [loading,setLoading] = useState(false);
     const [serverError,setServerError] = useState(null);
 
     const submit = async () => {
+
+        if(!name || name.length < 1)
+            return setServerError('Name cannot be empty');
 
         setLoading(true);
         
@@ -33,9 +37,9 @@ function UpdateProfile({account}){
             }
         }
 
-        let profile = {bio: text};
+        let profile = {name,bio};
 
-        await profileUpdate(profile,setLoading,setServerError,profilePicUrl,user.username);
+        await profileUpdate(profile,setLoading,setServerError,profilePicUrl,account.username);
     }
 
     return (
@@ -43,14 +47,18 @@ function UpdateProfile({account}){
             <Card className={styles.profileUpdate}>
                 <h1>Update Profile</h1>
                 <ProfilePic setMedia={setMedia} userImage={account.profilePicUrl}/>
+                <div className={styles.name}>
+                    <FontAwesomeIcon icon={faUser} className={styles.item} />
+                    <input type="text" name="name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                </div>
                 <div className={styles.bio}>
                     <FontAwesomeIcon icon={faInfoCircle} className={styles.item} />
-                    <textarea name="bio" placeholder="Bio" value={text} onChange={(e)=>setText(e.target.value)}/>
+                    <textarea name="bio" placeholder="Bio" value={bio} onChange={(e) => setBio(e.target.value)}/>
                 </div>
                 {!loading && <Button className={styles.saveButton} onClick={submit}>Save</Button>}
-                {loading && <Spinner />}
+                {loading && <Spinner className={styles.loading} />}
             </Card>
-            {serverError && <p style={{marginTop:"20px",color:"red"}}>{serverError}</p>}
+            {serverError && <p style={{marginTop:"30px",color:"red"}}>{serverError}</p>}
         </div>
     );
 }
@@ -63,7 +71,7 @@ UpdateProfile.getInitialProps = async ctx => {
             headers: { Authorization: token }
         });
     
-        return { account:res.data };
+        return { account: res.data };
     } catch (error) {
       return { errorLoading: true };
     }

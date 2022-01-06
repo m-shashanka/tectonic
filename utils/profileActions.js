@@ -37,12 +37,14 @@ export const unfollowUser = async (userToUnfollowId, setUserFollowStats) => {
 
 export const profileUpdate = async (profile, setLoading, setError, profilePicUrl,username) => {
   try {
-    const {bio} = profile;
+    const {name,bio} = profile;
 
-    await Axios.post(`/update`, {
-      bio,
-      profilePicUrl
-    });
+    if(!name || name.length < 1){
+      setError('Name cannot be empty');
+      return;
+    }
+
+    await Axios.post(`/update`, {name,bio,profilePicUrl});
 
     setLoading(false);
     Router.replace(`/${username}`);
