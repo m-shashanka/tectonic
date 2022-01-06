@@ -3,16 +3,13 @@ import MessageInputField from "../MessageInputField/MessageInputField";
 import Message from "../Message/Message";
 import styles from "./chatBox.module.css";
 
-export default function ChatBox({divRef,bannerData, messages,user,socket,sendMsg, deleteMsg}){
+export default function ChatBox({divRef,bannerData, messages,user,sendMsg, deleteMsg}){
     return (
         <>
             <div className={styles.header}>
                 <Link href={`/${bannerData.username}`}>
                     <div className={styles.userPic}>
-                        <img
-                            src={bannerData.profilePicUrl}
-                            alt="Profile Pic"
-                        />
+                        <img src={bannerData.profilePicUrl}/>
                     </div>
                 </Link>
                 <Link href={`/${bannerData.username}`}>

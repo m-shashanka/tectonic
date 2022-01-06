@@ -35,9 +35,7 @@ export default function SearchMessages({chats,setChats}) {
   
         const res = await axios.get(`${baseUrl}/api/search/${value}`, {
           headers: { Authorization: token },
-          cancelToken: new CancelToken(canceler => {
-            cancel = canceler;
-          })
+          cancelToken: new CancelToken(canceler => {cancel = canceler;})
         });
   
         if (!res.data || res.data.length === 0) {
@@ -54,14 +52,12 @@ export default function SearchMessages({chats,setChats}) {
     };
 
     const addChat = result => {
-      const alreadyInChat =
-        chats.length > 0 &&
+      const alreadyInChat = chats.length > 0 &&
         chats.filter(chat => chat.messagesWith === result._id).length > 0;
   
       if (alreadyInChat) {
         return router.push(`/messages?message=${result._id}`);
       }
-      //
       else {
         const newChat = {
           messagesWith: result._id,

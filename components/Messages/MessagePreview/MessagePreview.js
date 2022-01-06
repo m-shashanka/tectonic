@@ -7,8 +7,7 @@ import styles from "./messagePreview.module.css";
 export default function MessagePreview({chat, connectedUsers, deleteChat}){
 
     const router = useRouter();
-
-    //use this to show online
+    
     const isOnline = connectedUsers.length > 0 &&
         connectedUsers.filter(user => user.userId === chat.messagesWith).length > 0;
 

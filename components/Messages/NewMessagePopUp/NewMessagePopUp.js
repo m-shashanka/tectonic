@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import calculateTime from "../../../utils/calculateTime";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
