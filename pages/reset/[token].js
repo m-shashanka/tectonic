@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-// import { Form, Button, Message, Segment, Divider } from "semantic-ui-react";
 import { Reset } from "../../components/Layout/NoData/NoData";
 import Card from "../../components/Layout/Card/Card";
 import Button from "../../components/Layout/Button/Button";
@@ -29,7 +28,6 @@ function TokenPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setNewPassword((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -106,11 +104,7 @@ function TokenPage() {
             />
           </div>
         </section>
-        {!loading && (
-          <Button className={styles.submit} onClick={resetPassword}>
-            RESET
-          </Button>
-        )}
+        {!loading && <Button className={styles.submit} onClick={resetPassword}>RESET</Button>}
         {loading && <Spinner className={styles.loading} />}
       </Card>
       {errorMsg && <p className={styles.error}>{errorMsg}</p>}
@@ -122,68 +116,6 @@ function TokenPage() {
       </>}
     </div>
   );
-
-  // return (
-  //   <>
-  //     {success ? (
-  //       <Message
-  //         attached
-  //         success
-  //         size="large"
-  //         header="Password reset successfull"
-  //         icon="check"
-  //         content="Login Again"
-  //         style={{ cursor: "pointer" }}
-  //         onClick={() => router.push("/login")}
-  //       />
-  //     ) : (
-  //       <Message attached icon="settings" header="Reset Password" color="teal" />
-  //     )}
-
-  //     {!success && (
-  //       <Form loading={loading} onSubmit={resetPassword} error={errorMsg !== null}>
-  //         <Message error header="Oops!" content={errorMsg} />
-
-  //         <Segment>
-  //           <Form.Input
-  //             fluid
-  //             icon="eye"
-  //             type="password"
-  //             iconPosition="left"
-  //             label="New Password"
-  //             placeholder="Enter new Password"
-  //             name="field1"
-  //             onChange={handleChange}
-  //             value={field1}
-  //             required
-  //           />
-  //           <Form.Input
-  //             fluid
-  //             icon="eye"
-  //             type="password"
-  //             iconPosition="left"
-  //             label="Confirm Password"
-  //             placeholder="Confirm new Password"
-  //             name="field2"
-  //             onChange={handleChange}
-  //             value={field2}
-  //             required
-  //           />
-
-  //           <Divider hidden />
-
-  //           <Button
-  //             disabled={field1 === "" || field2 === "" || loading}
-  //             icon="configure"
-  //             type="submit"
-  //             color="orange"
-  //             content="Reset"
-  //           />
-  //         </Segment>
-  //       </Form>
-  //     )}
-  //   </>
-  // );
 }
 
 export default TokenPage;

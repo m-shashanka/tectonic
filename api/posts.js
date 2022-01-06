@@ -12,8 +12,7 @@ const {
   removeCommentNotification
 } = require("../utilsServer/notificationActions");
 
-// CREATE A POST
-
+// Create a post
 router.post("/", authMiddleware, async (req, res) => {
   const { text, location, picUrl } = req.body;
 
@@ -38,8 +37,7 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-// GET ALL POSTS
-
+// Get all posts
 router.get("/", authMiddleware, async (req, res) => {
   const { pageNumber } = req.query;
 
@@ -48,9 +46,7 @@ router.get("/", authMiddleware, async (req, res) => {
     const size = 8;
     const { userId } = req;
 
-    const loggedUser = await FollowerModel.findOne({ user: userId }).select(
-      "-followers"
-    );
+    const loggedUser = await FollowerModel.findOne({ user: userId }).select("-followers");
 
     let posts = [];
 
@@ -75,8 +71,6 @@ router.get("/", authMiddleware, async (req, res) => {
           .populate("comments.user");
       }
     }
-
-    //
     else {
       const skips = size * (number - 1);
 
@@ -92,7 +86,6 @@ router.get("/", authMiddleware, async (req, res) => {
           .populate("user")
           .populate("comments.user");
       }
-      //
       else {
         posts = await PostModel.find({ user: userId })
           .skip(skips)
@@ -110,8 +103,7 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
-// GET POST BY ID
-
+// Get post by id
 router.get("/:postId", authMiddleware, async (req, res) => {
   try {
     const post = await PostModel.findById(req.params.postId)
@@ -129,8 +121,7 @@ router.get("/:postId", authMiddleware, async (req, res) => {
   }
 });
 
-// DELETE POST
-
+// Delete a post
 router.delete("/:postId", authMiddleware, async (req, res) => {
   try {
     const { userId } = req;
@@ -161,8 +152,7 @@ router.delete("/:postId", authMiddleware, async (req, res) => {
   }
 });
 
-// LIKE A POST
-
+// Like a post
 router.post("/like/:postId", authMiddleware, async (req, res) => {
   try {
     const { postId } = req.params;
@@ -194,8 +184,7 @@ router.post("/like/:postId", authMiddleware, async (req, res) => {
   }
 });
 
-// UNLIKE A POST
-
+// Unlike a post
 router.put("/unlike/:postId", authMiddleware, async (req, res) => {
   try {
     const { postId } = req.params;
@@ -230,8 +219,7 @@ router.put("/unlike/:postId", authMiddleware, async (req, res) => {
   }
 });
 
-// GET ALL LIKES OF A POST
-
+// Get all likes of a post
 router.get("/like/:postId", authMiddleware, async (req, res) => {
   try {
     const { postId } = req.params;
@@ -248,8 +236,7 @@ router.get("/like/:postId", authMiddleware, async (req, res) => {
   }
 });
 
-// CREATE A COMMENT
-
+// Create new comment
 router.post("/comment/:postId", authMiddleware, async (req, res) => {
   try {
     const { postId } = req.params;
@@ -291,8 +278,7 @@ router.post("/comment/:postId", authMiddleware, async (req, res) => {
   }
 });
 
-// DELETE A COMMENT
-
+// Delete a comment
 router.delete("/:postId/:commentId", authMiddleware, async (req, res) => {
   try {
     const { postId, commentId } = req.params;

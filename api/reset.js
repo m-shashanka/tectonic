@@ -15,7 +15,7 @@ const options = {
 
 const transporter = nodemailer.createTransport(sendGridTransport(options));
 
-// CHECK USER EXISTS AND SEND EMAIL FOR RESET PASSWORD
+// Check if user exists and send email for reset password
 router.post("/", async (req, res) => {
   try {
     const { email } = req.body;
@@ -56,8 +56,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// VERIFY THE TOKEN AND RESET THE PASSWORD IN DB
-
+// Verify the token and reset the password in db
 router.post("/token", async (req, res) => {
   try {
     const { token, password } = req.body;

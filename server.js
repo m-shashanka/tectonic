@@ -114,7 +114,6 @@ io.use((socket, next) => {
     const receiverSocket2 = findConnectedChatUser(msgSendToUserId);
 
     if (receiverSocket1) {
-      // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
       io.to(receiverSocket1.socketId).emit("newMsgReceived", { newMsg });
     }
 
@@ -132,22 +131,6 @@ io.use((socket, next) => {
 
     if (success) socket.emit("msgDeleted");
   });
-
-  // socket.on("sendMsgFromNotification", async ({ userId, msgSendToUserId, msg }) => {
-  //   const { newMsg, error } = await sendMsg(userId, msgSendToUserId, msg);
-  //   const receiverSocket = findConnectedUser(msgSendToUserId);
-
-  //   if (receiverSocket) {
-  //     // WHEN YOU WANT TO SEND MESSAGE TO A PARTICULAR SOCKET
-  //     io.to(receiverSocket.socketId).emit("newMsgReceived", { newMsg });
-  //   }
-  //   //
-  //   else {
-  //     await setMsgToUnread(msgSendToUserId);
-  //   }
-
-  //   !error && socket.emit("msgSentFromNotification");
-  // });
 
   socket.on("disconnect", () => {
     // clearInterval(interval);

@@ -4,8 +4,7 @@ const ChatModel = require("../models/ChatModel");
 const UserModel = require("../models/UserModel");
 const authMiddleware = require("../middleware/authMiddleware");
 
-// GET ALL CHATS
-
+// Get all chats
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const { userId } = req;
@@ -31,8 +30,7 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
-// GET USER INFO
-
+// Get User Info
 router.get("/user/:userToFindId", authMiddleware, async (req, res) => {
   try {
     const user = await UserModel.findById(req.params.userToFindId);
@@ -49,7 +47,6 @@ router.get("/user/:userToFindId", authMiddleware, async (req, res) => {
 });
 
 // Delete a chat
-
 router.delete(`/:messagesWith`, authMiddleware, async (req, res) => {
   try {
     const { userId } = req;

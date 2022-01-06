@@ -11,8 +11,6 @@
     margin-bottom: 20px;
 }
 
-/* change size of profile pic for mobile */
-
 .profilePic{
     width: 140px;
     height: 140px;
@@ -26,11 +24,11 @@
 
 .profileInfo{
     padding-top: 3%;
-    /* padding-left: 27%; for mobile screen*/
 }
 
 .profileInfo h2{
     margin-bottom: 4px;
+    font-weight: 500;
 }
 
 .followButton{
@@ -60,7 +58,6 @@
     text-align: center;
     cursor: pointer;
     padding: 5px 0;
-    /* line-height: 6vh; */
 }
 
 .menuCard p{

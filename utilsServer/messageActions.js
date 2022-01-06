@@ -40,7 +40,6 @@ const sendMsg = async (userId, msgSendToUserId, msg) => {
       previousChat.messages.push(newMsg);
       await user.save();
     }
-    //
     else {
       const newChat = { messagesWith: msgSendToUserId, messages: [newMsg] };
       user.chats.unshift(newChat);
@@ -55,7 +54,6 @@ const sendMsg = async (userId, msgSendToUserId, msg) => {
       previousChatForReceiver.messages.push(newMsg);
       await msgSendToUser.save();
     }
-    //
     else {
       const newChat = { messagesWith: userId, messages: [newMsg] };
       msgSendToUser.chats.unshift(newChat);

@@ -31,9 +31,7 @@ export default function Settings({user}){
         setShowPassword2(false);
     }
 
-    const handleNotification = (e) => {
-        toggleMessagePopup(showNotification,setShowNotification);
-    }
+    const handleNotification = (e) => toggleMessagePopup(showNotification,setShowNotification);
 
     const [serverError,setServerError] = useState(null);
     const [success,setSuccess] = useState(false);

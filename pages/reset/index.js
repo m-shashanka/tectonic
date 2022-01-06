@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-// import { Form, Button, Message, Segment } from "semantic-ui-react";
+import { useEffect, useState } from "react";
 import { Reset } from "../../components/Layout/NoData/NoData";
 import Card from "../../components/Layout/Card/Card";
 import Button from "../../components/Layout/Button/Button";
@@ -25,15 +24,12 @@ function ResetPage() {
       return setErrorMsg("Invalid email");
 
     setLoading(true);
-
     try {
       await axios.post(`${baseUrl}/api/reset`, { email });
-
       setEmailChecked(true);
     } catch (error) {
       setErrorMsg(catchErrors(error));
     }
-
     setLoading(false);
   };
 
@@ -55,14 +51,7 @@ function ResetPage() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        {!loading && (
-          <Button
-            className={styles.submit}
-            onClick={resetPassword}
-          >
-            SUBMIT
-          </Button>
-        )}
+        {!loading && <Button className={styles.submit} onClick={resetPassword}>SUBMIT</Button>}
         {loading && <Spinner className={styles.loading} />}
       </Card>
       {errorMsg && <p className={styles.error}>{errorMsg}</p>}
@@ -73,49 +62,6 @@ function ResetPage() {
       )}
     </div>
   );
-
-  // return (
-  //   <>
-  //     {emailChecked ? (
-  //       <Message
-  //         attached
-  //         icon="mail"
-  //         header="Check Your Inbox"
-  //         content="Please check your inbox for further instructions"
-  //         success
-  //       />
-  //     ) : (
-  //       <Message attached icon="settings" header="Reset Password" color="teal" />
-  //     )}
-
-  //     <Form loading={loading} onSubmit={resetPassword} error={errorMsg !== null}>
-  //       <Message error header="Oops!" content={errorMsg} />
-
-  //       <Segment>
-  //         <Form.Input
-  //           fluid
-  //           icon="mail outline"
-  //           type="email"
-  //           iconPosition="left"
-  //           label="Email"
-  //           placeholder="Enter email address"
-  //           name="email"
-  //           onChange={e => setEmail(e.target.value)}
-  //           value={email}
-  //           required
-  //         />
-
-  //         <Button
-  //           disabled={loading || email.length === 0}
-  //           icon="configure"
-  //           type="submit"
-  //           color="orange"
-  //           content="Submit"
-  //         />
-  //       </Segment>
-  //     </Form>
-  //   </>
-  // );
 }
 
 export default ResetPage;
