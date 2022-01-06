@@ -6,12 +6,7 @@ import axios from "axios";
 import baseUrl from "../../utils/baseUrl";
 import cookie from "js-cookie";
 
-const Followers = ({
-  user,
-  loggedUserFollowStats,
-  setUserFollowStats,
-  profileUserId
-}) => {
+const Followers = ({user,loggedUserFollowStats,setUserFollowStats,profileUserId}) => {
   const [followers, setFollowers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -35,17 +30,11 @@ const Followers = ({
 
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : followers.length > 0 ? (
+      {loading ? <Spinner /> : followers.length > 0 ? (
         followers.map(profileFollower => {
-          /*  */
 
-          const isFollowing =
-            loggedUserFollowStats.following.length > 0 &&
-            loggedUserFollowStats.following.filter(
-              following => following.user === profileFollower.user._id
-            ).length > 0;
+          const isFollowing = loggedUserFollowStats.following.length > 0 &&
+            loggedUserFollowStats.following.filter(following => following.user === profileFollower.user._id).length > 0;
 
           return (
               <Friend 

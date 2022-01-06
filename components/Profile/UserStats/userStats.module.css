@@ -23,11 +23,12 @@
     margin-left: 8px;
 }
 
-/* remove this style if screen width decreases */
-.profilePosts{
-    padding: 0 10%;
-    border-right: 1px solid white;
-    border-left: 1px solid white;
+@media (min-width: 1000px){
+    .profilePosts{
+        padding: 0 10%;
+        border-right: 1px solid white;
+        border-left: 1px solid white;
+    }
 }
 
 .profileFollowing{

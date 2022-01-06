@@ -19,7 +19,6 @@ const OnlineUser = ({onlineUser}) => {
       }, []);
 
     return (
-        // <Card className={styles.friendCard}>
         <Link href={`/${userDetails.username}`}>
             <div className={styles.user}>
                 <div className={styles.userPic}>
@@ -34,7 +33,6 @@ const OnlineUser = ({onlineUser}) => {
                 <div className={styles.online}></div>
             </div>
         </Link>
-        // </Card> 
     );
 }
 
