@@ -24,7 +24,6 @@
 
 .content{
     background-color: white;
-    /* overflow-x: hidden; */
     padding: 12px;
     max-height: 50vh;
     overflow-y: auto;

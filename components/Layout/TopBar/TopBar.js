@@ -149,7 +149,7 @@ export default function TopBar({user: {unreadNotification,email,unreadMessage,us
               <UserStats userFollowStats={userFollowStats} />
             </div>
 
-            <RightMenu isActive={isActive} username={username} email={email} />
+            <RightMenu isActive={isActive} username={username} email={email} router={router} />
 
             <div className={rightMenuOpen ? styles.rightMenuCloseArrow : styles.rightMenuOpenArrow} onClick={rightMenuToggle}>
               <FontAwesomeIcon icon={rightMenuOpen ? faChevronRight : faChevronLeft}/>
@@ -325,7 +325,7 @@ const TopbarLeft = ({router}) => {
   );
 }
 
-const RightMenu = ({isActive, username, email}) => {
+const RightMenu = ({isActive, username, email, router}) => {
   return (
     <>
       <div className={styles.profileOptions}>
