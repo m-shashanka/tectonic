@@ -4,7 +4,6 @@ import baseUrl from "../../../utils/baseUrl";
 import cookie from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Card from "../Card/Card";
 import UserSuggestion from "../../Profile/UserSuggestion/UserSuggestion";
 import OnlineUser from "../../Profile/OnlineUser/OnlineUser";
 import UserStats from "../../Profile/UserStats/UserStats";
@@ -15,49 +14,18 @@ import NewMessagePopUp from "../../Messages/NewMessagePopUp/NewMessagePopUp";
 import getUserInfo from "../../../utils/getUserInfo";
 import newMsgSound from "../../../utils/newMsgSound";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPaw,
-  faChevronLeft,
-  faChevronRight,
-  faTh,
-  faBell,
-  faComment,
-  faUser,
-  faCog,
-  faSearch,
-  faHome,
-  faSignOutAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import {
-  faComment as farComment,
-  faBell as farBell,
-  faUser as farUser,
-} from "@fortawesome/free-regular-svg-icons";
+import {faPaw,faChevronLeft,faChevronRight,faTh,faBell,faComment,faUser,faCog,faSearch,faHome,faSignOutAlt,} from "@fortawesome/free-solid-svg-icons";
+import {faComment as farComment,faBell as farBell,faUser as farUser,} from "@fortawesome/free-regular-svg-icons";
 import { Media, MediaContextProvider } from "../../../Responsive/Media";
 import { Notification } from "../Toastr";
 import styles from "./topBar.module.css";
 
-export default function TopBar({
-  user: {
-    unreadNotification,
-    email,
-    unreadMessage,
-    username,
-    profilePicUrl,
-    _id,
-    newMessagePopup,
-  },
-  userFollowStats,
-}) {
-  const [chatHovered, setChatHovered] = useState(false);
-  const toggleChatHover = () => setChatHovered(!chatHovered);
-
-  const [notificationHovered, setNotificationHovered] = useState(false);
-  const toggleNotificationHover = () =>
-    setNotificationHovered(!notificationHovered);
+export default function TopBar({user: {unreadNotification,email,unreadMessage,username,profilePicUrl,_id,newMessagePopup,},userFollowStats}) {
 
   const [leftMenuOpen, setLeftMenuOpen] = useState(true);
   const [rightMenuOpen, setRightMenuOpen] = useState(true);
+  const leftMenuToggle = () => setLeftMenuOpen((prevValue) => !prevValue);
+  const rightMenuToggle = () => setRightMenuOpen((prevValue) => !prevValue);
 
   const [connectedUsers, setConnectedUsers] = useState([]);
 
@@ -95,16 +63,12 @@ export default function TopBar({
       });
 
       socket.current.on("newNotificationReceived",({userId, profilePicUrl, username, postId, like }) => {
-
           if(userFollowStats.following.length > 0 &&
             userFollowStats.following.filter((following) => following.user === userId).length > 0){
-
               setNewNotification({profilePicUrl, username, postId, like });
-    
               showNotificationPopup(true);
           }
-        }
-      );
+      });
     }
 
     return () => {
@@ -117,15 +81,8 @@ export default function TopBar({
 
     const handler = async ({ newMsg }) => {
       const { username, profilePicUrl } = await getUserInfo(newMsg.sender);
-
-      setNewMessageReceived({
-        ...newMsg,
-        senderName: username,
-        senderProfilePic: profilePicUrl,
-      });
-
+      setNewMessageReceived({...newMsg,senderName: username,senderProfilePic: profilePicUrl});
       showNewMessageModal(true);
-
       newMsgSound(username);
     };
 
@@ -142,25 +99,15 @@ export default function TopBar({
     notificationPopup && setTimeout(() => showNotificationPopup(false), 5000);
   }, [notificationPopup]);
 
-  const leftMenuToggle = () => {
-    setLeftMenuOpen((prevValue) => !prevValue);
-  };
-
-  const rightMenuToggle = () => {
-    setRightMenuOpen((prevValue) => !prevValue);
-  };
-
   if (isActive("/notifications")) unreadNotification = 0;
 
   if (isActive("/messages")) unreadMessage = 0;
 
   return (
-    <>
       <MediaContextProvider>
-
         <Media greaterThanOrEqual="tablet">
 
-        {newMessageModal && !isActive("/messages") && (
+          {newMessageModal && !isActive("/messages") && (
             <Modal closeModal={() => showNewMessageModal(false)}>
               <NewMessagePopUp
                 closeModal={() => showNewMessageModal(false)}
@@ -171,54 +118,21 @@ export default function TopBar({
             </Modal>
           )}
           
-          {notificationPopup && newNotification && (
-            <Notification newNotification={newNotification} />
-          )}
+          {notificationPopup && newNotification && <Notification newNotification={newNotification}/>}
 
           <div className={styles.topbarContainer}>
-            <div className={styles.topbarLeft} onClick={() => router.push("/")}>
-              <span className={styles.logo}>
-                <FontAwesomeIcon icon={faPaw} />
-                {` Social Media`}
-              </span>
-            </div>
-
-            <div className={styles.topbarCenter}>
-              <SearchBar />
-            </div>
-
+            <TopbarLeft router={router} />
             <div className={styles.topbarRight}>
               <div className={styles.topbarIcons}>
                 <div className={styles.topbarIconItem}>
-                  <FontAwesomeIcon
-                    icon={chatHovered ? faComment : farComment}
-                    className={styles.chatIcon}
-                    onMouseEnter={toggleChatHover}
-                    onMouseLeave={toggleChatHover}
-                    onClick={() => router.push("/messages")}
-                  />
-                  {unreadMessage ? (
-                    <span className={styles.topbarIconBadge}>
-                      {unreadMessage}
-                    </span>
-                  ) : null}
+                  <ChatIcon router={router} />
+                  {unreadMessage ? <span className={styles.topbarIconBadge}>{unreadMessage}</span> : null}
                 </div>
                 <div className={styles.topbarIconItem}>
-                  <FontAwesomeIcon
-                    icon={notificationHovered ? faBell : farBell}
-                    className={styles.bellIcon}
-                    onMouseEnter={toggleNotificationHover}
-                    onMouseLeave={toggleNotificationHover}
-                    onClick={() => router.push("/notifications")}
-                  />
-                  {unreadNotification ? (
-                    <span className={styles.topbarIconBadge}>
-                      {unreadNotification}
-                    </span>
-                  ) : null}
+                  <BellIcon router={router} />
+                  {unreadNotification ? <span className={styles.topbarIconBadge}>{unreadNotification}</span> : null}
                 </div>
               </div>
-
               <FontAwesomeIcon
                 icon={rightMenuOpen ? faUser : farUser}
                 size="2x"
@@ -228,198 +142,50 @@ export default function TopBar({
             </div>
           </div>
 
-          <div
-            className={
-              rightMenuOpen
-                ? `${styles.rightMenu} ${styles.toggled}`
-                : styles.rightMenu
-            }
-          >
+          <div className={rightMenuOpen ? `${styles.rightMenu} ${styles.toggled}`: styles.rightMenu}>
             <div className={styles.userProfile}>
-              <div className={styles.userPic}>
-                <img src={profilePicUrl} alt="" />
-              </div>
+              <div className={styles.userPic}><img src={profilePicUrl} /></div>
               <h3>{username}</h3>
-
               <UserStats userFollowStats={userFollowStats} />
             </div>
 
-            <div className={styles.profileOptions}>
-              <Link href="/">
-                <div
-                  className={
-                    isActive("/")
-                      ? `${styles.profileFeed} ${styles.selectedOption}`
-                      : styles.profileFeed
-                  }
-                >
-                  <FontAwesomeIcon icon={faTh} className={styles.item} />
-                  <p>Feed</p>
-                </div>
-              </Link>
-              <Link href="/notifications">
-                <div
-                  className={
-                    isActive("/notifications")
-                      ? `${styles.profileNotifications} ${styles.selectedOption}`
-                      : styles.profileNotifications
-                  }
-                >
-                  <FontAwesomeIcon icon={faBell} className={styles.item} />
-                  <p>Notifications</p>
-                </div>
-              </Link>
-              <Link href="/messages">
-                <div
-                  className={
-                    isActive("/messages")
-                      ? `${styles.profileMessages} ${styles.selectedOption}`
-                      : styles.profileMessages
-                  }
-                >
-                  <FontAwesomeIcon icon={faComment} className={styles.item} />
-                  <p>Messages</p>
-                </div>
-              </Link>
-              <Link href={`/${username}`}>
-                <div
-                  className={
-                    router.query.username === username
-                      ? `${styles.profileUser} ${styles.selectedOption}`
-                      : styles.profileUser
-                  }
-                >
-                  <FontAwesomeIcon icon={faUser} className={styles.item} />
-                  <p>Profile</p>
-                </div>
-              </Link>
-              <Link href={`/settings`}>
-                <div
-                  className={
-                    isActive("/settings")
-                      ? `${styles.profileSettings} ${styles.selectedOption}`
-                      : styles.profileSettings
-                  }
-                >
-                  <FontAwesomeIcon icon={faCog} className={styles.item} />
-                  <p>Settings</p>
-                </div>
-              </Link>
-            </div>
+            <RightMenu isActive={isActive} username={username} email={email} />
 
-            <div
-              className={styles.userLogout}
-              onClick={() => logoutUser(email)}
-            >
-              <FontAwesomeIcon icon={faSignOutAlt} className={styles.item} />
-              <p>Logout</p>
-            </div>
-
-            <div
-              className={
-                rightMenuOpen
-                  ? styles.rightMenuCloseArrow
-                  : styles.rightMenuOpenArrow
-              }
-              onClick={rightMenuToggle}
-            >
-              <FontAwesomeIcon
-                icon={rightMenuOpen ? faChevronRight : faChevronLeft}
-              />
+            <div className={rightMenuOpen ? styles.rightMenuCloseArrow : styles.rightMenuOpenArrow} onClick={rightMenuToggle}>
+              <FontAwesomeIcon icon={rightMenuOpen ? faChevronRight : faChevronLeft}/>
             </div>
           </div>
         </Media>
 
         <Media between={["mobile", "tablet"]}>
           <div className={styles.topbarContainer}>
-            <div className={styles.topbarLeft} onClick={() => router.push("/")}>
-              <span className={styles.logo}>
-                <FontAwesomeIcon icon={faPaw} />
-                {` Social Media`}
-              </span>
-            </div>
-
-            <div className={styles.topbarCenter}>
-              <SearchBar />
-            </div>
-
+            <TopbarLeft router={router} />
             <div className={styles.topbarTabletRight}>
-              <FontAwesomeIcon
-                className={isActive("/") ? styles.selectedMenuItem : styles.menuItem}
-                icon={faHome}
-                onClick={() => router.push("/")}
-              />
-              <FontAwesomeIcon
-                className={isActive("/messages") ? styles.selectedMenuItem : styles.menuItem}
-                icon={faComment}
-                onClick={() => router.push("/messages")}
-              />
-              <FontAwesomeIcon
-                className={isActive("/notifications") ? styles.selectedMenuItem : styles.menuItem}
-                icon={faBell}
-                onClick={() => router.push("/notifications")}
-              />
-              <FontAwesomeIcon 
-                className={isActive("/settings") ? styles.selectedMenuItem : styles.menuItem} 
-                icon={faCog} 
-                onClick={() => router.push("/settings")}
-              />
-              <FontAwesomeIcon
-                className={router.query.username === username ? styles.selectedMenuItem : styles.menuItem}
-                icon={faUser}
-                onClick={() => router.push(`/${username}`)}
-              />
-              <FontAwesomeIcon
-                className={styles.menuItem}
-                icon={faSignOutAlt}
-                onClick={() => logoutUser(email)}
-              />
+              <HomeMenu isActive={isActive} router={router} />
+              <MessageMenu isActive={isActive} router={router} />
+              <NotificationsMenu isActive={isActive} router={router} />
+              <SettingsMenu isActive={isActive} router={router} />
+              <ProfileMenu router={router} username={username} />
+              <LogoutMenu email={email} />
             </div>
           </div>
         </Media>
 
         <Media lessThan="mobile">
           <div className={styles.topbarContainer}>
-
             <div className={styles.topbarMobile}>
-              <FontAwesomeIcon
-                className={isActive("/") ? styles.selectedMenuItem : styles.menuItem}
-                icon={faHome}
-                onClick={() => router.push("/")}
-              />
-              <FontAwesomeIcon
-                className={isActive("/notifications") ? styles.selectedMenuItem : styles.menuItem}
-                icon={faBell}
-                onClick={() => router.push("/notifications")}
-              />
-              <FontAwesomeIcon 
-                className={isActive("/search") ? styles.selectedMenuItem : styles.menuItem} 
-                icon={faSearch} 
-                onClick={() => router.push("/search")}
-              />
-              <FontAwesomeIcon
-                className={router.query.username === username ? styles.selectedMenuItem : styles.menuItem}
-                icon={faUser}
-                onClick={() => router.push(`/${username}`)}
-              />
-              <FontAwesomeIcon
-                className={styles.menuItem}
-                icon={faSignOutAlt}
-                onClick={() => logoutUser(email)}
-              />
+              <HomeMenu isActive={isActive} router={router} />
+              <NotificationsMenu isActive={isActive} router={router} />
+              <SearchMenu isActive={isActive} router={router} />
+              <ProfileMenu router={router} username={username} />
+              <LogoutMenu email={email} />
             </div>
           </div>
         </Media>
 
         <Media greaterThanOrEqual="computer">
           {!isActive("/messages") && (
-            <div
-              className={
-                leftMenuOpen
-                  ? `${styles.leftMenu} ${styles.toggled}`
-                  : styles.leftMenu
-              }
-            >
+            <div className={leftMenuOpen ? `${styles.leftMenu} ${styles.toggled}`: styles.leftMenu}>
               <p style={{ marginTop: "10px" }}>People you may know</p>
               <div className={styles.layUsers}>
                 <UserSuggestion />
@@ -435,22 +201,169 @@ export default function TopBar({
                   <OnlineUser key={onlineUser.userId} onlineUser={onlineUser.userId} />
                 ))}
               </div>
-              <div
-                className={
-                  leftMenuOpen
-                    ? styles.leftMenuCloseArrow
-                    : styles.leftMenuOpenArrow
-                }
-                onClick={leftMenuToggle}
-              >
-                <FontAwesomeIcon
-                  icon={leftMenuOpen ? faChevronLeft : faChevronRight}
-                />
+              <div className={leftMenuOpen ? styles.leftMenuCloseArrow : styles.leftMenuOpenArrow} onClick={leftMenuToggle}>
+                <FontAwesomeIcon icon={leftMenuOpen ? faChevronLeft : faChevronRight} />
               </div>
             </div>
           )}
         </Media>
       </MediaContextProvider>
+  );
+}
+
+const ChatIcon = ({router}) => {
+  const [chatHovered, setChatHovered] = useState(false);
+  const toggleChatHover = () => setChatHovered(!chatHovered);
+
+  return (
+    <FontAwesomeIcon
+      icon={chatHovered ? faComment : farComment}
+      className={styles.chatIcon}
+      onMouseEnter={toggleChatHover}
+      onMouseLeave={toggleChatHover}
+      onClick={() => router.push("/messages")}
+    />
+  );
+}
+
+const BellIcon = ({router}) => {
+  const [notificationHovered, setNotificationHovered] = useState(false);
+  const toggleNotificationHover = () => setNotificationHovered(!notificationHovered);
+
+  return (
+    <FontAwesomeIcon
+      icon={notificationHovered ? faBell : farBell}
+      className={styles.bellIcon}
+      onMouseEnter={toggleNotificationHover}
+      onMouseLeave={toggleNotificationHover}
+      onClick={() => router.push("/notifications")}
+    />
+  );
+}
+
+const HomeMenu = ({router, isActive}) => {
+  return (
+    <FontAwesomeIcon
+      className={isActive("/") ? styles.selectedMenuItem : styles.menuItem}
+      icon={faHome}
+      onClick={() => router.push("/")}
+    />
+  );
+}
+
+const MessageMenu = ({router, isActive}) => {
+  return (
+    <FontAwesomeIcon
+      className={isActive("/messages") ? styles.selectedMenuItem : styles.menuItem}
+      icon={faComment}
+      onClick={() => router.push("/messages")}
+    />
+  );
+}
+
+const NotificationsMenu = ({router, isActive}) => {
+  return (
+    <FontAwesomeIcon
+      className={isActive("/notifications") ? styles.selectedMenuItem : styles.menuItem}
+      icon={faBell}
+      onClick={() => router.push("/notifications")}
+    />
+  );
+}
+
+const SettingsMenu = ({router, isActive}) => {
+  return (
+    <FontAwesomeIcon 
+      className={isActive("/settings") ? styles.selectedMenuItem : styles.menuItem} 
+      icon={faCog} 
+      onClick={() => router.push("/settings")}
+    />
+  );
+}
+
+const ProfileMenu = ({router, username}) => {
+  return (
+    <FontAwesomeIcon
+      className={router.query.username === username ? styles.selectedMenuItem : styles.menuItem}
+      icon={faUser}
+      onClick={() => router.push(`/${username}`)}
+    />
+  );
+}
+
+const SearchMenu = ({router, isActive}) => {
+  return (
+    <FontAwesomeIcon 
+      className={isActive("/search") ? styles.selectedMenuItem : styles.menuItem} 
+      icon={faSearch} 
+      onClick={() => router.push("/search")}
+    />
+  );
+}
+
+const LogoutMenu = ({email}) => {
+  return (
+    <FontAwesomeIcon
+      className={styles.menuItem}
+      icon={faSignOutAlt}
+      onClick={() => logoutUser(email)}
+    />
+  );
+}
+
+const TopbarLeft = ({router}) => {
+  return (
+    <>
+      <div className={styles.topbarLeft} onClick={() => router.push("/")}>
+        <span className={styles.logo}>
+          <FontAwesomeIcon icon={faPaw} />
+          {` Social Media`}
+        </span>
+      </div>
+      <div className={styles.topbarCenter}><SearchBar /></div>
+    </>
+  );
+}
+
+const RightMenu = ({isActive, username, email}) => {
+  return (
+    <>
+      <div className={styles.profileOptions}>
+        <Link href="/">
+          <div className={isActive("/") ? `${styles.profileFeed} ${styles.selectedOption}`: styles.profileFeed}>
+            <FontAwesomeIcon icon={faTh} className={styles.item} />
+            <p>Feed</p>
+          </div>
+        </Link>
+        <Link href="/notifications">
+          <div className={isActive("/notifications") ? `${styles.profileNotifications} ${styles.selectedOption}`: styles.profileNotifications}>
+            <FontAwesomeIcon icon={faBell} className={styles.item} />
+            <p>Notifications</p>
+          </div>
+        </Link>
+        <Link href="/messages">
+          <div className={isActive("/messages") ? `${styles.profileMessages} ${styles.selectedOption}`: styles.profileMessages}>
+            <FontAwesomeIcon icon={faComment} className={styles.item} />
+            <p>Messages</p>
+          </div>
+        </Link>
+        <Link href={`/${username}`}>
+          <div className={router.query.username === username ? `${styles.profileUser} ${styles.selectedOption}` : styles.profileUser}>
+            <FontAwesomeIcon icon={faUser} className={styles.item} />
+            <p>Profile</p>
+          </div>
+        </Link>
+        <Link href={`/settings`}>
+          <div className={isActive("/settings") ? `${styles.profileSettings} ${styles.selectedOption}`: styles.profileSettings}>
+            <FontAwesomeIcon icon={faCog} className={styles.item} />
+            <p>Settings</p>
+          </div>
+        </Link>
+      </div>
+      <div className={styles.userLogout} onClick={() => logoutUser(email)}>
+        <FontAwesomeIcon icon={faSignOutAlt} className={styles.item} />
+        <p>Logout</p>
+      </div>
     </>
   );
 }
