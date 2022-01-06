@@ -33,9 +33,7 @@ export default function SearchBar({mobile}) {
     
           const res = await axios.get(`${baseUrl}/api/search/${value}`, {
             headers: { Authorization: token },
-            cancelToken: new CancelToken(canceler => {
-              cancel = canceler;
-            })
+            cancelToken: new CancelToken(canceler => {cancel = canceler;})
           });
     
           if (!res.data || res.data.length === 0) {
@@ -60,11 +58,7 @@ export default function SearchBar({mobile}) {
         {(text.length > 0 && !mobile) && <div className={styles.backdrop}></div>}
         <div className={mobile ? styles.mobileSearchBar : styles.searchbar}>
             <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
-            <input
-              onBlur={()=>{
-                  results.length > 0 && setResults([]);
-                  setText("");
-              }}
+            <input onBlur={()=>{results.length > 0 && setResults([]); setText("");}}
               value={text}
               onChange={handleChange}
               placeholder="Search for people"
@@ -75,20 +69,14 @@ export default function SearchBar({mobile}) {
         <div className={mobile ? styles.mobileSearchResult : styles.searchResult}>
           {results.map((data) => (
             <div key={data._id} className={styles.searchItem} onMouseDown={()=>Router.push(`/${data.username}`)}>
-              <div>
-                <img
-                  src={data.profilePicUrl}
-                  alt=""
-                />
-              </div>
+              <div><img src={data.profilePicUrl} /></div>
               <h4>{data.name}</h4>
             </div>
           ))}
           {(text && results.length === 0) &&
             <div className={`${styles.searchItem} ${styles.noResults}`}>
               <h4>No results found</h4>
-            </div>
-          }
+            </div>}
         </div>
       </>
     );

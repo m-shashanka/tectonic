@@ -32,10 +32,7 @@ export default function Login(){
       if(serverError)
         setServerError(null);
 
-      let user = {
-        email: data.email,
-        password: data.password
-      }
+      let user = {email: data.email,password: data.password}
 
       await loginUser(user, setServerError, setFormLoading);
     };
@@ -48,31 +45,20 @@ export default function Login(){
               <input type="email" placeholder="Email" name="email"
                 {...register("email", {
                   required: "email required",
-                  pattern: {
-                    value:
-                      regexEmail,
-                      message: "invalid email address",
-                    },
+                  pattern: {value: regexEmail,message: "invalid email address"}
                 })}
               />
-              {errors.email && (
-                <p className={styles.errorMessage}>{errors.email.message}</p>
-              )}
+              {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
             </div>
             <div className={errors.password ? styles.invalid : null}>
               <FontAwesomeIcon icon={faLock} className={styles.item} />
               <input type={showPassword ? "text" : "password"} placeholder="Password" name="password"
                 {...register("password", {
                   required: "password required",
-                  minLength: {
-                    value: 6,
-                    message: "password must be atleast 6 characters long",
-                  },
+                  minLength: {value: 6,message: "password must be atleast 6 characters long"}
                 })}
               />
-              {errors.password && (
-                <p className={styles.errorMessage}>{errors.password.message}</p>
-              )}
+              {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
               <FontAwesomeIcon 
                 icon={showPassword ? faEyeSlash : faEye} 
                 className={`${styles.item} ${styles.eye}`} 

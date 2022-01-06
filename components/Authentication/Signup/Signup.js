@@ -7,15 +7,14 @@ import uploadPic from "../../../utils/uploadPicToCloudinary";
 import Spinner from "../../Layout/Spinner/Spinner";
 import ProfilePic from "./ProfilePic/ProfilePic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-  faUser, faEnvelope, faLock, faEye, faEyeSlash, faUserCircle, faCheck, faTimes, faInfoCircle
-} from "@fortawesome/free-solid-svg-icons";
+import {faUser, faEnvelope, faLock, faEye, faEyeSlash, faUserCircle, faCheck, faTimes, faInfoCircle} from "@fortawesome/free-solid-svg-icons";
 import styles from "./signup.module.css";
 const regexUserName = /^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/;
 const regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 let cancel;
 
 export default function Signup() {
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [username, setUsername] = useState("");
@@ -68,9 +67,7 @@ export default function Signup() {
       const CancelToken = axios.CancelToken;
 
       const res = await axios.get(`${baseUrl}/api/signup/${username}`, {
-        cancelToken: new CancelToken(canceler => {
-          cancel = canceler;
-        })
+        cancelToken: new CancelToken(canceler => {cancel = canceler;})
       });
 
       if (usernameErrorMessage) setUsernameErrorMessage("");
@@ -90,52 +87,30 @@ export default function Signup() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <h1>Create Account</h1>
-
       <ProfilePic setMedia={setMedia} userImage="https://res.cloudinary.com/drnc3bkx7/image/upload/v1636035901/user_f2qa5w.png" />
-
       <div className={errors.name ? styles.invalid : null}>
         <FontAwesomeIcon icon={faUser} className={styles.item} />
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
+        <input type="text" placeholder="Name" name="name"
           {...register("name", { required: "name required" })}
         />
-        {errors.name && (
-          <p className={styles.errorMessage}>{errors.name.message}</p>
-        )}
+        {errors.name && <p className={styles.errorMessage}>{errors.name.message}</p>}
       </div>
       <div className={errors.email ? styles.invalid : null}>
         <FontAwesomeIcon icon={faEnvelope} className={styles.item} />
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
+        <input type="email" placeholder="Email" name="email"
           {...register("email", {
             required: "email required",
-            pattern: {
-              value:
-                regexEmail,
-                message: "invalid email address",
-              },
-          })}
+            pattern: {value: regexEmail,message: "invalid email address"}}
+          )}
         />
-        {errors.email && (
-          <p className={styles.errorMessage}>{errors.email.message}</p>
-        )}
+        {errors.email && <p className={styles.errorMessage}>{errors.email.message}</p>}
       </div>
       <div className={errors.password ? styles.invalid : null}>
         <FontAwesomeIcon icon={faLock} className={styles.item} />
-        <input
-          type={showPassword ? "text" : "password"}
-          placeholder="Password"
-          name="password"
+        <input type={showPassword ? "text" : "password"} placeholder="Password" name="password"
           {...register("password", {
             required: "password required",
-            minLength: {
-              value: 6,
-              message: "password must be atleast 6 characters long",
-            },
+            minLength: {value: 6,message: "password must be atleast 6 characters long"}
           })}
         />
         <FontAwesomeIcon 
@@ -143,24 +118,14 @@ export default function Signup() {
           className={`${styles.item} ${styles.eye}`} 
           onClick={()=>{setShowPassword(prev=>!prev)}}
         />
-        {errors.password && (
-          <p className={styles.errorMessage}>{errors.password.message}</p>
-        )}
+        {errors.password && <p className={styles.errorMessage}>{errors.password.message}</p>}
       </div>
       <div className={!usernameErrorMessage ? null : styles.invalid}>
         {!usernameLoading && !username && <FontAwesomeIcon icon={faUserCircle} className={styles.item} />}
-        {!usernameLoading && username && !usernameErrorMessage && (
-          <FontAwesomeIcon icon={faCheck} className={styles.green} />
-        )}
-        {!usernameLoading && username && usernameErrorMessage && (
-          <FontAwesomeIcon icon={faTimes} className={styles.red} />
-        )}
+        {!usernameLoading && username && !usernameErrorMessage && <FontAwesomeIcon icon={faCheck} className={styles.green} />}
+        {!usernameLoading && username && usernameErrorMessage && <FontAwesomeIcon icon={faTimes} className={styles.red} />}
         {usernameLoading && <Spinner className={styles.usernameLoader} />}
-        <input
-          type="text"
-          placeholder="Username"
-          name="username"
-          value={username}
+        <input type="text" placeholder="Username" name="username" value={username}
           onChange={(e) => {
             setUsername(e.target.value);
             if (e.target.value.length === 0) {
@@ -174,9 +139,7 @@ export default function Signup() {
             }
           }}
         />
-        {usernameErrorMessage && (
-          <p className={styles.errorMessage}>{usernameErrorMessage}</p>
-        )}
+        {usernameErrorMessage && <p className={styles.errorMessage}>{usernameErrorMessage}</p>}
       </div>
       <div className={styles.bio}>
         <FontAwesomeIcon icon={faInfoCircle} className={styles.item} />
@@ -185,12 +148,7 @@ export default function Signup() {
       {!formLoading && <button
         type="submit"
         style={{ marginTop: "10px" }}
-        onClick={() => {
-          !username && setUsernameErrorMessage("username required");
-        }}
-      >
-        Sign Up
-      </button>}
+        onClick={() => {!username && setUsernameErrorMessage("username required");}}>Sign Up</button>}
       {formLoading && <Spinner className={styles.loading}/>}
       {serverError && <p className={styles.serverError}>{serverError}</p>}
     </form>

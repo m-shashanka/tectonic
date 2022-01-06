@@ -68,7 +68,6 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     destroyCookie(ctx, "token");
     protectedRoutes && redirectUser(ctx, "/authentication");
   }
-  //
   else {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);

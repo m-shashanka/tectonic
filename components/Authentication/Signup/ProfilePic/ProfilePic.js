@@ -4,8 +4,10 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import styles from "./profile.module.css";
 
 export default function ProfilePic({ setMedia,userImage }) {
+
   const [mediaPreview, setMediaPreview] = useState(userImage || null);
   const [highlighted, setHighlighted] = useState(false);
+  
   const inputRef = useRef();
 
   const handleChange = e => {
