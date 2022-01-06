@@ -224,7 +224,7 @@ router.post("/settings/password", authMiddleware, async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
 
-    if (newPassword.length < 6) {
+    if (!newPassword || newPassword.length < 6) {
       return res.status(400).send("Password must be atleast 6 characters");
     }
 

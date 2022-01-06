@@ -40,7 +40,7 @@ export default function Settings({user}){
     useEffect(() => {
         if(success){
             serverError && setServerError(null);
-            setTimeout(() => setSuccess(false), 5000);
+            setTimeout(() => setSuccess(false), 7000);
             setPassword({password1:"",password2:""});
         }
         else if(!success && serverError){

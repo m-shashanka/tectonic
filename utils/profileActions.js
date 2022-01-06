@@ -55,9 +55,9 @@ export const profileUpdate = async (profile, setLoading, setError, profilePicUrl
 };
 
 export const passwordUpdate = async (setSuccess, userPasswords, setError) => {
-  const { currentPassword, newPassword } = userPasswords;
+  const { password1, password2 } = userPasswords;
   try {
-    await Axios.post(`/settings/password`, { currentPassword, newPassword });
+    await Axios.post(`/settings/password`, { currentPassword : password1, newPassword : password2 });
     setSuccess(true);
   } catch (error) {
     setError(catchErrors(error));
