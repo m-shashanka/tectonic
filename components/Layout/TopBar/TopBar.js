@@ -317,7 +317,7 @@ const TopbarLeft = ({router}) => {
       <div className={styles.topbarLeft} onClick={() => router.push("/")}>
         <span className={styles.logo}>
           <FontAwesomeIcon icon={faPaw} />
-          {` Social Media`}
+          {` Tectonic`}
         </span>
       </div>
       <div className={styles.topbarCenter}><SearchBar /></div>

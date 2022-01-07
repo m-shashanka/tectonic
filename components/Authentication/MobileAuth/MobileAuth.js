@@ -13,7 +13,7 @@ export default function MobileAuth() {
     <div className={styles.container}>
       <div className={styles.title}>
         <FontAwesomeIcon icon={faPaw} size="3x" />
-        <h1>Social Media</h1>
+        <h1>Tectonic</h1>
       </div>
 
       <Card className={styles.cardContainer}>

@@ -16,7 +16,7 @@ const HeadTags = () => (
 
       <style>{mediaStyles}</style>
 
-      <title>Social Media</title>
+      <title>Tectonic</title>
     </Head>
 );
 export default HeadTags;
