@@ -37,6 +37,9 @@ export default function TopBar({user: {unreadNotification,email,unreadMessage,us
   const [newNotification, setNewNotification] = useState(null);
   const [notificationPopup, showNotificationPopup] = useState(false);
 
+  const [unreadMsg,setUnreadMsg] = useState(unreadMessage);
+  const [unreadNotf,setUnreadNotf] = useState(unreadNotification);
+
   const router = useRouter();
 
   const isActive = (route) => router.pathname === route;
@@ -90,6 +93,14 @@ export default function TopBar({user: {unreadNotification,email,unreadMessage,us
       socket.current.on("newMsgReceived", handler);
     }
 
+    if(router.pathname === "/messages"){
+      showNewMessageModal(false);
+      setUnreadMsg(0);
+    }
+
+    if(router.pathname === "/notifications")
+      setUnreadNotf(0);
+
     return () => {
       socket.current && socket.current.off("newMsgReceived", handler);
     };
@@ -98,10 +109,6 @@ export default function TopBar({user: {unreadNotification,email,unreadMessage,us
   useEffect(() => {
     notificationPopup && setTimeout(() => showNotificationPopup(false), 5000);
   }, [notificationPopup]);
-
-  if (isActive("/notifications")) unreadNotification = 0;
-
-  if (isActive("/messages")) unreadMessage = 0;
 
   return (
       <MediaContextProvider>
@@ -126,11 +133,11 @@ export default function TopBar({user: {unreadNotification,email,unreadMessage,us
               <div className={styles.topbarIcons}>
                 <div className={styles.topbarIconItem}>
                   <ChatIcon router={router} />
-                  {unreadMessage ? <span className={styles.topbarIconBadge}>{unreadMessage}</span> : null}
+                  {unreadMsg ? <span className={styles.topbarIconBadge}>{unreadMsg}</span> : null}
                 </div>
                 <div className={styles.topbarIconItem}>
                   <BellIcon router={router} />
-                  {unreadNotification ? <span className={styles.topbarIconBadge}>{unreadNotification}</span> : null}
+                  {unreadNotf ? <span className={styles.topbarIconBadge}>{unreadNotf}</span> : null}
                 </div>
               </div>
               <FontAwesomeIcon

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { useRouter } from 'next/router';
 import Card from '../../Layout/Card/Card';
 import styles from './userSuggestion.module.css';
 
@@ -19,15 +19,15 @@ const username = [
 ];
 
 const UserSuggestion = ({index}) => {
+  const router = useRouter();
+
     return (
-      <Link href={`/${username[index]}`}>
-        <Card className={styles.user}>
-            <div className={styles.userPic}>
+      <Card className={styles.user} onClick={()=>router.push(`/${username[index]}`)} >
+          <div className={styles.userPic}>
               <img src={profilePics[index]} />
-            </div>
-            <h4>{username[index]}</h4>
-        </Card>
-      </Link>
+          </div>
+          <h4>{username[index]}</h4>
+      </Card>
     );
 }
 
