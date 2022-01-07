@@ -49,6 +49,7 @@ export default function Notifications({ notifications, errorLoading, user, userF
                     loggedUserFollowStats={loggedUserFollowStats}
                     setUserFollowStats={setUserFollowStats}
                   />}
+                  <hr />
               </div>)}
           </Card> : <NoNotifications />}
     </>

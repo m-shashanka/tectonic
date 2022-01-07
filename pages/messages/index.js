@@ -40,7 +40,7 @@ export default function Messages({ chatsData, errorLoading, user }) {
   // This ref is for persisting the state of query string in url throughout re-renders
   const openChatId = useRef("");
 
-  //CONNECTION useEffect
+  //Connection useEffect
   useEffect(() => {
     if (!socket.current) {
       const token = cookie.get("token");
@@ -81,7 +81,7 @@ export default function Messages({ chatsData, errorLoading, user }) {
     };
   }, []);
 
-  // LOAD MESSAGES useEffect
+  // Load messages useEffect
   useEffect(() => {
     const loadMessages = () => {
       socket.current.emit("loadMessages", {
@@ -147,7 +147,7 @@ export default function Messages({ chatsData, errorLoading, user }) {
       socket.current.on("newMsgReceived", async ({ newMsg }) => {
         let senderName;
 
-        // WHEN CHAT WITH SENDER IS CURRENTLY OPENED INSIDE YOUR BROWSER
+        // When chat with sender is currently open in browser
         if (newMsg.sender === openChatId.current) {
           setMessages((prev) => [...prev, newMsg]);
 
@@ -163,7 +163,6 @@ export default function Messages({ chatsData, errorLoading, user }) {
             return [...prev];
           });
         }
-        //
         else {
           const ifPreviouslyMessaged =
             chats.filter((chat) => chat.messagesWith === newMsg.sender).length > 0;
@@ -185,7 +184,7 @@ export default function Messages({ chatsData, errorLoading, user }) {
             });
           }
 
-          //IF NO PREVIOUS CHAT WITH THE SENDER
+          //If no previous chat with sender
           else {
             const { username, profilePicUrl } = await getUserInfo(
               newMsg.sender

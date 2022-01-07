@@ -7,14 +7,12 @@
 
 .green{
     padding-left: 8px;
-    transform: scale(1.37);
     position: absolute;
     color: #63C642;
 }
 
 .red{
     padding-left: 8px;
-    transform: scale(1.37);
     position: absolute;
     color: red;
 }

@@ -188,12 +188,11 @@ export default function TopBar({user: {unreadNotification,email,unreadMessage,us
             <div className={leftMenuOpen ? `${styles.leftMenu} ${styles.toggled}`: styles.leftMenu}>
               <p style={{ marginTop: "10px" }}>People you may know</p>
               <div className={styles.layUsers}>
-                <UserSuggestion />
-                <UserSuggestion />
-                <UserSuggestion />
-                <UserSuggestion />
-                <UserSuggestion />
-                <UserSuggestion />
+                <UserSuggestion index={0} />
+                <UserSuggestion index={1} />
+                <UserSuggestion index={2} />
+                <UserSuggestion index={3} />
+                <UserSuggestion index={4} />
               </div>
               {connectedUsers.length > 0 && <p>Online Users</p>}
               <div className={styles.layOnlineUsers}>

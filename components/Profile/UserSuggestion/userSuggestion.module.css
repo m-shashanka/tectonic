@@ -1,5 +1,5 @@
 .user{
-    width: 23%;
+    width: 30%;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -23,9 +23,9 @@
 }
 
 .userPic{
-    margin-top: 5px;
-    width: 80%;
-    height: 80%;
+    margin: 5px 5px 0px 5px;
+    /* width: 75px;
+    height: 75px; */
 }
 
 .userPic img{
