@@ -4,7 +4,7 @@ A social media web application where people can connect with each other, share t
 
 ### Techstack
 
-NextJS (ReactJS)
+NextJS (ReactJS)                                                                                                                                                                   
 MongoDB
 NodeJS
 Express
